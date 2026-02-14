@@ -1,16 +1,8 @@
 "use client"
-// function loadUsers(){
-//     const d = new Date().toLocaleString();
-//     const User = { id: 1, full_name: "Pepe no existoArray", email: "inexistente@gmail", createdAt: d, role:"FANTASMA"};
-//     const users = [];
-//     for (let i = 0; i < 100; i++) {
-//         users.push(User);
-//     }
-//     // console.log(users);
-//     return users;
-// }
-export default function UsersTable({users}) {
-    // const users = loadUsers();
+
+import { useState } from "react";
+
+export default function UsersTable({users, selectedRow, onSelect}) {
     return (
         <div className="overflow-auto rounded-box border border-base-content/5 bg-base-100">
             <table className="table">
@@ -25,8 +17,10 @@ export default function UsersTable({users}) {
                 </thead>
                 <tbody>
                     {users.map((u,index) => {
-                        return (<tr key={index}>
-                            <th>{index}</th>
+                        return (<tr key={u.id} 
+                            onClick= { () => onSelect(u.id)}
+                            className={`${selectedRow == u.id? "bg-neutral-500": "bg-base-100"} hover:bg-base-300`}>
+                            <th>{u.id}</th>
                             <td>{u.full_name}</td>
                             <td>{u.email}</td>
                             <td>{u.role}</td>
