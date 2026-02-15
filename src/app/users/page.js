@@ -63,7 +63,7 @@ export default function UsersMainPage() {
                         <Image src={plus} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("/users/newUser")}>
+                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`/users/updateUser/${selectedId}`)}>
                     <div className="w-10 rounded-full">
                         <Image src={lapiz} alt=""></Image>
                     </div>

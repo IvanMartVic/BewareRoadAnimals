@@ -43,4 +43,17 @@ export async function deleteUser(id) {
     });
     return user;
 }
+export async function updateUser({id, new_data}){
+    if(!id){
+        return null;
+    }
+    const user = await prisma.user.update({
+        where: {
+            id:id,
+        },
+        data: new_data,
+    });
+    return user;
+
+}
 

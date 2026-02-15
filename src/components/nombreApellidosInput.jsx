@@ -1,4 +1,4 @@
-export default function NombreApellidosInput({onValueChanged}) {
+export default function NombreApellidosInput({onValueChanged, value}) {
     const handleChange = (event) => {
         onValueChanged(event.target.value);
     }
@@ -27,6 +27,7 @@ export default function NombreApellidosInput({onValueChanged}) {
                     maxLength="90"
                     title="Only letters, numbers or dash"
                     onChange={handleChange}
+                    value={value}
                 />
             </label>
             <p className="validator-hint hidden">
