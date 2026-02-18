@@ -3,12 +3,17 @@ import Link from "next/link"
 import avatar from "@/../public/avatar.jpg"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { LogOut } from "@/services/authenticationService"
 
 export default function Navbar({ pageContent }) {
     const router = useRouter();
     const logout = function() {
-        alert("logging out");
-        router.push("/login");
+        // alert("logging out");
+        const choice = confirm("¿Cerrar Sesion?");
+        if(choice){
+            LogOut();
+            router.push("/login");
+        }
     }
     return (
         <>
