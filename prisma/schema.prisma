@@ -17,4 +17,20 @@ model User {
   createdAt DateTime @default(now())
   role String @default("USER")
   password_hash String 
+  devices Device[] 
+}
+
+model Device{
+    id Int @id @default(autoincrement())
+    deployedBy User @relation(fields:[userId], references:[id])
+    coordinates String
+    userId Int
+    logs LogMessage[]
+}
+
+model LogMessage{
+    id Int @id @default(autoincrement())
+    deviceIn Device @relation(fields:[deviceId], references:[id])
+    deviceId Int
+    message String
 }

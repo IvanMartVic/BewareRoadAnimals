@@ -1,7 +1,8 @@
-export default function PasswordInput({onValueChanged}){
+export default function PasswordInput({onValueChanged, validate=true}){
     const handleChange = (event) => {
         onValueChanged(event.target.value);
     }
+    const pattern = validate ? "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}":"*" 
 
     return (
         <>
@@ -30,10 +31,11 @@ export default function PasswordInput({onValueChanged}){
                     onChange={handleChange}
                 />
             </label>
+            {validate &&
             <p className="validator-hint hidden">
                 tiene que tener 8 caracteres, con:
                 <br /> Al menos un número<br /> Al menos una letra mayúscula <br /> Al menos una letra minúscula
-            </p>        
+            </p>}        
         </>
     )
 }

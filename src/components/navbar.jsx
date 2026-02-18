@@ -46,10 +46,21 @@ export default function Navbar({ pageContent }) {
                         {/* Sidebar content here */}
                         <li>
                             <details open>
-                                <summary>Usuarios</summary>
+                                <summary className="font-bold">Usuarios</summary>
                                 <ul>
                                     <li><Link href={"/users"}>Área de usuarios </Link></li>
                                     <li><Link href={"/users/newUser"}>Nuevo Usuario</Link></li>
+                                </ul>
+
+                            </details>
+
+                        </li>
+                        <li>
+                            <details open>
+                                <summary className="font-bold">Dispositivos</summary>
+                                <ul>
+                                    <li><Link href={"/devices"}>Area de dispositivos</Link></li>
+                                    <li><Link href={"/devices/newDevice"}>Nuevo Dipositivo</Link></li>
                                 </ul>
 
                             </details>

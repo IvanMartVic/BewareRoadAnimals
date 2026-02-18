@@ -1,4 +1,4 @@
-export default function EmailInput({onValueChanged, value}) {
+export default function EmailInput({onValueChanged, value, validate=true}) {
 
     const handleChange = (event) => {
         onValueChanged(event.target.value);
@@ -20,7 +20,8 @@ export default function EmailInput({onValueChanged, value}) {
                 </svg>
                 <input type="email" placeholder="email@site.com" required onChange={handleChange} value={value}/>
             </label>
-            <div className="validator-hint hidden">Escriba una dirección de email válida</div>
+            {validate &&
+            <div className="validator-hint hidden">Escriba una dirección de email válida</div>}
         </>
 
     )
