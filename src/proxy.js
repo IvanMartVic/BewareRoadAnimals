@@ -16,7 +16,7 @@ export default async function proxy(request) {
     if(authorized.success){
         return NextResponse.next();
     }else{
-        const login_url = new URL(LOGIN_URL, request.nextUrl);
+        const login_url = new URL(LOGIN_URL, request.url);
         return NextResponse.redirect(login_url);
     }
     // const cookieStore = await cookies();
