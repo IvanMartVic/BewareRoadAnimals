@@ -3,7 +3,8 @@
 // import { compare } from "bcryptjs";
 // import * as jose from "jose"
 // import { cookies } from "next/headers";
-import { myAuth, myLogOut, mySignIn, credentials} from "@/utils/authUtils"
+import {  myLogOut, mySignIn, credentials} from "@/utils/authUtils"
+import { myAuth } from "@/utils/auth";
 
 
 export async function SignIn({password, email}:credentials){

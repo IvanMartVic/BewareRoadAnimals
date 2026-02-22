@@ -1,7 +1,7 @@
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { jwtVerify } from "jose"
-import { myAuth } from "./utils/authUtils";
+// import { jwtVerify } from "jose"
+import { myAuth } from "@/utils/auth.ts"
 
 
 const LOGIN_URL = "/login";
