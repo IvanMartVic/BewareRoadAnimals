@@ -13,7 +13,9 @@ export async function myAuth(){
         const res = await jwtVerify(auth_token.value, secret);
         return {success:true, token:res};
     }catch(e){
-        console.log(auth_token);
+        // console.log(e?.name);
+        // console.log(e?.message);
+        // console.log(auth_token);
         return {success:false};
     }
 }
