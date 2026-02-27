@@ -58,12 +58,12 @@ export default function UsersMainPage() {
                         <Image src={papelera} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("main_navigation/users/newUser")}>
+                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("/main_navigation/users/newUser")}>
                     <div className="w-10 rounded-full">
                         <Image src={plus} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`main_navigation/users/updateUser/${selectedId}`)}>
+                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`/main_navigation/users/updateUser/${selectedId}`)}>
                     <div className="w-10 rounded-full">
                         <Image src={lapiz} alt=""></Image>
                     </div>
