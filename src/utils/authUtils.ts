@@ -3,48 +3,49 @@ import { jwtVerify, SignJWT } from "jose";
 import { prisma } from "../../lib/prisma";
 import { compare } from "bcryptjs";
 import { myAuth } from "./auth";
-export async function myLogOut(){
+export async function myLogOut() {
     const cookieStore = await cookies();
     cookieStore.delete("auth-token");
 }
-export interface credentials{
-    password:string;
-    email:string;
+export interface credentials {
+    password: string;
+    email: string;
 }
 
-export async function mySignIn({password, email}:credentials){
+export async function mySignIn({ password, email }: credentials) {
     const user = await prisma.user.findUnique({
-        where:{
-            email:email,
+        where: {
+            email: email,
         }
     });
-    if(!user){
+    if (!user) {
         return {
-            success:false,
-            message:"No account found",
+            success: false,
+            message: "No account found",
         }
     }
     console.log(`signing user in ${email}`);
     const isUser = await compare(password, user.password_hash);
-    if(isUser){
+    if (isUser) {
         const secret = new TextEncoder().encode(process.env.SECRET_STRING);
         const alg = 'HS256'
-        const jwt = await new SignJWT({email:email, full_name:user.full_name, role:user.role, userId:user.id})
-        .setProtectedHeader({alg})
-        .setExpirationTime('1h')
-        .sign(secret);
+        const jwt = await new SignJWT({ email: email, full_name: user.full_name, role: user.role, userId: user.id })
+            .setProtectedHeader({ alg })
+            .setExpirationTime('1h')
+            .sign(secret);
         const cookieStore = await cookies();
         cookieStore.set("auth-token", jwt);
         console.log(jwt);
     }
-    return {success:isUser};
+    return { success: isUser };
 }
 
-export async function getAuthUserFromToken(){
+
+export async function getAuthUserFromToken() {
     const auth_res = await myAuth();
-    if(false == auth_res.success)
+    if (false == auth_res.success)
         throw new Error("getAuthUserFromToken called with an unvalid token");
-    console.log(JSON.stringify(auth_res.token_payload));
-    const {full_name, email, role, userId} = auth_res.token_payload;
-    return {full_name, email, role, userId};
+    console.log(JSON.stringify(auth_res.userData));
+    const { full_name, email, role, userId } = auth_res.userData;
+    return { full_name, email, role, userId };
 }
