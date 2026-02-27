@@ -1,9 +1,9 @@
 "use client"
 import { useEffect, useState } from "react";
-import SearchBar from "../../components/searchBar";
-import UsersTable from "../../components/UsersTable";
+import SearchBar from "@/components/searchBar";
+import UsersTable from "@/components/UsersTable";
 import Image from "next/image";
-import { getAllUsers, getUserById, deleteUser } from "../../services/userService";
+import { getAllUsers, getUserById, deleteUser } from "@/services/userService";
 import papelera from "@/../public/papelera.jpg";
 import plus from "@/../public/plus_icon.jpg";
 import lapiz from "@/../public/lapiz.png";
@@ -58,12 +58,12 @@ export default function UsersMainPage() {
                         <Image src={papelera} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("/users/newUser")}>
+                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("main_navigation/users/newUser")}>
                     <div className="w-10 rounded-full">
                         <Image src={plus} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`/users/updateUser/${selectedId}`)}>
+                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`main_navigation/users/updateUser/${selectedId}`)}>
                     <div className="w-10 rounded-full">
                         <Image src={lapiz} alt=""></Image>
                     </div>

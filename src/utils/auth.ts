@@ -9,9 +9,9 @@ export async function myAuth(){
     try{
         const secret = new TextEncoder().encode(process.env.SECRET_STRING);
         const res = await jwtVerify(auth_token.value, secret);
-        return {success:true, token:res};
+        return {success:true, token_payload:res.payload};
     }catch(e){
-        console.log(auth_token);
+        console.log("invalid auth-token" + auth_token);
         return {success:false};
     }
 }

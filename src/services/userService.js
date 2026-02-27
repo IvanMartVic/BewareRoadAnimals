@@ -43,6 +43,7 @@ export async function deleteUser(id) {
     });
     return user;
 }
+
 export async function updateUser({id, new_data}){
     if(!id){
         return null;

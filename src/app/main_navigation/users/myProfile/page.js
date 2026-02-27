@@ -41,7 +41,7 @@ export default function MyProfilePage() {
                     </fieldset>
                 </li>
                 <li className="text-xl">admin/user</li>
-                <li className="link-primary pt-5"><Link href={"/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
+                <li className="link-primary pt-5"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
 
             </ul>
 

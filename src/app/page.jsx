@@ -22,7 +22,7 @@ export default function LoginPage() {
             setError(response);
             return;
         }
-        router.push("/");
+        router.push("/main_navigation");
     }
     return (
         <div className="flex justify-center items-center h-screen">

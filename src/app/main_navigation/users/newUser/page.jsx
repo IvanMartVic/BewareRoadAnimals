@@ -19,7 +19,7 @@ export default function NewUserPage() {
         const userData = {full_name:name, email:email, password:password, isAdmin:adminChecked};
         await createUser(userData);
         e.target.reset();
-        router.push("/");
+        router.push("/main_navigation");
     }
     const checkboxChanged = (e) => {
         setAdmin(e.target.checked);

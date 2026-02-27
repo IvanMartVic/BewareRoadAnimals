@@ -3,7 +3,7 @@
 // import { compare } from "bcryptjs";
 // import * as jose from "jose"
 // import { cookies } from "next/headers";
-import {  myLogOut, mySignIn, credentials} from "@/utils/authUtils"
+import {  myLogOut, mySignIn, credentials, getAuthUserFromToken} from "@/utils/authUtils"
 import { myAuth } from "@/utils/auth";
 
 
@@ -15,4 +15,8 @@ export async function LogOut(){
 }
 export async function auth(){
     return await myAuth();
+}
+
+export async function getAuthUser(){
+    return await getAuthUserFromToken();
 }

@@ -12,7 +12,7 @@ export default function Navbar({ pageContent }) {
         const choice = confirm("¿Cerrar Sesion?");
         if(choice){
             LogOut();
-            router.push("/login");
+            router.push("/");
         }
     }
     return (
@@ -22,7 +22,7 @@ export default function Navbar({ pageContent }) {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
                 </label>
                 <div className="flex-1">
-                    <Link className="btn btn-ghost text-xl" href={"/"}>RoadAnimals</Link>
+                    <Link className="btn btn-ghost text-xl" href={"/main_navigation"}>RoadAnimals</Link>
 
                 </div>
                 <div className="dropdown dropdown-end">
@@ -35,7 +35,7 @@ export default function Navbar({ pageContent }) {
                     <ul
                         tabIndex="-1"
                         className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
-                        <li className="btn btn-primary mb-5"><Link href={"/users/myProfile"}>Ver Perfil </Link></li>
+                        <li className="btn btn-primary mb-5"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
                         <li className="btn btn-secondary"><button onClick={logout}>Cerrar Sesión</button></li>
                     </ul>
                 </div>
@@ -53,8 +53,8 @@ export default function Navbar({ pageContent }) {
                             <details open>
                                 <summary className="font-bold">Usuarios</summary>
                                 <ul>
-                                    <li><Link href={"/users"}>Área de usuarios </Link></li>
-                                    <li><Link href={"/users/newUser"}>Nuevo Usuario</Link></li>
+                                    <li><Link href={"/main_navigation/users"}>Área de usuarios </Link></li>
+                                    <li><Link href={"/main_navigation/users/newUser"}>Nuevo Usuario</Link></li>
                                 </ul>
 
                             </details>
@@ -64,14 +64,14 @@ export default function Navbar({ pageContent }) {
                             <details open>
                                 <summary className="font-bold">Dispositivos</summary>
                                 <ul>
-                                    <li><Link href={"/devices"}>Area de dispositivos</Link></li>
-                                    <li><Link href={"/devices/newDevice"}>Nuevo Dipositivo</Link></li>
+                                    <li><Link href={"/main_navigation/devices"}>Area de dispositivos</Link></li>
+                                    <li><Link href={"/main_navigation/devices/newDevice"}>Nuevo Dipositivo</Link></li>
                                 </ul>
 
                             </details>
 
                         </li>
-                        <li><Link href={"/about"}>Sobre nosotros</Link></li>
+                        <li><Link href={"/main_navigation/about"}>Sobre nosotros</Link></li>
                     </ul>
                 </div>
             </div>

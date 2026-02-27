@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { jwtVerify, SignJWT } from "jose";
 import { prisma } from "../../lib/prisma";
 import { compare } from "bcryptjs";
+import { myAuth } from "./auth";
 export async function myLogOut(){
     const cookieStore = await cookies();
     cookieStore.delete("auth-token");
@@ -28,7 +29,7 @@ export async function mySignIn({password, email}:credentials){
     if(isUser){
         const secret = new TextEncoder().encode(process.env.SECRET_STRING);
         const alg = 'HS256'
-        const jwt = await new SignJWT({email:email, full_name:user.full_name, role:user.role})
+        const jwt = await new SignJWT({email:email, full_name:user.full_name, role:user.role, userId:user.id})
         .setProtectedHeader({alg})
         .setExpirationTime('1h')
         .sign(secret);
@@ -37,4 +38,13 @@ export async function mySignIn({password, email}:credentials){
         console.log(jwt);
     }
     return {success:isUser};
+}
+
+export async function getAuthUserFromToken(){
+    const auth_res = await myAuth();
+    if(false == auth_res.success)
+        throw new Error("getAuthUserFromToken called with an unvalid token");
+    console.log(JSON.stringify(auth_res.token_payload));
+    const {full_name, email, role, userId} = auth_res.token_payload;
+    return {full_name, email, role, userId};
 }
