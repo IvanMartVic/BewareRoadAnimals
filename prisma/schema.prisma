@@ -1,36 +1,33 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  full_name String
-  createdAt DateTime @default(now())
-  role String @default("USER")
-  password_hash String 
-  devices Device[] 
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  full_name     String
+  createdAt     DateTime @default(now())
+  role          String   @default("USER")
+  password_hash String
+  devices       Device[]
 }
 
-model Device{
-    id Int @id @default(autoincrement())
-    deployedBy User @relation(fields:[userId], references:[id])
-    coordinates String
-    userId Int
-    logs LogMessage[]
+model Device {
+  id          Int          @id @default(autoincrement())
+  coordinates String
+  userId      Int
+  deployedBy  User         @relation(fields: [userId], references: [id])
+  logs        LogMessage[]
 }
 
-model LogMessage{
-    id Int @id @default(autoincrement())
-    deviceIn Device @relation(fields:[deviceId], references:[id])
-    deviceId Int
-    message String
+model LogMessage {
+  id       Int    @id @default(autoincrement())
+  deviceId Int
+  message  String
+  deviceIn Device @relation(fields: [deviceId], references: [id])
 }

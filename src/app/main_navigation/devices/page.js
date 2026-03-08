@@ -15,16 +15,20 @@ import { useShallow } from "zustand/shallow";
 export default function DevicesMainPage() {
     const [users, setUsers] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
-    const { fetchDevices, isLoading, devices, deleteDevice } = useDeviceStore(
+    const { fetchDevices, isLoading, devices, deleteDevice, error} = useDeviceStore(
         useShallow((state) => ({
             fetchDevices: state.fetchDevices,
             isLoading: state.isLoading,
             devices: state.devices,
             deleteDevice: state.deleteDevice,
+            error:state.error,
         })));
     useEffect(() => {
         fetchDevices();
-    }, [fetchDevices]);
+        if(error != null){
+            alert(error);
+        }
+    }, [fetchDevices, error]);
 
     async function handleSearch({ searchInput }) {
         // if (searchInput) {

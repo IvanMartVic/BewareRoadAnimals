@@ -3,6 +3,7 @@ import { prisma } from "@/../lib/prisma";
 import bcrypt from "bcryptjs";
 
 export async function getAllUsers() {
+    console.log(process.env.DATABASE_URL);
     const users = await prisma.user.findMany();
     // const response = await fetch("/api/users");
     // const users = await response.json();

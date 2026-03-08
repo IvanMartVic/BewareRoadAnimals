@@ -378,6 +378,7 @@ export type LogMessageCreateOrConnectWithoutDeviceInInput = {
 
 export type LogMessageCreateManyDeviceInInputEnvelope = {
   data: Prisma.LogMessageCreateManyDeviceInInput | Prisma.LogMessageCreateManyDeviceInInput[]
+  skipDuplicates?: boolean
 }
 
 export type LogMessageUpsertWithWhereUniqueWithoutDeviceInInput = {
@@ -1129,6 +1130,7 @@ export type LogMessageCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * The data used to create many LogMessages.
    */
   data: Prisma.LogMessageCreateManyInput | Prisma.LogMessageCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1147,6 +1149,7 @@ export type LogMessageCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * The data used to create many LogMessages.
    */
   data: Prisma.LogMessageCreateManyInput | Prisma.LogMessageCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

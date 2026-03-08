@@ -17,7 +17,7 @@ export default async function UserUpdatePage({params}){
     console.log(JSON.stringify(user));
     return (
     <div className="flex justify-center items-center h-screen">
-            {user && <UserUpdateForm key={user.id} user={user} submitRoute={"main_navigation/users"}></UserUpdateForm>}
+            {user && <UserUpdateForm key={user.id} user={user} submitRoute={"/main_navigation/users"}></UserUpdateForm>}
     </div>
     );
 
