@@ -22,7 +22,8 @@ export default async function proxy(request) {
 
 }
 export const config = {
-    matcher: '/main_navigation((?!api|_next/static|_next/image|favicon.ico).*)',
+    // matcher: '/main_navigation((?!api|_next/static|_next/image|favicon.ico).*)',
+    matcher: '/main_navigation',
 
 
 }
