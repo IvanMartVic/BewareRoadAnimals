@@ -21,6 +21,7 @@ export default function CoordinatesIput({ref}) {
             latitude = (latitudeOrientation == "N")? latitude: -latitude;
             let length = convertCoordsToFloat(+lenghtGrad, +lenghtMinute, +lenghtSecond)
             length = (lenghtOrientation == "E")? length: -length;
+            alert(`${lenghtOrientation} ${latitudeOrientation}`)
             return {latitude, length}
         }
     }));
@@ -66,8 +67,8 @@ export default function CoordinatesIput({ref}) {
                         <label>''</label>
                     </legend>
                     <select className="select w-15" onChange={(e) => setLenghtOrientation(e.target.value)}>
-                        <option value="O">O</option>
                         <option value="E">E</option>
+                        <option value="O">O</option>
                     </select>
                 </div>
             </div>

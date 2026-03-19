@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllDevices, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById } from "@/services/deviceService"
+import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById } from "@/services/deviceService"
 
 
 interface OutputDevice extends InputDevice {
@@ -25,7 +25,7 @@ const useDeviceStore = create<DeviceStore>((set) => ({
     fetchDevices: async () => {
         set({ isLoading: true });
         try {
-            const res = await getAllDevices();
+            const res = await getAllDevicesWithUser();
             set({ devices: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
