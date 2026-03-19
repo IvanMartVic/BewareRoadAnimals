@@ -44,7 +44,7 @@ export async function updateDevice({ data: new_data, id }: UpdateDeviceInput) {
         where: {
             id: id,
         },
-        data: new_data,
+        data:{ ...new_data},
     });
     return updated;
 }

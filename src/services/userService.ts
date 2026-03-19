@@ -2,6 +2,29 @@
 import { prisma } from "@/../lib/prisma";
 import bcrypt from "bcryptjs";
 
+export interface InputUser {
+    full_name: string,
+    email: string,
+    role: string,
+    password: string,
+}
+export interface OutputUser {
+    id: number,
+    full_name: string,
+    email: string,
+    role: string,
+    created_at?: Date,
+}
+export interface UpdateUserData {
+    full_name: string,
+    email: string,
+    role: string,
+}
+export interface UpdateUserInput {
+    id: number,
+    new_data: Partial<UpdateUserData>,
+}
+
 export async function getAllUsers() {
     console.log(process.env.DATABASE_URL);
     const users = await prisma.user.findMany();
@@ -10,7 +33,7 @@ export async function getAllUsers() {
     return users;
 }
 
-export async function getUserById(id) {
+export async function getUserById(id: number) {
     const user = await prisma.user.findUnique({
         where: {
             id: id,
@@ -19,10 +42,10 @@ export async function getUserById(id) {
     return user;
 }
 
-export async function createUser(userData) {
-    const { full_name, email, password, isAdmin } = userData;
+export async function createUser(userData: InputUser) {
+    const { full_name, email, password, role: isAdmin } = userData;
     let role = undefined;
-    if(isAdmin){
+    if (isAdmin) {
         role = "ADMIN";
     }
 
@@ -30,13 +53,13 @@ export async function createUser(userData) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const new_user = await prisma.user.create({
-        data: { full_name: full_name, email: email, password_hash: hash , role:role }
+        data: { full_name: full_name, email: email, password_hash: hash, role: role }
     });
     console.log(new_user);
     return new_user;
 }
 
-export async function deleteUser(id) {
+export async function deleteUser(id: number) {
     const user = await prisma.user.delete({
         where: {
             id: id,
@@ -45,15 +68,13 @@ export async function deleteUser(id) {
     return user;
 }
 
-export async function updateUser({id, new_data}){
-    if(!id){
-        return null;
-    }
+export async function updateUser({ id, new_data }: UpdateUserInput) {
+
     const user = await prisma.user.update({
         where: {
-            id:id,
+            id: id,
         },
-        data: new_data,
+        data: {...new_data},
     });
     return user;
 

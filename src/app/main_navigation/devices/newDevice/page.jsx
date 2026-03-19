@@ -1,29 +1,33 @@
 "use client"
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CoordinatesIput from "@/components/coordinatesInput";
-import { createDevice } from "@/services/deviceService"
-import { getAuthUser } from "@/services/authenticationService"
 import useDeviceStore from "@/stores/deviceStore"
+import useAuthStore from "@/stores/authStore"
+import { useShallow } from "zustand/shallow";
 
 export default function NewDevicePage() {
     const router = useRouter();
-    const [coordinates, setCoordinates] = useState("");
-    const [userData, setUserData] = useState(null);
     const addDevice = useDeviceStore((state) => (state.addDevice));
+    const { authUserData, fetchAuthUser } = useAuthStore(
+        useShallow((state) => ({
+            authUserData: state.authUserData,
+            fetchAuthUser: state.fetchAuthUser,
+        }))
+    );
 
     useEffect(() => {
-        getAuthUser().then((user) => setUserData(user));
-    },[setUserData])
+        fetchAuthUser();
+    },[fetchAuthUser])
 
     const handleSubmit = async (e) => {
         if (e && e.preventDefault) {
             e.preventDefault();
         }
-        if(userData){
+        if(authUserData){
             const {latitude, length}= coordinatesRef.current.getCoordenates();
-            await addDevice({userId:userData.userId, coordLatitude:latitude, coordLength:length});
-            alert(`dispositivo desplegado en ${latitude} ${length} por ${userData.full_name}`);
+            await addDevice({userId:authUserData.id, coordLatitude:latitude, coordLength:length});
+            alert(`dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}`);
             router.push("/main_navigation/devices");
         }
     }
@@ -37,7 +41,7 @@ export default function NewDevicePage() {
                     <label className="label ">Despliegado por</label>
                     <legend className="input">
                         <input 
-                            value={userData?.full_name ?? ""}
+                            value={authUserData?.full_name ?? "desconocido"}
                             disabled
                         ></input>
                     </legend>

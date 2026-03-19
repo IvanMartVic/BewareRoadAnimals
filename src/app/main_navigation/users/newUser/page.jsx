@@ -3,11 +3,12 @@ import PasswordInput from "@/components/passwordInput";
 import EmailInput from "@/components/emailInput";
 import NombreApellidosInput from "@/components/nombreApellidosInput";
 import { useState } from "react";
-import { createUser } from "@/services/userService";
 import { useRouter } from "next/navigation";
+import useUserStore from "@/stores/userStore"
 
 export default function NewUserPage() {
     const router = useRouter();
+    const addUser = useUserStore((state) => state.addUser);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,7 +18,7 @@ export default function NewUserPage() {
             e.preventDefault();
         }
         const userData = {full_name:name, email:email, password:password, isAdmin:adminChecked};
-        await createUser(userData);
+        await addUser(userData);
         e.target.reset();
         router.push("/main_navigation");
     }

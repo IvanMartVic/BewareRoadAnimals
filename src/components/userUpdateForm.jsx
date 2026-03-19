@@ -3,13 +3,14 @@ import EmailInput from "@/components/emailInput";
 import NombreApellidosInput from "@/components/nombreApellidosInput";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { updateUser } from "../services/userService";
+import useUserStore from "@/stores/userStore"
 
 export default function UserUpdateForm({user, submitRoute}){
     const [name, setName] = useState(user.full_name);
     const [email, setEmail] = useState(user.email);
     const [adminChecked, setAdmin] = useState(user.role == "ADMIN");
     const router = useRouter();
+    const updateUser = useUserStore((state) => state.updateUser);
     const handleSubmit = async (e) => {
         if (e && e.preventDefault) {
             e.preventDefault();

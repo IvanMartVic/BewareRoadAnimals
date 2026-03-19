@@ -3,32 +3,44 @@ import { useEffect, useState } from "react";
 import SearchBar from "@/components/searchBar";
 import UsersTable from "@/components/UsersTable";
 import Image from "next/image";
-import { getAllUsers, getUserById, deleteUser } from "@/services/userService";
 import papelera from "@/../public/papelera.jpg";
 import plus from "@/../public/plus_icon.jpg";
 import lapiz from "@/../public/lapiz.png";
 import { useRouter } from "next/navigation";
+import  useUserStore  from "@/stores/userStore";
+import { useShallow } from "zustand/shallow";
 
 
 export default function UsersMainPage() {
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
+    // useEffect(() => {
+    //     getAllUsers().then((data) => setUsers(data));
+    // }, [setUsers]);
+    const { users, fetchUsers, deleteUser } = useUserStore(
+        useShallow((state) => ({
+            users: state.users,
+            fetchUsers: state.fetchUsers,
+            deleteUser: state.deleteUser,
+        }))
+    );
     useEffect(() => {
-        getAllUsers().then((data) => setUsers(data));
-    }, [setUsers]);
+        fetchUsers();
+    },[fetchUsers])
 
     async function handleSearch({ searchInput }) {
-        if (searchInput) {
-            const onlyUser = [];
-            const user = await getUserById(+searchInput);
-            if (user) {
-                onlyUser.push(user);
-            }
-            setUsers(onlyUser);
-        } else {
-            const allUsers = await getAllUsers();
-            setUsers(allUsers);
-        }
+        // if (searchInput) {
+        //     const onlyUser = [];
+        //     const user = await getUserById(+searchInput);
+        //     if (user) {
+        //         onlyUser.push(user);
+        //     }
+        //     // setUsers(onlyUser);
+        // } else {
+        //     // const allUsers = await getAllUsers();
+        //     // setUsers(allUsers);
+        // }
+        alert(JSON.stringify(users));
     }
     function handleSelect(newId) {
         if (selectedId == newId) {
@@ -41,8 +53,6 @@ export default function UsersMainPage() {
     async function deleteSelectedUser() {
         const user = await deleteUser(selectedId);
         alert(`usuario ${user.full_name} eliminado`);
-        const users = await getAllUsers();
-        setUsers(users);
     }
 
 

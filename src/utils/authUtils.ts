@@ -49,3 +49,4 @@ export async function getAuthUserFromToken() {
     const { full_name, email, role, userId } = auth_res.userData;
     return { full_name, email, role, userId };
 }
+
