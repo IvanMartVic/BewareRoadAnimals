@@ -1,7 +1,7 @@
 export default function EmailInput({onValueChanged, value, validate=true}) {
 
     const handleChange = (event) => {
-        onValueChanged(event.target.value);
+        onValueChanged(event.target.value.toLowerCase());
     }
     return (
         <>

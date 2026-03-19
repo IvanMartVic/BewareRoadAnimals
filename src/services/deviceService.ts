@@ -3,10 +3,12 @@ import { prisma } from "@/../lib/prisma";
 
 export interface InputDevice {
     userId: number,
-    coordinates: string,
+    coordLatitude: number
+    coordLength: number
 }
 interface UpdateDeviceData {
-    coordinates: string,
+    coordLatitude: number
+    coordLength: number
 }
 export interface UpdateDeviceInput {
     id: number,
@@ -18,11 +20,12 @@ export async function getAllDevices() {
     return devices;
 }
 
-export async function createDevice({ userId, coordinates }: InputDevice) {
+export async function createDevice({ userId, coordLatitude, coordLength}: InputDevice) {
     const new_device = await prisma.device.create({
         data: {
             userId: userId,
-            coordinates: coordinates,
+            coordLatitude: coordLatitude,
+            coordLength: coordLength,
         }
     });
     return new_device;

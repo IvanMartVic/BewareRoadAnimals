@@ -19,7 +19,8 @@ model User {
 
 model Device {
   id          Int          @id @default(autoincrement())
-  coordinates String
+  coordLatitude Float
+  coordLength Float
   userId      Int
   deployedBy  User         @relation(fields: [userId], references: [id])
   logs        LogMessage[]

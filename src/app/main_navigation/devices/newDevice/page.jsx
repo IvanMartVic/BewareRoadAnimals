@@ -20,14 +20,14 @@ export default function NewDevicePage() {
         if (e && e.preventDefault) {
             e.preventDefault();
         }
-        // const device = createDevice(deployedBy, coordinates);
-
-        const coords = coordinatesRef.current.getCoordenates();
-        await addDevice({userId:userData.userId, coordinates:coords});
-        alert(`${JSON.stringify(userData)} ${coords}`);
-        router.push("/main_navigation/devices");
-
+        if(userData){
+            const {latitude, length}= coordinatesRef.current.getCoordenates();
+            await addDevice({userId:userData.userId, coordLatitude:latitude, coordLength:length});
+            alert(`dispositivo desplegado en ${latitude} ${length} por ${userData.full_name}`);
+            router.push("/main_navigation/devices");
+        }
     }
+
     const coordinatesRef = useRef();
     return (
         <div className="flex justify-start items-start ml-40 p-10 h-screen">

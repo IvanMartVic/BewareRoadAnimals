@@ -7,12 +7,24 @@ export default function CoordinatesIput({ref}) {
     const [lenghtGrad, setLenghtGrad] = useState(0)
     const [lenghtMinute, setLenghtMinute] = useState(0)
     const [lenghtSecond, setLenghtSecond] = useState(0)
+    const [lenghtOrientation, setLenghtOrientation] = useState("E")
+    const [latitudeOrientation, setLatitudeOrientation] = useState("N")
+
+    function convertCoordsToFloat(grad, min, sec){
+        return grad + min/60 + sec/3600;
+
+    }
 
     useImperativeHandle(ref, () => ({
         getCoordenates: () => {
-            return `${latitudeGrad}º ${latitudeMinute}' ${latitudeSecond}'' ${lenghtGrad}º ${lenghtMinute}' ${lenghtSecond}''`;
+            let latitude = convertCoordsToFloat(+latitudeGrad, +latitudeMinute, +latitudeSecond)
+            latitude = (latitudeOrientation == "N")? latitude: -latitude;
+            let length = convertCoordsToFloat(+lenghtGrad, +lenghtMinute, +lenghtSecond)
+            length = (lenghtOrientation == "E")? length: -length;
+            return {latitude, length}
         }
     }));
+
 
 
 
@@ -34,9 +46,9 @@ export default function CoordinatesIput({ref}) {
                         <input className="input w-12 mr-2" onChange={(e) => setLatitudeSecond(e.target.value)}></input>
                         <label>''</label>
                     </legend>
-                    <select className="select w-15">
-                        <option>N</option>
-                        <option>S</option>
+                    <select className="select w-15" onChange={(e) =>setLatitudeOrientation(e.target.value)}>
+                        <option value="N">N</option>
+                        <option value="S">S</option>
                     </select>
                 </div>
                 <legend className="label">Longitud</legend>
@@ -53,9 +65,9 @@ export default function CoordinatesIput({ref}) {
                         <input className="input w-12 mr-2" onChange={(e) => setLenghtSecond(e.target.value)}></input>
                         <label>''</label>
                     </legend>
-                    <select className="select w-15">
-                        <option>O</option>
-                        <option>E</option>
+                    <select className="select w-15" onChange={(e) => setLenghtOrientation(e.target.value)}>
+                        <option value="O">O</option>
+                        <option value="E">E</option>
                     </select>
                 </div>
             </div>

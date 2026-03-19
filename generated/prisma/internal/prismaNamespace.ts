@@ -681,7 +681,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const DeviceScalarFieldEnum = {
   id: 'id',
-  coordinates: 'coordinates',
+  coordLatitude: 'coordLatitude',
+  coordLength: 'coordLength',
   userId: 'userId'
 } as const
 
