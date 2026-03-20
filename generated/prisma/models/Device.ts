@@ -221,7 +221,7 @@ export type DeviceWhereInput = {
   coordLength?: Prisma.FloatFilter<"Device"> | number
   userId?: Prisma.IntFilter<"Device"> | number
   deployedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  logs?: Prisma.LogMessageListRelationFilter
+  logs?: Prisma.LogListRelationFilter
 }
 
 export type DeviceOrderByWithRelationInput = {
@@ -230,7 +230,7 @@ export type DeviceOrderByWithRelationInput = {
   coordLength?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   deployedBy?: Prisma.UserOrderByWithRelationInput
-  logs?: Prisma.LogMessageOrderByRelationAggregateInput
+  logs?: Prisma.LogOrderByRelationAggregateInput
 }
 
 export type DeviceWhereUniqueInput = Prisma.AtLeast<{
@@ -242,7 +242,7 @@ export type DeviceWhereUniqueInput = Prisma.AtLeast<{
   coordLength?: Prisma.FloatFilter<"Device"> | number
   userId?: Prisma.IntFilter<"Device"> | number
   deployedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  logs?: Prisma.LogMessageListRelationFilter
+  logs?: Prisma.LogListRelationFilter
 }, "id">
 
 export type DeviceOrderByWithAggregationInput = {
@@ -271,7 +271,7 @@ export type DeviceCreateInput = {
   coordLatitude: number
   coordLength: number
   deployedBy: Prisma.UserCreateNestedOneWithoutDevicesInput
-  logs?: Prisma.LogMessageCreateNestedManyWithoutDeviceInInput
+  logs?: Prisma.LogCreateNestedManyWithoutDeviceInInput
 }
 
 export type DeviceUncheckedCreateInput = {
@@ -279,14 +279,14 @@ export type DeviceUncheckedCreateInput = {
   coordLatitude: number
   coordLength: number
   userId: number
-  logs?: Prisma.LogMessageUncheckedCreateNestedManyWithoutDeviceInInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutDeviceInInput
 }
 
 export type DeviceUpdateInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedBy?: Prisma.UserUpdateOneRequiredWithoutDevicesNestedInput
-  logs?: Prisma.LogMessageUpdateManyWithoutDeviceInNestedInput
+  logs?: Prisma.LogUpdateManyWithoutDeviceInNestedInput
 }
 
 export type DeviceUncheckedUpdateInput = {
@@ -294,7 +294,7 @@ export type DeviceUncheckedUpdateInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  logs?: Prisma.LogMessageUncheckedUpdateManyWithoutDeviceInNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutDeviceInNestedInput
 }
 
 export type DeviceCreateManyInput = {
@@ -433,14 +433,14 @@ export type DeviceUpdateOneRequiredWithoutLogsNestedInput = {
 export type DeviceCreateWithoutDeployedByInput = {
   coordLatitude: number
   coordLength: number
-  logs?: Prisma.LogMessageCreateNestedManyWithoutDeviceInInput
+  logs?: Prisma.LogCreateNestedManyWithoutDeviceInInput
 }
 
 export type DeviceUncheckedCreateWithoutDeployedByInput = {
   id?: number
   coordLatitude: number
   coordLength: number
-  logs?: Prisma.LogMessageUncheckedCreateNestedManyWithoutDeviceInInput
+  logs?: Prisma.LogUncheckedCreateNestedManyWithoutDeviceInInput
 }
 
 export type DeviceCreateOrConnectWithoutDeployedByInput = {
@@ -530,14 +530,14 @@ export type DeviceCreateManyDeployedByInput = {
 export type DeviceUpdateWithoutDeployedByInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
-  logs?: Prisma.LogMessageUpdateManyWithoutDeviceInNestedInput
+  logs?: Prisma.LogUpdateManyWithoutDeviceInNestedInput
 }
 
 export type DeviceUncheckedUpdateWithoutDeployedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
-  logs?: Prisma.LogMessageUncheckedUpdateManyWithoutDeviceInNestedInput
+  logs?: Prisma.LogUncheckedUpdateManyWithoutDeviceInNestedInput
 }
 
 export type DeviceUncheckedUpdateManyWithoutDeployedByInput = {
@@ -573,7 +573,7 @@ export type DeviceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
  * DeviceCountOutputType without action
  */
 export type DeviceCountOutputTypeCountLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LogMessageWhereInput
+  where?: Prisma.LogWhereInput
 }
 
 
@@ -627,7 +627,7 @@ export type $DevicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Device"
   objects: {
     deployedBy: Prisma.$UserPayload<ExtArgs>
-    logs: Prisma.$LogMessagePayload<ExtArgs>[]
+    logs: Prisma.$LogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1029,7 +1029,7 @@ readonly fields: DeviceFieldRefs;
 export interface Prisma__DeviceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   deployedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  logs<T extends Prisma.Device$logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Device$logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LogMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  logs<T extends Prisma.Device$logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Device$logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1463,23 +1463,23 @@ export type DeviceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
  */
 export type Device$logsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the LogMessage
+   * Select specific fields to fetch from the Log
    */
-  select?: Prisma.LogMessageSelect<ExtArgs> | null
+  select?: Prisma.LogSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the LogMessage
+   * Omit specific fields from the Log
    */
-  omit?: Prisma.LogMessageOmit<ExtArgs> | null
+  omit?: Prisma.LogOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LogMessageInclude<ExtArgs> | null
-  where?: Prisma.LogMessageWhereInput
-  orderBy?: Prisma.LogMessageOrderByWithRelationInput | Prisma.LogMessageOrderByWithRelationInput[]
-  cursor?: Prisma.LogMessageWhereUniqueInput
+  include?: Prisma.LogInclude<ExtArgs> | null
+  where?: Prisma.LogWhereInput
+  orderBy?: Prisma.LogOrderByWithRelationInput | Prisma.LogOrderByWithRelationInput[]
+  cursor?: Prisma.LogWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LogMessageScalarFieldEnum | Prisma.LogMessageScalarFieldEnum[]
+  distinct?: Prisma.LogScalarFieldEnum | Prisma.LogScalarFieldEnum[]
 }
 
 /**

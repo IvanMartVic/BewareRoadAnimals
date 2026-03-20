@@ -28,7 +28,7 @@ export type User = Prisma.UserModel
  */
 export type Device = Prisma.DeviceModel
 /**
- * Model LogMessage
+ * Model Log
  * 
  */
-export type LogMessage = Prisma.LogMessageModel
+export type Log = Prisma.LogModel

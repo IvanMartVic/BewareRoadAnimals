@@ -10,5 +10,5 @@
  */
 export type * from './models/User'
 export type * from './models/Device'
-export type * from './models/LogMessage'
+export type * from './models/Log'
 export type * from './commonInputTypes'

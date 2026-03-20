@@ -10,7 +10,7 @@ export default function DeviceTable({ devices, selectedRow, onSelect }) {
                     <tr>
                         <th>id</th>
                         <th>Coordenadas</th>
-                        <th>UserId</th>
+                        <th>Desplegado por</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,8 +19,8 @@ export default function DeviceTable({ devices, selectedRow, onSelect }) {
                             onClick={() => onSelect(d.id)}
                             className={`${selectedRow == d.id ? "bg-neutral-500" : "bg-base-100"} hover:bg-base-300`}>
                             <th>{d.id}</th>
-                            <td>{`${d.coordLatitude} ${d.coordLength}`}</td>
-                            <td>{d.userId}</td>
+                            <td>{`${(d.coordLatitude).toFixed(4)} ${d.coordLength.toFixed(4)}`}</td>
+                            <td>{d.deployedBy.full_name}</td>
                         </tr>);
                     })}
 

@@ -23,12 +23,13 @@ model Device {
   coordLength Float
   userId      Int
   deployedBy  User         @relation(fields: [userId], references: [id])
-  logs        LogMessage[]
+  logs        Log[]
 }
 
-model LogMessage {
+model Log{
   id       Int    @id @default(autoincrement())
   deviceId Int
   message  String
+  image String
   deviceIn Device @relation(fields: [deviceId], references: [id])
 }

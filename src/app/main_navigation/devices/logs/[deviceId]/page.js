@@ -1,34 +1,44 @@
 "use client"
 import { useEffect, useState } from "react";
 import SearchBar from "@/components/searchBar";
-import DevicesTable from "@/components/DeviceTable";
+import LogsTable from "@/components/LogsTable";
 import Image from "next/image";
-// import { getAllUsers, getUserById, deleteUser } from "@/services/userService";
 import papelera from "@/../public/papelera.jpg";
 import plus from "@/../public/plus_icon.jpg";
 import log_icon from "@/../public/log_icon.jpg";
 import { useRouter } from "next/navigation";
-import useDeviceStore from "@/stores/deviceStore";
+import useLogStore from "@/stores/logStore";
 import { useShallow } from "zustand/shallow";
+import { useParams } from "next/navigation";
 
 
-export default function DevicesMainPage() {
-    const [users, setUsers] = useState([]);
+export default function LogsMainPage() {
+    const { deviceId } = useParams();
     const [selectedId, setSelectedId] = useState(null);
-    const { fetchDevices, isLoading, devices, deleteDevice, error} = useDeviceStore(
-        useShallow((state) => ({
-            fetchDevices: state.fetchDevices,
-            isLoading: state.isLoading,
-            devices: state.devices,
-            deleteDevice: state.deleteDevice,
-            error:state.error,
-        })));
-    useEffect(() => {
-        fetchDevices();
-        if(error != null){
-            alert(error);
+    const { fetchLogs, fetchDeviceLogs, logs, deleteLog, deleteAllLogs } = useLogStore(
+        useShallow((state => ({
+            logs: state.logs,
+            fetchLogs: state.fetchLogs,
+            fetchDeviceLogs: state.fetchDeviceLogs,
+            deleteLog: state.deleteLog,
+            deleteAllLogs: state.deleteAllLogs,
+        })))
+    );
+    const refreshLogs = () => {
+        if(deviceId != "null"){
+            fetchDeviceLogs(+deviceId);
+        }else{
+            fetchLogs();
         }
-    }, [fetchDevices, error]);
+    };
+
+    useEffect(() => {
+        if(deviceId != "null"){
+            fetchDeviceLogs(+deviceId);
+        }else{
+            fetchLogs();
+        }
+    }, [fetchDeviceLogs, fetchLogs, deviceId]);
 
     async function handleSearch({ searchInput }) {
         // if (searchInput) {
@@ -42,7 +52,7 @@ export default function DevicesMainPage() {
         //     const allUsers = await getAllUsers();
         //     setUsers(allUsers);
         // }
-        alert(JSON.stringify(devices));
+        alert(JSON.stringify(logs));
     }
     function handleSelect(newId) {
         if (selectedId == newId) {
@@ -52,9 +62,12 @@ export default function DevicesMainPage() {
         }
     }
 
-    async function deleteSelectedDevice() {
-        const device = await deleteDevice(selectedId);
-        alert(`dispositivo ${device.id} eliminado`);
+    async function deleteSelectedLog() {
+        const log = await deleteLog(selectedId);
+        refreshLogs();
+    }
+    async function deleteUserLogs(){
+        deleteAllLogs();
     }
 
 
@@ -66,23 +79,19 @@ export default function DevicesMainPage() {
             <div className="flex flex-row gap-4">
                 <SearchBar onSearch={handleSearch}></SearchBar>
                 <div role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full" onClick={deleteSelectedDevice}>
+                    <div className="w-10 rounded-full" onClick={deleteSelectedLog}>
                         <Image src={papelera} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("/main_navigation/devices/newDevice")}>
+                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={deleteAllLogs}>
                     <div className="w-10 rounded-full">
                         <Image src={plus} alt=""></Image>
                     </div>
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`/main_navigation/devices/logs/${selectedId}`)}>
-                    <div className="w-10 rounded-full">
-                        <Image src={log_icon} alt=""></Image>
-                    </div>
-                </div>
             </div>
-            <DevicesTable devices={devices} selectedRow={selectedId} onSelect={handleSelect}></DevicesTable>
+            <LogsTable logs={logs} selectedRow={selectedId} onSelect={handleSelect}></LogsTable>
         </div>
     );
 
 }
+

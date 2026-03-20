@@ -53,7 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Device: 'Device',
-  LogMessage: 'LogMessage'
+  Log: 'Log'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -94,13 +94,14 @@ export const DeviceScalarFieldEnum = {
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
 
 
-export const LogMessageScalarFieldEnum = {
+export const LogScalarFieldEnum = {
   id: 'id',
   deviceId: 'deviceId',
-  message: 'message'
+  message: 'message',
+  image: 'image'
 } as const
 
-export type LogMessageScalarFieldEnum = (typeof LogMessageScalarFieldEnum)[keyof typeof LogMessageScalarFieldEnum]
+export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]
 
 
 export const SortOrder = {
