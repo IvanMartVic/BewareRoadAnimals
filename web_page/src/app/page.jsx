@@ -25,11 +25,10 @@ export default function LoginPage() {
         router.push("/main_navigation");
     }
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-screen bg-base-300">
             <form onSubmit={handleSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                    <legend className="fieldset-legend">Login</legend>
-
+                    <legend className="fieldset-legend text-primary text-xl">Login</legend>
                     <label className="label">Email</label>
                     <EmailInput onValueChanged={(val) => setEmail(val)} validate={false}></EmailInput>
 
@@ -37,7 +36,7 @@ export default function LoginPage() {
                     <PasswordInput onValueChanged={(val) => setPassword(val)} validate={false}></PasswordInput>
                     <Link className="link link-hover mt-4" href={"/"}>Recuperar contraseña</Link>
 
-                    <button type="submit" className="btn btn-neutral mt-4">Login</button>
+                    <button type="submit" className="btn btn-primary mt-4">Login</button>
                     {error &&
                     <p className="text-red-200 font-bold">{error?.message}</p>
                     }

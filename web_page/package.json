@@ -23,6 +23,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-leaflet": "^5.0.0",
+    "react-leaflet-markercluster": "^5.0.0-rc.0",
     "vercel": "^50.25.4",
     "zustand": "^5.0.11"
   },

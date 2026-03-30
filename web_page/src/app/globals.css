@@ -1,6 +1,42 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@plugin "daisyui/theme" {
+  name: "roadlight";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0); 
+  --color-base-content: oklch(21% 0.006 285.885);
+  --color-primary: #29526D;
+  --color-primary-content: oklch(98% 0.001 106.423);
+  --color-secondary: #7A9E35;
+  --color-secondary-content: oklch(98% 0.018 155.826);
+  --color-accent: #542B72;
+  --color-accent-content: oklch(98% 0.026 102.212);
+  --color-neutral: oklch(14% 0.005 285.823);
+  --color-neutral-content: oklch(92% 0.004 286.32);
+  --color-info: oklch(70% 0.165 254.624);
+  --color-info-content: oklch(28% 0.091 267.935);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(26% 0.051 172.552);
+  --color-warning: oklch(75% 0.183 55.934);
+  --color-warning-content: oklch(26% 0.079 36.259);
+  --color-error: #D72638;
+  --color-error-content: oklch(25% 0.092 26.042);
+  --radius-selector: 0.25rem;
+  --radius-field: 2rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 1;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -15,13 +51,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #171717;
+    --foreground: #0a0a0a;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Iter, Roboto,sans-serif;
 }

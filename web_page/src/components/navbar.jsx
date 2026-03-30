@@ -10,14 +10,14 @@ export default function Navbar({ pageContent }) {
     const logout = function() {
         // alert("logging out");
         const choice = confirm("¿Cerrar Sesion?");
-        if(choice){
+        if (choice) {
             LogOut();
             router.push("/");
         }
     }
     return (
         <>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-base-300">
                 <label htmlFor="sidebar" className="btn btn-ghost">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
                 </label>
@@ -34,20 +34,20 @@ export default function Navbar({ pageContent }) {
                     </div>
                     <ul
                         tabIndex="-1"
-                        className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
-                        <li className="btn btn-primary mb-5"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
-                        <li className="btn btn-secondary"><button onClick={logout}>Cerrar Sesión</button></li>
+                        className="menu dropdown-content bg-base-300 rounded-box z-1 mt-1 w-46 shadow-sm">
+                        <li className="btn btn-primary mb-1"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
+                        <li className="btn btn-error"><button onClick={logout}>Cerrar Sesión</button></li>
                     </ul>
                 </div>
             </div>
-            <div className="flex-none drawer lg:drawer-open">
+            <div className="flex-none drawer lg:drawer-open bg-base-300">
                 <input id="sidebar" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content">
+                <div className="drawer-content bg-base-100">
                     {pageContent}
                 </div>
                 <div className="drawer-side is-drawer-close:hidden">
                     <label htmlFor="sidebar" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu bg-base-200 min-h-full w-80 p-4">
+                    <ul className="menu bg-base-300 min-h-full w-80 p-4">
                         {/* Sidebar content here */}
                         <li>
                             <details open>

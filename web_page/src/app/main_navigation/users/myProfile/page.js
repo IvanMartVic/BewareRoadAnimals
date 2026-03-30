@@ -70,7 +70,7 @@ export default function MyProfilePage() {
                 </li>
                 <li className="text-xl" >ROL: {authUserData?.role || "desconocido"}</li>
                 <div className= "flex flex-row justify-between mt-5">
-                    <button className="btn btn-soft btn-secondary" onClick={handleChanges}>Aplicar Cambios</button>
+                    <button className="btn btn-soft btn-primary" onClick={handleChanges}>Aplicar Cambios</button>
                     <li className="btn btn-soft btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
                 </div>
 

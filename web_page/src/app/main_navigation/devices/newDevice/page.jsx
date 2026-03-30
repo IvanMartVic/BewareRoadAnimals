@@ -46,7 +46,7 @@ export default function NewDevicePage() {
                         ></input>
                     </legend>
                     <CoordinatesIput ref={coordinatesRef}></CoordinatesIput>
-                    <button type="submit" className="btn btn-neutral mt-4">Añadir</button>
+                    <button type="submit" className="btn btn-primary mt-4">Añadir</button>
                 </fieldset>
             </form>
 

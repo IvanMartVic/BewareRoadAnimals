@@ -1,10 +1,13 @@
-import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet"
+import { MapContainer, Marker, TileLayer, Popup, LayerGroup} from "react-leaflet"
 import "leaflet/dist/leaflet.css"
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import 'react-leaflet-markercluster/styles'
+
 
 export default function MyMap(props) {
-    const { position, zoom, devices } = props
+    const { position, zoom, devices, scrollWheelZoom } = props
 
     var redIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
@@ -15,19 +18,23 @@ export default function MyMap(props) {
         shadowSize: [41, 41]
     });
 
-    return (<MapContainer center={position} zoom={zoom} scrollWheelZoom={false} style={{ height: "60%", width: "60%" }}>
-        <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {devices && devices.map((d) => {
-            return (
-                <Marker key={d.id} position={[d.coordLatitude, d.coordLength]} icon={redIcon}>
-                    <Popup>
-                        Dispositivo {d.id}. <br /> desplegado por {d.deployedBy?.full_name || "Desconocido"}
-                    </Popup>
-                </Marker>
-            );
-        })}
-    </MapContainer>)
+    return (
+        <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false } style={{ height: "90%", width: "95%" }}>
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <MarkerClusterGroup>
+                {devices && devices.map((d) => {
+                    return (
+                        <Marker key={d.id} position={[d.coordLatitude, d.coordLength]} icon={redIcon}>
+                            <Popup>
+                                Dispositivo {d.id}. <br /> desplegado por {d.deployedBy?.full_name || "Desconocido"}
+                            </Popup>
+                        </Marker>
+                    );
+                })}
+
+            </MarkerClusterGroup>
+        </MapContainer>)
 }

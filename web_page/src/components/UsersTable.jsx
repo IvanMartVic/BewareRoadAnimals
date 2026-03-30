@@ -19,7 +19,7 @@ export default function UsersTable({users, selectedRow, onSelect}) {
                     {users.map((u,index) => {
                         return (<tr key={u.id} 
                             onClick= { () => onSelect(u.id)}
-                            className={`${selectedRow == u.id? "bg-neutral-500": "bg-base-100"} hover:bg-base-300`}>
+                            className={`${selectedRow == u.id? "bg-neutral-400": "bg-base-100"} hover:bg-base-300`}>
                             <th>{u.id}</th>
                             <td>{u.full_name}</td>
                             <td>{u.email}</td>
