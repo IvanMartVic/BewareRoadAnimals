@@ -30,9 +30,15 @@ export default function NewUserPage() {
             <form onSubmit={handleSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 gap-7">
                     <legend className="fieldset-legend text-xl">Nuevo Usuario</legend>
-                    <NombreApellidosInput onValueChanged={(val) => setName(val)}></NombreApellidosInput>
-                    <EmailInput onValueChanged={(val) => setEmail(val)}></EmailInput>
-                    <PasswordInput onValueChanged={(val) => setPassword(val)}></PasswordInput>
+                    <div>
+                        <NombreApellidosInput onValueChanged={(val) => setName(val)}></NombreApellidosInput>
+                    </div>
+                    <div>
+                        <EmailInput onValueChanged={(val) => setEmail(val)}></EmailInput>
+                    </div>
+                    <div>
+                        <PasswordInput onValueChanged={(val) => setPassword(val)}></PasswordInput>
+                    </div>
                     <label className="label text-xl">
                         <input type="checkbox" className="checkbox" onChange={checkboxChanged}/>
                         ADMIN

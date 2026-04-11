@@ -1,6 +1,6 @@
-export default function NombreApellidosInput({onValueChanged, value}) {
+export default function NombreApellidosInput({onValueChanged: onChange, value, disabled=false}) {
     const handleChange = (event) => {
-        onValueChanged(event.target.value);
+        onChange(event.target.value);
     }
     return (
         <>
@@ -22,12 +22,13 @@ export default function NombreApellidosInput({onValueChanged, value}) {
                     required
                     placeholder="Nombre y Apellido(s)"
                     // pattern="[A-Za-z][A-Za-z]* [A-Za-z][A-Za-z]*( [A-Za-z][A-Za-z-]*)?"
-                    pattern="[A-Za-z][A-Za-z]*"
+                    pattern="^[A-Za-z]+(\s[A-Za-z]+){1,2}$"
                     minLength="6"
                     maxLength="90"
                     title="Only letters, numbers or dash"
                     onChange={handleChange}
                     value={value}
+                    disabled={disabled}
                 />
             </label>
             <p className="validator-hint hidden">
