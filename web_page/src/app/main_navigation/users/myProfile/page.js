@@ -14,12 +14,13 @@ export default function MyProfilePage() {
     const [name_disabled, set_name_disabled] = useState(true);
     const [email_disabled, set_email_disabled] = useState(true);
     const router = useRouter();
-    const { authUserData, fetchAuthUser, setAuthUserData, updateAuthUser } = useAuthStore(
+    const { authUserData, fetchAuthUser, setAuthUserData, updateAuthUser, deleteAuthUser } = useAuthStore(
         useShallow((state) => ({
             authUserData: state.authUserData,
             fetchAuthUser: state.fetchAuthUser,
             setAuthUserData: state.setAuthUserData,
             updateAuthUser: state.updateAuthUser,
+            deleteAuthUser: state.deleteAuthUser,
         }))
     );
 
@@ -33,17 +34,25 @@ export default function MyProfilePage() {
         }
         if (authUserData) {
             const new_data = { full_name: authUserData?.full_name, email: authUserData?.email }
-            updateAuthUser(new_data);
+            await updateAuthUser(new_data);
         }
         alert("información cambiada con éxito");
         router.push("/main_navigation")
+    }
+    const deleteUser = async () => {
+        const c = confirm("vas a eliminar todos los datos de tu cuenta, ¿continuar?");
+        if(c){
+            await deleteAuthUser();
+            router.push("/");
+        }
+
     }
 
 
 
 
     return (
-        <div className="flex justify-start items-center h-screen gap-16 ml-60 pb-32">
+        <div className="flex justify-center items-center h-screen  gap-16 mr-72 pb-32">
             <div className="avatar">
                 <div className="ring-primary ring-offset-base-100 w-100 rounded-full ring-2 ring-offset-2">
                     <Image src={avatar} alt=""></Image>
@@ -77,6 +86,7 @@ export default function MyProfilePage() {
                     <button className="btn btn-soft btn-primary" type="submit" >Aplicar Cambios</button>
                     <li className="btn btn-soft btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
                 </div>
+                <button className="btn btn-error mt-10 w-full" type="button" onClick={deleteUser}>Borrar cuenta</button>
             </form>
 
 

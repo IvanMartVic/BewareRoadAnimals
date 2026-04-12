@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { AuthTokenData } from "@/utils/auth"
 import { auth } from "@/services/authenticationService";
-import { updateUser, OutputUser, UpdateUserData, UpdateUserInput, getUserById } from "@/services/userService";
+import { updateUser, OutputUser, UpdateUserData, UpdateUserInput, getUserById, deleteUser } from "@/services/userService";
 
 type authStoreState = {
     authUserData: OutputUser | null,
@@ -12,12 +12,13 @@ type authStoreState = {
 type authStoreActions = {
     fetchAuthUser: () => void,
     setAuthUserData: (newData: Partial<AuthTokenData>) => void,
+    deleteAuthUser: () => void,
 };
 type AuthStore = authStoreState & authStoreActions;
 
 const useAuthStore = create<AuthStore>((set, get) => ({
     authUserData: null,
-    userId:0,
+    userId: 0,
     error: null,
     fetchAuthUser: async () => {
         console.log("fetched called");
@@ -25,7 +26,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
         if (res?.success && res.userData?.userId) {
             const id = res.userData.userId;
             const userData = await getUserById(id);
-            set({ authUserData: userData, userId: id});
+            set({ authUserData: userData, userId: id });
         } else {
             console.assert(false, "authentication failed inside app")
         }
@@ -47,7 +48,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
             if (!id) {
                 throw new Error("Trying to update an undefined authUser (maybe use fetchAuthUser before calling updateAuthUser)")
             }
-            const updatedUser: OutputUser = await updateUser({ id:id, new_data:fields});
+            const updatedUser: OutputUser = await updateUser({ id: id, new_data: fields });
             set((state) => ({
                 authUserData: state.authUserData ? {
                     ...state.authUserData,
@@ -62,6 +63,20 @@ const useAuthStore = create<AuthStore>((set, get) => ({
             }
         }
 
+    },
+    deleteAuthUser: async () => {
+        try{
+            const id = get().userId;
+            if (!id) {
+                throw new Error("Trying to update an undefined authUser (maybe use fetchAuthUser before calling updateAuthUser)")
+            }
+            const deletedUser: OutputUser = await deleteUser(id);
+            set({authUserData:null});
+        }catch(e){
+            if(e instanceof Error){
+                set({error: e.message})
+            }
+        }
     }
 
 }));
