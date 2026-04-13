@@ -1,15 +1,12 @@
 "use client"
 import { useEffect, useState } from "react";
-import SearchBar from "@/components/searchBar";
-import LogsTable from "@/components/LogsTable";
-import Image from "next/image";
-import papelera from "@/../public/papelera.jpg";
-import plus from "@/../public/plus_icon.jpg";
-import log_icon from "@/../public/log_icon.jpg";
 import { useRouter } from "next/navigation";
 import useLogStore from "@/stores/logStore";
+import useDeviceStore from "@/stores/deviceStore"
 import { useShallow } from "zustand/shallow";
 import { useParams } from "next/navigation";
+import { useMemo } from "react";
+import dynamic from "next/dynamic";
 
 
 export default function LogsMainPage() {
@@ -24,6 +21,30 @@ export default function LogsMainPage() {
             deleteAllLogs: state.deleteAllLogs,
         })))
     );
+    const [pageDevice, setPageDevice] = useState(null);
+
+    const { fetchDevices, isLoading, devices, error } = useDeviceStore(
+        useShallow((state) => ({
+            fetchDevices: state.fetchDevices,
+            isLoading: state.isLoading,
+            devices: state.devices,
+            deleteDevice: state.deleteDevice,
+            error: state.error,
+        })));
+    useEffect(() => {
+        fetchDevices();
+        if (error != null) {
+            alert(error);
+        }
+    }, [fetchDevices, error]);
+
+    useEffect(() => {
+        if(devices){
+            const device = devices.find((d) => d.id == deviceId);
+            setPageDevice(device);
+        }
+    }, [devices, setPageDevice, deviceId]);
+
     const refreshLogs = () => {
         if(deviceId != "null"){
             fetchDeviceLogs(+deviceId);
@@ -70,26 +91,59 @@ export default function LogsMainPage() {
         deleteAllLogs();
     }
 
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/DeviceMap'),
+        {
+            loading: () => <p>A map is loading</p>,
+            ssr: false
+        }
+    ), [])
 
     const router = useRouter();
     return (
         <div
             className="flex flex-col gap-4 justify-start items-start h-screen p-10">
-            <h1 className="text-2xl text-bold"></h1>
-            <div className="flex flex-row gap-4">
-                <SearchBar onSearch={handleSearch}></SearchBar>
-                <div role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className="w-10 rounded-full" onClick={deleteSelectedLog}>
-                        <Image src={papelera} alt=""></Image>
-                    </div>
+            <div className="flex flex-row w-full justify-between">
+                <div className="flex flex-col">
+                    <h1 className="text-3xl font-bold">Dispositivo {deviceId}</h1>
+                    {!isLoading && 
+                        <h1>Desplegado por {pageDevice?.deployedBy?.full_name || "desconocido"}</h1>
+                    }
                 </div>
-                <div role="button" className="btn btn-ghost btn-circle avatar" onClick={deleteAllLogs}>
-                    <div className="w-10 rounded-full">
-                        <Image src={plus} alt=""></Image>
+                <div className="card bg-error card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
+                    <div className="card-body">
+                        <h1 className="card-title justify-start text-neutral-content">Alertas:</h1>
                     </div>
                 </div>
             </div>
-            <LogsTable logs={logs} selectedRow={selectedId} onSelect={handleSelect}></LogsTable>
+            <div className="flex h-5/10 w-1/2">
+                {!isLoading && pageDevice && 
+                    <Map position={[pageDevice?.coordLatitude, pageDevice?.coordLength]} zoom={13} devices={devices} />
+                }
+            </div>
+            <div className="flex flex-row gap-8 h-1/5 w-full justify-between items-start">
+                <div className="card bg-neutral  card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
+                    <div className="card-body">
+                        <h1 className="card-title justify-start text-neutral-content">Logs:</h1>
+                    </div>
+                </div>
+                <div className="card bg-base-300 card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
+                    <div className="card-body">
+                        <h1 className="card-title justify-start ">Detecciones: 10</h1>
+                    </div>
+                </div>
+                <div className="card bg-base-300 card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
+                    <div className="card-body">
+                        <h1 className="card-title justify-start ">Sistema: 3</h1>
+                    </div>
+                </div>
+                <div className="card bg-warning card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-primary">
+                    <div className="card-body">
+                        <h1 className="card-title justify-start ">Aviso Batería: </h1>
+                    </div>
+                </div>
+
+            </div>
         </div>
     );
 
