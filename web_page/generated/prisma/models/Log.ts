@@ -41,6 +41,7 @@ export type LogMinAggregateOutputType = {
   deviceId: number | null
   message: string | null
   image: string | null
+  type: string | null
 }
 
 export type LogMaxAggregateOutputType = {
@@ -48,6 +49,7 @@ export type LogMaxAggregateOutputType = {
   deviceId: number | null
   message: string | null
   image: string | null
+  type: string | null
 }
 
 export type LogCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type LogCountAggregateOutputType = {
   deviceId: number
   message: number
   image: number
+  type: number
   _all: number
 }
 
@@ -74,6 +77,7 @@ export type LogMinAggregateInputType = {
   deviceId?: true
   message?: true
   image?: true
+  type?: true
 }
 
 export type LogMaxAggregateInputType = {
@@ -81,6 +85,7 @@ export type LogMaxAggregateInputType = {
   deviceId?: true
   message?: true
   image?: true
+  type?: true
 }
 
 export type LogCountAggregateInputType = {
@@ -88,6 +93,7 @@ export type LogCountAggregateInputType = {
   deviceId?: true
   message?: true
   image?: true
+  type?: true
   _all?: true
 }
 
@@ -182,6 +188,7 @@ export type LogGroupByOutputType = {
   deviceId: number
   message: string
   image: string
+  type: string
   _count: LogCountAggregateOutputType | null
   _avg: LogAvgAggregateOutputType | null
   _sum: LogSumAggregateOutputType | null
@@ -212,6 +219,7 @@ export type LogWhereInput = {
   deviceId?: Prisma.IntFilter<"Log"> | number
   message?: Prisma.StringFilter<"Log"> | string
   image?: Prisma.StringFilter<"Log"> | string
+  type?: Prisma.StringFilter<"Log"> | string
   deviceIn?: Prisma.XOR<Prisma.DeviceScalarRelationFilter, Prisma.DeviceWhereInput>
 }
 
@@ -220,6 +228,7 @@ export type LogOrderByWithRelationInput = {
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   deviceIn?: Prisma.DeviceOrderByWithRelationInput
 }
 
@@ -231,6 +240,7 @@ export type LogWhereUniqueInput = Prisma.AtLeast<{
   deviceId?: Prisma.IntFilter<"Log"> | number
   message?: Prisma.StringFilter<"Log"> | string
   image?: Prisma.StringFilter<"Log"> | string
+  type?: Prisma.StringFilter<"Log"> | string
   deviceIn?: Prisma.XOR<Prisma.DeviceScalarRelationFilter, Prisma.DeviceWhereInput>
 }, "id">
 
@@ -239,6 +249,7 @@ export type LogOrderByWithAggregationInput = {
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   _count?: Prisma.LogCountOrderByAggregateInput
   _avg?: Prisma.LogAvgOrderByAggregateInput
   _max?: Prisma.LogMaxOrderByAggregateInput
@@ -254,11 +265,13 @@ export type LogScalarWhereWithAggregatesInput = {
   deviceId?: Prisma.IntWithAggregatesFilter<"Log"> | number
   message?: Prisma.StringWithAggregatesFilter<"Log"> | string
   image?: Prisma.StringWithAggregatesFilter<"Log"> | string
+  type?: Prisma.StringWithAggregatesFilter<"Log"> | string
 }
 
 export type LogCreateInput = {
   message: string
   image: string
+  type?: string
   deviceIn: Prisma.DeviceCreateNestedOneWithoutLogsInput
 }
 
@@ -267,11 +280,13 @@ export type LogUncheckedCreateInput = {
   deviceId: number
   message: string
   image: string
+  type?: string
 }
 
 export type LogUpdateInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   deviceIn?: Prisma.DeviceUpdateOneRequiredWithoutLogsNestedInput
 }
 
@@ -280,6 +295,7 @@ export type LogUncheckedUpdateInput = {
   deviceId?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogCreateManyInput = {
@@ -287,11 +303,13 @@ export type LogCreateManyInput = {
   deviceId: number
   message: string
   image: string
+  type?: string
 }
 
 export type LogUpdateManyMutationInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogUncheckedUpdateManyInput = {
@@ -299,6 +317,7 @@ export type LogUncheckedUpdateManyInput = {
   deviceId?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogListRelationFilter = {
@@ -316,6 +335,7 @@ export type LogCountOrderByAggregateInput = {
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type LogAvgOrderByAggregateInput = {
@@ -328,6 +348,7 @@ export type LogMaxOrderByAggregateInput = {
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type LogMinOrderByAggregateInput = {
@@ -335,6 +356,7 @@ export type LogMinOrderByAggregateInput = {
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type LogSumOrderByAggregateInput = {
@@ -387,12 +409,14 @@ export type LogUncheckedUpdateManyWithoutDeviceInNestedInput = {
 export type LogCreateWithoutDeviceInInput = {
   message: string
   image: string
+  type?: string
 }
 
 export type LogUncheckedCreateWithoutDeviceInInput = {
   id?: number
   message: string
   image: string
+  type?: string
 }
 
 export type LogCreateOrConnectWithoutDeviceInInput = {
@@ -429,29 +453,34 @@ export type LogScalarWhereInput = {
   deviceId?: Prisma.IntFilter<"Log"> | number
   message?: Prisma.StringFilter<"Log"> | string
   image?: Prisma.StringFilter<"Log"> | string
+  type?: Prisma.StringFilter<"Log"> | string
 }
 
 export type LogCreateManyDeviceInInput = {
   id?: number
   message: string
   image: string
+  type?: string
 }
 
 export type LogUpdateWithoutDeviceInInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogUncheckedUpdateWithoutDeviceInInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LogUncheckedUpdateManyWithoutDeviceInInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -461,6 +490,7 @@ export type LogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   deviceId?: boolean
   message?: boolean
   image?: boolean
+  type?: boolean
   deviceIn?: boolean | Prisma.DeviceDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
@@ -469,6 +499,7 @@ export type LogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   deviceId?: boolean
   message?: boolean
   image?: boolean
+  type?: boolean
   deviceIn?: boolean | Prisma.DeviceDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
@@ -477,6 +508,7 @@ export type LogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   deviceId?: boolean
   message?: boolean
   image?: boolean
+  type?: boolean
   deviceIn?: boolean | Prisma.DeviceDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["log"]>
 
@@ -485,9 +517,10 @@ export type LogSelectScalar = {
   deviceId?: boolean
   message?: boolean
   image?: boolean
+  type?: boolean
 }
 
-export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "deviceId" | "message" | "image", ExtArgs["result"]["log"]>
+export type LogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "deviceId" | "message" | "image" | "type", ExtArgs["result"]["log"]>
 export type LogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deviceIn?: boolean | Prisma.DeviceDefaultArgs<ExtArgs>
 }
@@ -508,6 +541,7 @@ export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     deviceId: number
     message: string
     image: string
+    type: string
   }, ExtArgs["result"]["log"]>
   composites: {}
 }
@@ -936,6 +970,7 @@ export interface LogFieldRefs {
   readonly deviceId: Prisma.FieldRef<"Log", 'Int'>
   readonly message: Prisma.FieldRef<"Log", 'String'>
   readonly image: Prisma.FieldRef<"Log", 'String'>
+  readonly type: Prisma.FieldRef<"Log", 'String'>
 }
     
 

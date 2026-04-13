@@ -12,7 +12,7 @@ export default async function proxy(request) {
     //     return NextResponse.next();
     // }
     const authorized = await myAuth();
-    console.log(authorized);
+    // console.log(authorized);
     if(authorized.success){
         return NextResponse.next();
     }else{

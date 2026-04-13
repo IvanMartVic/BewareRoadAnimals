@@ -9,6 +9,14 @@ export async function getAllLogs(filters={}) {
     });
     return logs;
 }
+export async function getLogsCount(filters={}) {
+    const logs = await prisma.log.count({
+        where:{
+            ...filters,
+        }
+    });
+    return logs;
+}
 
 
 export async function createLog({message, image}) {

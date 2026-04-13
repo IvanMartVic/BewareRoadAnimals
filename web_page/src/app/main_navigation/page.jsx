@@ -5,6 +5,7 @@ import useDeviceStore from "@/stores/deviceStore"
 import { useShallow } from "zustand/shallow";
 import useAuthStore from "@/stores/authStore"
 import perropic from "@/../public/perro_gracios.jpeg"
+import LogsOverview from "@/components/LogsOverview";
 import Image from "next/image";
 
 export default function Home() {
@@ -70,29 +71,7 @@ export default function Home() {
                 <div className="bg-neutral h-full w-2/5 relative"> <Image className="object-cover" fill src={perropic} alt=""></Image> </div>
                 <div className="bg-neutral h-full w-2/5 relative"> <Image className="object-cover" fill src={perropic} alt=""></Image> </div>
             </div>
-            <div className="flex flex-row gap-8 h-1/5 w-full justify-between items-start">
-                <div className="card bg-neutral  card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start text-neutral-content">Logs:</h1>
-                    </div>
-                </div>
-                <div className="card bg-base-300 card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start ">Detecciones: 10</h1>
-                    </div>
-                </div>
-                <div className="card bg-base-300 card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start ">Sistema: 3</h1>
-                    </div>
-                </div>
-                <div className="card bg-warning card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-primary">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start ">Aviso Batería: </h1>
-                    </div>
-                </div>
-
-            </div>
+            <LogsOverview/>
 
         </div>
     );

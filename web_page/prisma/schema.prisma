@@ -24,6 +24,7 @@ model Device {
   userId      Int
   deployedBy  User         @relation(fields: [userId], references: [id])
   logs        Log[]
+  deployedAt DateTime @default(now())
 }
 
 model Log{
@@ -32,4 +33,5 @@ model Log{
   message  String
   image String
   deviceIn Device @relation(fields: [deviceId], references: [id])
+  type String @default("SISTEMA")
 }
