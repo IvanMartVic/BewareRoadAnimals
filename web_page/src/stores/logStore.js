@@ -11,10 +11,10 @@ const useLogStore = create((set, get) => ({
     emergencyCount: 0,
     isLoading: false,
     error: null,
-    fetchLogs: async () => {
+    fetchLogs: async (filters = {}) => {
         set({ isLoading: true });
         try {
-            const res = await getAllLogs();
+            const res = await getAllLogs({...filters});
             set({ logs: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
@@ -22,14 +22,17 @@ const useLogStore = create((set, get) => ({
             }
         }
     },
-    fetchLogTypeCount: async () => {
+    //posible mejora: añadir un contador de ultima request para evitar race conditions en este Store
+    fetchLogTypeCount: async (filters = {}) => {
         set({ isLoading: true });
         try {
-            const logCount = await getLogsCount();
-            const detectCount = await getLogsCount({ type: "DETECCION" });
-            const systemCount = await getLogsCount({ type: "SISTEMA" });
-            const batteryWarningCount = await getLogsCount({ type: "BATERIA" });
-            const emergencyCount = await getLogsCount({ type: "ALERTA" });
+            const [logCount, detectCount, systemCount, batteryWarningCount, emergencyCount] = await Promise.all([
+                getLogsCount({ ...filters }),
+                getLogsCount({ ...filters, type: "DETECCION" }),
+                getLogsCount({ ...filters, type: "SISTEMA" }),
+                getLogsCount({ ...filters, type: "BATERIA" }),
+                getLogsCount({ ...filters, type: "ALERTA" }),
+            ]);
             set({ logCount: logCount, detectCount: detectCount, systemCount: systemCount, batteryWarningCount: batteryWarningCount, emergencyCount: emergencyCount, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {

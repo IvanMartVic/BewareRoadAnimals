@@ -1,9 +1,10 @@
 "use client"
 import useLogStore from "@/stores/logStore"
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useShallow } from "zustand/shallow"
 
-export default function LogsOverview() {
+const DEFAULT_FILTERS = {}
+export default function LogsOverview({filters = DEFAULT_FILTERS} ) {
     const { fetchLogTypeCount, logCount, systemCount, detectCount, batteryWarningCount, isLoading } = useLogStore(
         useShallow((s) => ({
             fetchLogTypeCount: s.fetchLogTypeCount,
@@ -14,8 +15,9 @@ export default function LogsOverview() {
             isLoading: s.isLoading,
         })));
     useEffect( () => {
-        fetchLogTypeCount?.();
-    }, [fetchLogTypeCount])
+        //hay una race-condition aquí si los filtros cambian rápidamente
+        fetchLogTypeCount?.(filters);
+    }, [fetchLogTypeCount, filters])
 
     return (
         < div className="flex flex-row gap-8 h-1/5 w-full justify-between items-start" >

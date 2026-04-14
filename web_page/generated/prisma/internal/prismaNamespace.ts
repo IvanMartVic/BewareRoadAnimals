@@ -695,7 +695,8 @@ export const LogScalarFieldEnum = {
   deviceId: 'deviceId',
   message: 'message',
   image: 'image',
-  type: 'type'
+  type: 'type',
+  timestamp: 'timestamp'
 } as const
 
 export type LogScalarFieldEnum = (typeof LogScalarFieldEnum)[keyof typeof LogScalarFieldEnum]

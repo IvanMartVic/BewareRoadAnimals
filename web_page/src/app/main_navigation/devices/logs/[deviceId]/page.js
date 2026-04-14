@@ -7,22 +7,12 @@ import { useShallow } from "zustand/shallow";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
+import LogsOverview from "@/components/LogsOverview";
 
 
 export default function LogsMainPage() {
     const { deviceId } = useParams();
-    const [selectedId, setSelectedId] = useState(null);
-    const { fetchLogs, fetchDeviceLogs, logs, deleteLog, deleteAllLogs } = useLogStore(
-        useShallow((state => ({
-            logs: state.logs,
-            fetchLogs: state.fetchLogs,
-            fetchDeviceLogs: state.fetchDeviceLogs,
-            deleteLog: state.deleteLog,
-            deleteAllLogs: state.deleteAllLogs,
-        })))
-    );
     const [pageDevice, setPageDevice] = useState(null);
-
     const { fetchDevices, isLoading, devices, error } = useDeviceStore(
         useShallow((state) => ({
             fetchDevices: state.fetchDevices,
@@ -37,59 +27,15 @@ export default function LogsMainPage() {
             alert(error);
         }
     }, [fetchDevices, error]);
-
     useEffect(() => {
-        if(devices){
+        if (devices) {
             const device = devices.find((d) => d.id == deviceId);
             setPageDevice(device);
         }
     }, [devices, setPageDevice, deviceId]);
 
-    const refreshLogs = () => {
-        if(deviceId != "null"){
-            fetchDeviceLogs(+deviceId);
-        }else{
-            fetchLogs();
-        }
-    };
 
-    useEffect(() => {
-        if(deviceId != "null"){
-            fetchDeviceLogs(+deviceId);
-        }else{
-            fetchLogs();
-        }
-    }, [fetchDeviceLogs, fetchLogs, deviceId]);
 
-    async function handleSearch({ searchInput }) {
-        // if (searchInput) {
-        //     const onlyUser = [];
-        //     const user = await getUserById(+searchInput);
-        //     if (user) {
-        //         onlyUser.push(user);
-        //     }
-        //     setUsers(onlyUser);
-        // } else {
-        //     const allUsers = await getAllUsers();
-        //     setUsers(allUsers);
-        // }
-        alert(JSON.stringify(logs));
-    }
-    function handleSelect(newId) {
-        if (selectedId == newId) {
-            setSelectedId(null);
-        } else {
-            setSelectedId(newId);
-        }
-    }
-
-    async function deleteSelectedLog() {
-        const log = await deleteLog(selectedId);
-        refreshLogs();
-    }
-    async function deleteUserLogs(){
-        deleteAllLogs();
-    }
 
     const Map = useMemo(() => dynamic(
         () => import('@/components/DeviceMap'),
@@ -100,13 +46,14 @@ export default function LogsMainPage() {
     ), [])
 
     const router = useRouter();
+    const deviceFilter = useMemo(() => ({ deviceId: +deviceId }), [deviceId]);
     return (
         <div
             className="flex flex-col gap-4 justify-start items-start h-screen p-10">
             <div className="flex flex-row w-full justify-between">
                 <div className="flex flex-col">
                     <h1 className="text-3xl font-bold">Dispositivo {deviceId}</h1>
-                    {!isLoading && 
+                    {!isLoading &&
                         <h1>Desplegado por {pageDevice?.deployedBy?.full_name || "desconocido"}</h1>
                     }
                 </div>
@@ -117,33 +64,13 @@ export default function LogsMainPage() {
                 </div>
             </div>
             <div className="flex h-5/10 w-1/2">
-                {!isLoading && pageDevice && 
+                {!isLoading && pageDevice &&
                     <Map position={[pageDevice?.coordLatitude, pageDevice?.coordLength]} zoom={13} devices={devices} />
                 }
             </div>
-            <div className="flex flex-row gap-8 h-1/5 w-full justify-between items-start">
-                <div className="card bg-neutral  card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start text-neutral-content">Logs:</h1>
-                    </div>
-                </div>
-                <div className="card bg-base-300 card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start ">Detecciones: 10</h1>
-                    </div>
-                </div>
-                <div className="card bg-base-300 card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start ">Sistema: 3</h1>
-                    </div>
-                </div>
-                <div className="card bg-warning card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-primary">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start ">Aviso Batería: </h1>
-                    </div>
-                </div>
-
-            </div>
+            {deviceFilter && 
+                <LogsOverview filters={deviceFilter} ></LogsOverview>
+            }
         </div>
     );
 

@@ -34,4 +34,5 @@ model Log{
   image String
   deviceIn Device @relation(fields: [deviceId], references: [id])
   type String @default("SISTEMA")
+  timestamp DateTime @default(now())
 }

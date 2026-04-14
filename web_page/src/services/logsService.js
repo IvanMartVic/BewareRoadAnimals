@@ -13,6 +13,7 @@ export async function getLogsCount(filters={}) {
     const logs = await prisma.log.count({
         where:{
             ...filters,
+            // deviceId:13,
         }
     });
     return logs;
