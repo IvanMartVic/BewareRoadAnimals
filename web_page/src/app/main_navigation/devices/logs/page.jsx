@@ -2,16 +2,17 @@
 import LogsTable from "@/components/LogsTable"
 // import { getAllLogs } from "@/services/logsService";
 import useLogStore from "@/stores/logStore";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import SearchBar from "@/components/searchBar";
 import LogDetails from "@/components/LogDetails";
-export default function LogViewPage() {
+import { use } from "react";
+export default function LogViewPage({searchParams}) {
     // http://localhost:3000/main_navigation/devices/logs?type=hola&deviceId=2 for type="hola" and deviceId="2"
-    let searchParams = useSearchParams();
-    const type = searchParams.get('type');
-    const deviceId = searchParams.get('deviceId');
+    let filters = use(searchParams);
+    const type = filters.type;
+    const deviceId = filters.deviceId;
     const [selectedRow, setSelectedRow] = useState(null);
     const [filter, setFilter] = useState({
         deviceId: (deviceId) ? +deviceId: "ALL",
