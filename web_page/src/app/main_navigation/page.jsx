@@ -7,6 +7,8 @@ import useAuthStore from "@/stores/authStore"
 import perropic from "@/../public/perro_gracios.jpeg"
 import LogsOverview from "@/components/LogsOverview";
 import Image from "next/image";
+import UsersOverview from "@/components/UsersOverview";
+import DevicesOverview from "@/components/DevicesOverview";
 
 export default function Home() {
     const Map = useMemo(() => dynamic(
@@ -26,10 +28,7 @@ export default function Home() {
         })));
     useEffect(() => {
         fetchDevices();
-        if (error != null) {
-            alert(error)
-        }
-    }, [fetchDevices, error]);
+    }, [fetchDevices]);
 
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
         useShallow((state) => ({
@@ -53,20 +52,8 @@ export default function Home() {
             <div
                 className="flex flex-row h-3/5 justify-start gap-4 items-start mt-5 w-full">
                 <div className="flex flex-col w-1/5 h-full gap-2 justify-between items-center">
-                    <div className="card bg-error w-full h-1/2 hover:cursor-pointer hover:bg-primary">
-                        <div className="card-body">
-                            <h1 className="card-title justify-start text-neutral-content">Alertas </h1>
-                            <p className="ml-2">  en las últimas 24h</p>
-                            <p className="justify-end text-end text-neutral-content text-bold text-xl">24</p>
-                        </div>
-                    </div>
-                    <div className="card bg-secondary w-full h-1/2 hover:cursor-pointer hover:bg-primary">
-                        <div className="card-body">
-                            <h1 className="card-title justify-start text-neutral-content">Usuarios </h1>
-                            <p className="ml-2">  datos de alta en el sistema</p>
-                            <p className="text-end text-secondary-content text-bold text-xl">2</p>
-                        </div>
-                    </div>
+                    <DevicesOverview/>
+                    <UsersOverview/>
                 </div>
                 <div className="bg-neutral h-full w-2/5 relative"> <Image className="object-cover" fill src={perropic} alt=""></Image> </div>
                 <div className="bg-neutral h-full w-2/5 relative"> <Image className="object-cover" fill src={perropic} alt=""></Image> </div>

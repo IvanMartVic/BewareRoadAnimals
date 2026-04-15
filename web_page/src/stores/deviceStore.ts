@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById } from "@/services/deviceService"
+import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById, getDevicesCount} from "@/services/deviceService"
 
 
 interface OutputDevice extends InputDevice {
@@ -7,6 +7,7 @@ interface OutputDevice extends InputDevice {
 }
 type deviceStoreState = {
     devices: OutputDevice[],
+    count: number,
     isLoading: boolean,
     error: string | null,
 };
@@ -20,6 +21,7 @@ type DeviceStore = deviceStoreState & deviceStoreActions;
 
 const useDeviceStore = create<DeviceStore>((set) => ({
     devices: [],
+    count: 0,
     isLoading: false,
     error: null,
     fetchDevices: async () => {
@@ -27,6 +29,17 @@ const useDeviceStore = create<DeviceStore>((set) => ({
         try {
             const res = await getAllDevicesWithUser();
             set({ devices: res, isLoading: false });
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message, isLoading: false });
+            }
+        }
+    },
+    fetchDevicesCount: async (filters = {}) => {
+        set({ isLoading: true });
+        try {
+            const res = await getDevicesCount({...filters});
+            set({ count: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
                 set({ error: e.message, isLoading: false });

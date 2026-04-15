@@ -71,6 +71,7 @@ export default function Navbar({ pageContent }) {
                             </details>
 
                         </li>
+                        <li className="font-bold"><Link href={"/main_navigation/devices/logs"}>Logs</Link></li>
                         <li><Link href={"/main_navigation/about"}>Sobre nosotros</Link></li>
                     </ul>
                 </div>

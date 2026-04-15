@@ -41,6 +41,14 @@ export async function getUserById(id: number) {
     });
     return user;
 }
+export async function getUserCount(filters = {}){
+    const count = await prisma.user.count({
+        where:{
+            ...filters,
+        }
+    });
+    return count;
+}
 
 export async function createUser(userData: InputUser) {
     const { full_name, email, password, role: isAdmin } = userData;

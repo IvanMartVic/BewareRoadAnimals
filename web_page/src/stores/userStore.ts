@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import { getAllUsers, createUser , deleteUser, updateUser, getUserById, OutputUser, InputUser, UpdateUserInput} from "@/services/userService"
+import { getAllUsers, createUser , deleteUser, updateUser, getUserById, OutputUser, InputUser, UpdateUserInput, getUserCount} from "@/services/userService"
 
 
 type userStoreState = {
     users: OutputUser[],
+    count: number,
     isLoading: boolean,
     error: string | null,
 };
@@ -17,6 +18,7 @@ type UserStore = userStoreState & userStoreActions;
 
 const useUserStore = create<UserStore>((set) => ({
     users: [],
+    count: 0,
     isLoading: false,
     error: null,
     fetchUsers: async () => {
@@ -24,6 +26,17 @@ const useUserStore = create<UserStore>((set) => ({
         try {
             const res = await getAllUsers();
             set({ users: res, isLoading: false });
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message, isLoading: false });
+            }
+        }
+    },
+    fetchUsersCount: async (filters = {}) => {
+        set({ isLoading: true });
+        try {
+            const res = await getUserCount({...filters});
+            set({ count: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
                 set({ error: e.message, isLoading: false });

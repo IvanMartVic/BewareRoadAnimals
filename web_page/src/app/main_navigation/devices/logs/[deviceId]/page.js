@@ -49,24 +49,21 @@ export default function LogsMainPage() {
     const deviceFilter = useMemo(() => ({ deviceId: +deviceId }), [deviceId]);
     return (
         <div
-            className="flex flex-col gap-4 justify-start items-start h-screen p-10">
+            className="flex flex-col gap-4 justify-start items-start h-screen p-10 w-full">
             <div className="flex flex-row w-full justify-between">
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full">
                     <h1 className="text-3xl font-bold">Dispositivo {deviceId}</h1>
                     {!isLoading &&
                         <h1>Desplegado por {pageDevice?.deployedBy?.full_name || "desconocido"}</h1>
                     }
                 </div>
-                <div className="card bg-error card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500">
-                    <div className="card-body">
-                        <h1 className="card-title justify-start text-neutral-content">Alertas:</h1>
-                    </div>
-                </div>
             </div>
-            <div className="flex h-5/10 w-1/2">
-                {!isLoading && pageDevice &&
-                    <Map position={[pageDevice?.coordLatitude, pageDevice?.coordLength]} zoom={13} devices={devices} />
-                }
+            <div className="flex w-full h-5/10 items-start">
+                <div className="flex h-full w-1/2">
+                    {!isLoading && pageDevice &&
+                        <Map position={[pageDevice?.coordLatitude, pageDevice?.coordLength]} zoom={13} devices={devices} />
+                    }
+                </div>
             </div>
             {deviceFilter && 
                 <LogsOverview filters={deviceFilter} ></LogsOverview>

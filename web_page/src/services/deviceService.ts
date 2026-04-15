@@ -27,6 +27,14 @@ export async function getAllDevicesWithUser() {
     } );
     return devices;
 }
+export async function getDevicesCount(filters = {}) {
+    const devices = await prisma.device.count( {
+        where: {
+            ...filters,
+        }
+    } );
+    return devices;
+}
 
 export async function createDevice({ userId, coordLatitude, coordLength}: InputDevice) {
     const new_device = await prisma.device.create({
