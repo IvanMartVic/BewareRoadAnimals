@@ -9,6 +9,8 @@ import LogsOverview from "@/components/LogsOverview";
 import Image from "next/image";
 import UsersOverview from "@/components/UsersOverview";
 import DevicesOverview from "@/components/DevicesOverview";
+import LogLineGraph from "@/components/LogLineGraph";
+import TypePieChart from "@/components/TypePieChart";
 
 export default function Home() {
     const Map = useMemo(() => dynamic(
@@ -55,8 +57,8 @@ export default function Home() {
                     <DevicesOverview/>
                     <UsersOverview/>
                 </div>
-                <div className="bg-neutral h-full w-2/5 relative"> <Image className="object-cover" fill src={perropic} alt=""></Image> </div>
-                <div className="bg-neutral h-full w-2/5 relative"> <Image className="object-cover" fill src={perropic} alt=""></Image> </div>
+                <div className="h-full w-2/5 relative"><LogLineGraph/></div>
+                <div className="bg-neutral h-full w-2/5 relative"><TypePieChart/></div>
             </div>
             <LogsOverview/>
 
