@@ -83,8 +83,8 @@ export default function MyProfilePage() {
                 </fieldset>
                 <label className="text-xl" >ROL: {authUserData?.role || "desconocido"}</label>
                 <div className="flex flex-row justify-between mt-5 gap-1">
-                    <button className="btn btn-soft btn-primary" type="submit" >Aplicar Cambios</button>
-                    <li className="btn btn-soft btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
+                    <button className="btn btn-primary" type="submit" >Aplicar Cambios</button>
+                    <li className="btn btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
                 </div>
                 <button className="btn btn-error mt-10 w-full" type="button" onClick={deleteUser}>Borrar cuenta</button>
             </form>

@@ -3,7 +3,7 @@ export default function LogsTable({ logs, selectedRow, onSelect }) {
     return (
         <div className="overflow-auto h-full w-full rounded-box border border-base-content/5 bg-base-100">
             <table className="table">
-                <thead>
+                <thead className="bg-primary text-primary-content">
                     <tr>
                         <th>Timestamp</th>
                         <th>message</th>

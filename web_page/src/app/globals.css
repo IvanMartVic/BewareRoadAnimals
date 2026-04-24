@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* paleta de colores : https://colorhunt.co/palette/4684329ad872ffef91ffa02e */
 @plugin "daisyui/theme" {
   name: "roadlight";
   default: false;
@@ -10,19 +11,19 @@
   --color-base-200: oklch(98% 0 0);
   --color-base-300: oklch(78% 0 0); 
   --color-base-content: oklch(21% 0.006 285.885);
-  --color-primary: #29526D;
+  --color-primary: #468432;
   --color-primary-content: oklch(98% 0.001 106.423);
-  --color-secondary: #7A9E35;
-  --color-secondary-content: oklch(98% 0.018 155.826);
-  --color-accent: #542B72;
-  --color-accent-content: oklch(98% 0.026 102.212);
+  --color-secondary: #FFEF91;
+  --color-secondary-content:oklch(21% 0.006 285.885); 
+  --color-accent: #9AD872;
+  --color-accent-content: oklch(98% 0.018 155.826);
   --color-neutral: oklch(14% 0.005 285.823);
   --color-neutral-content: oklch(92% 0.004 286.32);
   --color-info: oklch(70% 0.165 254.624);
   --color-info-content: oklch(28% 0.091 267.935);
   --color-success: oklch(76% 0.177 163.223);
   --color-success-content: oklch(26% 0.051 172.552);
-  --color-warning: oklch(75% 0.183 55.934);
+  --color-warning: #FFA02E;
   --color-warning-content: oklch(26% 0.079 36.259);
   --color-error: #D72638;
   --color-error-content: oklch(25% 0.092 26.042);

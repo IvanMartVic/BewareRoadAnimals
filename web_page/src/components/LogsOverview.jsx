@@ -39,7 +39,7 @@ export default function LogsOverview({ filters = DEFAULT_FILTERS }) {
                     <h1 className="card-title justify-start ">Sistema: {systemCount}</h1>
                 </div>
             </div>
-            <div className="card bg-warning card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-primary" onClick={() => router.push((`/main_navigation/devices/logs?type=BATERIA&${urlDeviceFilter}`))}>
+            <div className="card bg-warning card-border shadow-accent w-1/5 hover:cursor-pointer hover:bg-neutral-500" onClick={() => router.push((`/main_navigation/devices/logs?type=BATERIA&${urlDeviceFilter}`))}>
                 <div className="card-body">
                     <h1 className="card-title justify-start ">Aviso Batería: {batteryWarningCount}</h1>
                 </div>

@@ -17,9 +17,9 @@ export default function UsersOverview() {
     }, [fetchUsersCount]);
     const router = useRouter();
     return (
-        <div className="card bg-secondary w-full h-1/2 hover:cursor-pointer hover:bg-accent" onClick={ () => router.push("/main_navigation/users")}>
+        <div className="card bg-secondary w-full h-1/2 hover:cursor-pointer hover:bg-neutral-500" onClick={ () => router.push("/main_navigation/users")}>
             <div className="card-body">
-                <h1 className="card-title justify-start text-neutral-content">Usuarios </h1>
+                <h1 className="card-title justify-start text-secondary-content">Usuarios </h1>
                 <p className="ml-2">  datos de alta en el sistema</p>
                 <p className="text-end text-secondary-content text-bold text-xl">{count}</p>
                 {error && 

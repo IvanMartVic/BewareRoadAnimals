@@ -1,37 +1,14 @@
 "use client"
-import { useEffect, useMemo } from "react";
-import dynamic from "next/dynamic";
-import useDeviceStore from "@/stores/deviceStore"
+import { useEffect} from "react";
 import { useShallow } from "zustand/shallow";
 import useAuthStore from "@/stores/authStore"
-import perropic from "@/../public/perro_gracios.jpeg"
 import LogsOverview from "@/components/LogsOverview";
-import Image from "next/image";
 import UsersOverview from "@/components/UsersOverview";
 import DevicesOverview from "@/components/DevicesOverview";
 import LogLineGraph from "@/components/LogLineGraph";
 import TypePieChart from "@/components/TypePieChart";
 
 export default function Home() {
-    const Map = useMemo(() => dynamic(
-        () => import('@/components/DeviceMap'),
-        {
-            loading: () => <p>A map is loading</p>,
-            ssr: false
-        }
-    ), [])
-    const { fetchDevices, isLoading, devices, error } = useDeviceStore(
-        useShallow((state) => ({
-            fetchDevices: state.fetchDevices,
-            isLoading: state.isLoading,
-            devices: state.devices,
-            deleteDevice: state.deleteDevice,
-            error: state.error,
-        })));
-    useEffect(() => {
-        fetchDevices();
-    }, [fetchDevices]);
-
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
         useShallow((state) => ({
             authUserData: state.authUserData,

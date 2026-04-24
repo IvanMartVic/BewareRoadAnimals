@@ -45,7 +45,7 @@ export default function LogViewPage({searchParams}) {
             className="flex flex-col h-screen w-screen gap-4 p-10">
             <div className="flex flex-row w-screen gap-1">
                 <SearchBar onSearch={() => alert("hola")}></SearchBar>
-                <button className="btn btn-soft btn-accent" onClick={async () => await fetchLogs({deviceId:+deviceId})}>Recargar</button>
+                <button className="btn btn-secondary" onClick={async () => await fetchLogs({deviceId:+deviceId})}>Recargar</button>
             </div>
             <div className="flex h-[90vh] w-full">
                 <div className="flex w-[60vw]">

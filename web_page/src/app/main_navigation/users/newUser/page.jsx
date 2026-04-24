@@ -26,10 +26,10 @@ export default function NewUserPage() {
         setAdmin(e.target.checked);
     }
     return (
-        <div className="flex justify-start items-start ml-40 p-10 h-screen">
+        <div className="flex justify-center items-center p-10 h-screen">
             <form onSubmit={handleSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 gap-7">
-                    <legend className="fieldset-legend text-xl">Nuevo Usuario</legend>
+                    <legend className="fieldset-legend text-primary text-xl">Nuevo Usuario</legend>
                     <div>
                         <NombreApellidosInput onValueChanged={(val) => setName(val)}></NombreApellidosInput>
                     </div>
@@ -43,7 +43,7 @@ export default function NewUserPage() {
                         <input type="checkbox" className="checkbox" onChange={checkboxChanged}/>
                         ADMIN
                     </label>
-                    <button type="submit" className="btn btn-neutral mt-4">Añadir</button>
+                    <button type="submit" className="btn btn-primary mt-4">Añadir</button>
                 </fieldset>
             </form>
 

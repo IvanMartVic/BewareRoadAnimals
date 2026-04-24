@@ -34,10 +34,10 @@ export default function NewDevicePage() {
 
     const coordinatesRef = useRef();
     return (
-        <div className="flex justify-start items-start ml-40 p-10 h-screen">
+        <div className="flex justify-center items-center p-10 h-screen">
             <form onSubmit={handleSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 gap-7">
-                    <legend className="fieldset-legend text-xl">Nuevo Dispositivo</legend>
+                    <legend className="fieldset-legend text-xl text-primary">Nuevo Dispositivo</legend>
                     <label className="label ">Despliegado por</label>
                     <legend className="input">
                         <input 

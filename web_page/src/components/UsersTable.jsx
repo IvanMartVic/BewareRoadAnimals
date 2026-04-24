@@ -6,7 +6,7 @@ export default function UsersTable({users, selectedRow, onSelect}) {
     return (
         <div className="overflow-auto rounded-box border border-base-content/5 bg-base-100">
             <table className="table">
-                <thead>
+                <thead className="bg-primary text-primary-content">
                     <tr>
                         <th>id</th>
                         <th>Nombre y apellidos</th>

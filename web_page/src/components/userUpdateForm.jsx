@@ -33,7 +33,7 @@ export default function UserUpdateForm({user, submitRoute}){
         <div className="flex justify-start items-start">
             <form onSubmit={handleSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 gap-7">
-                    <legend className="fieldset-legend text-xl">Editar usuario</legend>
+                    <legend className="fieldset-legend text-primary text-xl">Editar usuario</legend>
                     <div>
                         <NombreApellidosInput onValueChanged={(val) => setName(val)} value={name}></NombreApellidosInput>
                     </div>
@@ -44,7 +44,7 @@ export default function UserUpdateForm({user, submitRoute}){
                         <input type="checkbox" className="checkbox" onChange={checkboxChanged} checked={adminChecked}/>
                         ADMIN
                     </label>
-                    <button type="submit" className="btn btn-neutral mt-4">Actualizar</button>
+                    <button type="submit" className="btn btn-primary mt-4">Actualizar</button>
                 </fieldset>
             </form>
 

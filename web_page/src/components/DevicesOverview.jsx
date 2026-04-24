@@ -16,7 +16,7 @@ export default function DevicesOverview() {
     const router = useRouter();
 
     return (
-        <div className="card bg-primary w-full h-1/2 hover:cursor-pointer hover:bg-accent" onClick={() => router.push("/main_navigation/devices")}>
+        <div className="card bg-primary w-full h-1/2 hover:cursor-pointer hover:bg-neutral-500" onClick={() => router.push("/main_navigation/devices")}>
             <div className="card-body">
                 <h1 className="card-title justify-start text-neutral-content">Dispositivos</h1>
                 <p className="ml-2 text-primary-content">dispositivos desplegados por el usuario</p>
