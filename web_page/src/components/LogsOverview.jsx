@@ -1,6 +1,6 @@
 "use client"
 import useLogStore from "@/stores/logStore"
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow"
 

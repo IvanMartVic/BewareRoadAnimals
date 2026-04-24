@@ -2,7 +2,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import useLogStore from '@/stores/logStore';
 import { useShallow } from 'zustand/shallow';
-import { useEffect, useMemo} from 'react';
+import { useCallback, useEffect, useMemo} from 'react';
 
 // #region Sample data
 function computeGraphData(logs) {
@@ -21,9 +21,16 @@ export default function LogLineGraph() {
         error: s.error,
     })));
     const data = useMemo(() => computeGraphData(logs), [logs]);
+    const fetchTodayLogs = useCallback( () => {
+        const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+        fetchLogs({timestamp: {
+            gte: TODAY, 
+        }});
+    },[fetchLogs]);
+
     useEffect(() => {
-        fetchLogs();
-    }, [fetchLogs]);
+        fetchTodayLogs();
+    }, [fetchTodayLogs]);
     return (
         /* The ResponsiveContainer takes the height/width of your "w-2/5 h-full" div */
         <div style={{ width: '100%', height: '100%' }} className='bg-base-100'>
