@@ -1,18 +1,12 @@
 "use client"
 import { useEffect, useState, useMemo } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-// import { getAllUsers, getUserById, deleteUser } from "@/services/userService";
-import papelera from "@/../public/papelera.jpg";
-import plus from "@/../public/plus_icon.jpg";
-import log_icon from "@/../public/log_icon.jpg";
 import { useRouter } from "next/navigation";
 import useDeviceStore from "@/stores/deviceStore";
 import { useShallow } from "zustand/shallow";
 
 
 export default function DevicesMainPage() {
-    const [selectedId, setSelectedId] = useState(null);
     const { fetchDevices, isLoading, devices, error } = useDeviceStore(
         useShallow((state) => ({
             fetchDevices: state.fetchDevices,
@@ -56,30 +50,4 @@ export default function DevicesMainPage() {
         </div>
     );
 
-    // <div
-    //     className="flex flex-col gap-4 justify-start items-start h-screen ">
-    //     <h1 className="text-2xl text-bold"></h1>
-    //     <div className="flex flex-row gap-4 items-center flex-1 w-full">
-    //         <div className="flex flex-col gap-4">
-    //             <div role="button" className="btn btn-ghost btn-circle avatar">
-    //                 <div className="w-10 rounded-full">
-    //                     <Image src={papelera} alt=""></Image>
-    //                 </div>
-    //             </div>
-    //             <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push("/main_navigation/devices/newDevice")}>
-    //                 <div className="w-10 rounded-full">
-    //                     <Image src={plus} alt=""></Image>
-    //                 </div>
-    //             </div>
-    //             <div role="button" className="btn btn-ghost btn-circle avatar" onClick={() => router.push(`/main_navigation/devices/logs/${selectedId}`)}>
-    //                 <div className="w-10 rounded-full">
-    //                     <Image src={log_icon} alt=""></Image>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         {!isLoading &&
-    //             <Map position={[40.96882, -5.66388]} zoom={8} devices={devices} />
-    //         }
-    //     </div>
-    // </div>
 }

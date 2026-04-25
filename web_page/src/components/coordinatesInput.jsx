@@ -1,53 +1,78 @@
 "use client"
-import { useState, useImperativeHandle } from "react"
-export default function CoordinatesIput({ref}) {
-    const [latitudeGrad, setLatitudeGrad] = useState(0)
-    const [latitudeMinute, setLatitudeMinute] = useState(0)
-    const [latitudeSecond, setLatitudeSecond] = useState(0)
-    const [lenghtGrad, setLenghtGrad] = useState(0)
-    const [lenghtMinute, setLenghtMinute] = useState(0)
-    const [lenghtSecond, setLenghtSecond] = useState(0)
-    const [lenghtOrientation, setLenghtOrientation] = useState("E")
-    const [latitudeOrientation, setLatitudeOrientation] = useState("N")
-
-    function convertCoordsToFloat(grad, min, sec){
-        return grad + min/60 + sec/3600;
+import { useState, useImperativeHandle, useEffect, useCallback, useMemo } from "react"
+export default function CoordinatesIput({ setMarkerPosition, markerPosition }) {
+    function convertFloatToCoords(grad_float) {
+        const gradAbs = Math.abs(grad_float);
+        const grad = Math.floor(gradAbs);
+        let sec = (gradAbs - grad) * 3600;
+        let min = Math.floor(sec / 60);
+        sec = (sec % 60).toFixed(2);
+        return { grad, min, sec };
+    }
+    function convertCoordsToFloat(grad, min, sec) {
+        return grad + min / 60 + sec / 3600;
 
     }
-
-    useImperativeHandle(ref, () => ({
-        getCoordenates: () => {
-            let latitude = convertCoordsToFloat(+latitudeGrad, +latitudeMinute, +latitudeSecond)
-            latitude = (latitudeOrientation == "N")? latitude: -latitude;
-            let length = convertCoordsToFloat(+lenghtGrad, +lenghtMinute, +lenghtSecond)
-            length = (lenghtOrientation == "E")? length: -length;
-            alert(`${lenghtOrientation} ${latitudeOrientation}`)
-            return {latitude, length}
+    const syncMapToInput = useCallback((latlng) => {
+        const { grad: latG, min: latM, sec: latS } = convertFloatToCoords(+latlng[0]);
+        const latO = (+latlng[0] > 0) ? "N" : "S";
+        const { grad: lngG, min: lngM, sec: lngS } = convertFloatToCoords(+latlng[1]);
+        const lngO = (+latlng[1] > 0) ? "E" : "O";
+        return {
+            latG: latG, latM: latM, latS: latS, latO: latO,
+            lngG: lngG, lngM: lngM, lngS: lngS, lngO: lngO
         }
-    }));
+    }, [
+    ]);
+    const coords= useMemo(() => markerPosition ? syncMapToInput(markerPosition) : {
+        latG: 0, latM: 0, latS: 0, latO: "N",
+        lngG: 0, lngM: 0, lngS: 0, lngO: "E",
+    }, [syncMapToInput, markerPosition]);
+    // const [coords, setCoords] = useState(markerCoords);
+
+
+    const getCoordenates = useCallback(() => {
+        let latitude = convertCoordsToFloat(+coords.latG, +coords.latM, +coords.latS)
+        latitude = (coords.latO == "N") ? latitude : -latitude;
+        let length = convertCoordsToFloat(+coords.lngG, +coords.lngM, +coords.lngS)
+        length = (coords.lngO == "E") ? length : -length;
+        return [latitude, length]
+    }, [coords]);
+
+
+
+    // useEffect(() => {
+    //     setMarkerPosition(getCoordenates());
+    // }, [setMarkerPosition, getCoordenates])
+    function changeMarker() {
+        setMarkerPosition(getCoordenates());
+    }
+    function fetchCoords() {
+        setCoords(markerCoords);
+    }
 
 
 
 
     return (
-        <>
+        <div>
             <label className="label text-xl">Coordenadas</label>
             <div className="flex-col ml-5">
                 <legend className="label">Latitud</legend>
                 <div className="flex flex-row w-full justify-between">
                     <legend>
-                        <input className="input w-12 mr-2" onChange={(e) => setLatitudeGrad(e.target.value)}></input>
+                        <input className="input w-12" disabled={true} value={coords.latG} onChange={(e) => setCoords({ ...coords, latG: e.target.value })}></input>
                         <label>º</label>
                     </legend>
                     <legend>
-                        <input className="input w-12 mr-2" onChange={(e) => setLatitudeMinute(e.target.value)}></input>
+                        <input className="input w-12" disabled={true} value={coords.latM} onChange={(e) => setCoords({ ...coords, latM: e.target.value })}></input>
                         <label>'</label>
                     </legend>
                     <legend>
-                        <input className="input w-12 mr-2" onChange={(e) => setLatitudeSecond(e.target.value)}></input>
+                        <input className="input w-18" disabled={true} value={coords.latS} onChange={(e) => setCoords({ ...coords, latS: e.target.value })}></input>
                         <label>''</label>
                     </legend>
-                    <select className="select w-15" onChange={(e) =>setLatitudeOrientation(e.target.value)}>
+                    <select className="select w-15" disabled={true} value={coords.latO} onChange={(e) => setCoords({ ...coords, latO: e.target.value })}>
                         <option value="N">N</option>
                         <option value="S">S</option>
                     </select>
@@ -55,24 +80,24 @@ export default function CoordinatesIput({ref}) {
                 <legend className="label">Longitud</legend>
                 <div className="flex flex-row w-full justify-between">
                     <legend>
-                        <input className="input w-12 mr-2" onChange={(e) => setLenghtGrad(e.target.value)}></input>
+                        <input className="input w-12 " disabled={true} value={coords.lngG} onChange={(e) => setCoords({ ...coords, lngG: e.target.value })}></input>
                         <label>º</label>
                     </legend>
                     <legend>
-                        <input className="input w-12 mr-2" onChange={(e) => setLenghtMinute(e.target.value)}></input>
+                        <input className="input w-12 " disabled={true} value={coords.lngM} onChange={(e) => setCoords({ ...coords, lngM: e.target.value })}></input>
                         <label>'</label>
                     </legend>
                     <legend>
-                        <input className="input w-12 mr-2" onChange={(e) => setLenghtSecond(e.target.value)}></input>
+                        <input className="input w-18 " disabled={true} value={coords.lngS} onChange={(e) => setCoords({ ...coords, lngS: e.target.value })}></input>
                         <label>''</label>
                     </legend>
-                    <select className="select w-15" onChange={(e) => setLenghtOrientation(e.target.value)}>
+                    <select className="select w-15" disabled={true} value={coords.lngO} onChange={(e) => setCoords({ ...coords, lngO: e.target.value })}>
                         <option value="E">E</option>
                         <option value="O">O</option>
                     </select>
                 </div>
             </div>
-        </>
+        </div>
 
     )
 

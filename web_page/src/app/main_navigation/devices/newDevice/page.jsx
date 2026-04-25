@@ -1,6 +1,7 @@
 "use client"
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import CoordinatesIput from "@/components/coordinatesInput";
 import useDeviceStore from "@/stores/deviceStore"
 import useAuthStore from "@/stores/authStore"
@@ -8,6 +9,7 @@ import { useShallow } from "zustand/shallow";
 
 export default function NewDevicePage() {
     const router = useRouter();
+    const SALAMANCA_POS = [40.96882, -5.66388];
     const addDevice = useDeviceStore((state) => (state.addDevice));
     const { authUserData, fetchAuthUser } = useAuthStore(
         useShallow((state) => ({
@@ -18,37 +20,52 @@ export default function NewDevicePage() {
 
     useEffect(() => {
         fetchAuthUser();
-    },[fetchAuthUser])
+    }, [fetchAuthUser])
+
+    const [markerPosition, setMarkerPosition] = useState(SALAMANCA_POS);
+    const markerRef = useRef(null);
 
     const handleSubmit = async (e) => {
         if (e && e.preventDefault) {
             e.preventDefault();
         }
-        if(authUserData){
-            const {latitude, length}= coordinatesRef.current.getCoordenates();
-            await addDevice({userId:authUserData.id, coordLatitude:latitude, coordLength:length});
+        if (authUserData) {
+            const latitude = markerPosition[0];
+            const length = markerPosition[1];
+
+            await addDevice({ userId: authUserData.id, coordLatitude: latitude, coordLength: length });
             alert(`dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}`);
             router.push("/main_navigation/devices");
         }
     }
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/DeviceInputMap'),
+        {
+            loading: () => <p>A map is loading</p>,
+            ssr: false
+        }
+    ), [])
 
-    const coordinatesRef = useRef();
     return (
-        <div className="flex justify-center items-center p-10 h-screen">
+        <div className="flex justify-between items-start p-10 h-screen gap-7">
             <form onSubmit={handleSubmit}>
-                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 gap-7">
+                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-s border p-4 gap-7">
                     <legend className="fieldset-legend text-xl text-primary">Nuevo Dispositivo</legend>
                     <label className="label ">Despliegado por</label>
                     <legend className="input">
-                        <input 
+                        <input
                             value={authUserData?.full_name ?? "desconocido"}
                             disabled
                         ></input>
                     </legend>
-                    <CoordinatesIput ref={coordinatesRef}></CoordinatesIput>
+                    <CoordinatesIput setMarkerPosition={setMarkerPosition} markerPosition={markerPosition}></CoordinatesIput>
                     <button type="submit" className="btn btn-primary mt-4">Añadir</button>
                 </fieldset>
             </form>
+            <div className="h-[90vh] w-3/4">
+                <Map position={SALAMANCA_POS} markerPosition={markerPosition} scrollWheelZoom={true} setMarkerPosition={setMarkerPosition} markerRef={markerRef} zoom={8} />
+
+            </div>
 
         </div>
     );
