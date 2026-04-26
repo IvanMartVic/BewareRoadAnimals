@@ -41,6 +41,8 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   role: string | null
   password_hash: string | null
+  resetToken: string | null
+  tokenExpiry: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -50,6 +52,8 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   role: string | null
   password_hash: string | null
+  resetToken: string | null
+  tokenExpiry: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -59,6 +63,8 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   role: number
   password_hash: number
+  resetToken: number
+  tokenExpiry: number
   _all: number
 }
 
@@ -78,6 +84,8 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   role?: true
   password_hash?: true
+  resetToken?: true
+  tokenExpiry?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -87,6 +95,8 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   role?: true
   password_hash?: true
+  resetToken?: true
+  tokenExpiry?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -96,6 +106,8 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   role?: true
   password_hash?: true
+  resetToken?: true
+  tokenExpiry?: true
   _all?: true
 }
 
@@ -192,6 +204,8 @@ export type UserGroupByOutputType = {
   createdAt: Date
   role: string
   password_hash: string
+  resetToken: string | null
+  tokenExpiry: Date | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -224,6 +238,8 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   role?: Prisma.StringFilter<"User"> | string
   password_hash?: Prisma.StringFilter<"User"> | string
+  resetToken?: Prisma.StringNullableFilter<"User"> | string | null
+  tokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   devices?: Prisma.DeviceListRelationFilter
 }
 
@@ -234,12 +250,15 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   password_hash?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  tokenExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   devices?: Prisma.DeviceOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   email?: string
+  resetToken?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -247,8 +266,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   role?: Prisma.StringFilter<"User"> | string
   password_hash?: Prisma.StringFilter<"User"> | string
+  tokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   devices?: Prisma.DeviceListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "resetToken">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -257,6 +277,8 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   password_hash?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  tokenExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -274,6 +296,8 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
   password_hash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  resetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  tokenExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
@@ -282,6 +306,8 @@ export type UserCreateInput = {
   createdAt?: Date | string
   role?: string
   password_hash: string
+  resetToken?: string | null
+  tokenExpiry?: Date | string | null
   devices?: Prisma.DeviceCreateNestedManyWithoutDeployedByInput
 }
 
@@ -292,6 +318,8 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   role?: string
   password_hash: string
+  resetToken?: string | null
+  tokenExpiry?: Date | string | null
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutDeployedByInput
 }
 
@@ -301,6 +329,8 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DeviceUpdateManyWithoutDeployedByNestedInput
 }
 
@@ -311,6 +341,8 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutDeployedByNestedInput
 }
 
@@ -321,6 +353,8 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   role?: string
   password_hash: string
+  resetToken?: string | null
+  tokenExpiry?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -329,6 +363,8 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -338,6 +374,8 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -347,6 +385,8 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   password_hash?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrder
+  tokenExpiry?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
@@ -360,6 +400,8 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   password_hash?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrder
+  tokenExpiry?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -369,6 +411,8 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
   password_hash?: Prisma.SortOrder
+  resetToken?: Prisma.SortOrder
+  tokenExpiry?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
@@ -386,6 +430,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -416,6 +468,8 @@ export type UserCreateWithoutDevicesInput = {
   createdAt?: Date | string
   role?: string
   password_hash: string
+  resetToken?: string | null
+  tokenExpiry?: Date | string | null
 }
 
 export type UserUncheckedCreateWithoutDevicesInput = {
@@ -425,6 +479,8 @@ export type UserUncheckedCreateWithoutDevicesInput = {
   createdAt?: Date | string
   role?: string
   password_hash: string
+  resetToken?: string | null
+  tokenExpiry?: Date | string | null
 }
 
 export type UserCreateOrConnectWithoutDevicesInput = {
@@ -449,6 +505,8 @@ export type UserUpdateWithoutDevicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateWithoutDevicesInput = {
@@ -458,6 +516,8 @@ export type UserUncheckedUpdateWithoutDevicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -498,6 +558,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   role?: boolean
   password_hash?: boolean
+  resetToken?: boolean
+  tokenExpiry?: boolean
   devices?: boolean | Prisma.User$devicesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -509,6 +571,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   role?: boolean
   password_hash?: boolean
+  resetToken?: boolean
+  tokenExpiry?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -518,6 +582,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   role?: boolean
   password_hash?: boolean
+  resetToken?: boolean
+  tokenExpiry?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -527,9 +593,11 @@ export type UserSelectScalar = {
   createdAt?: boolean
   role?: boolean
   password_hash?: boolean
+  resetToken?: boolean
+  tokenExpiry?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "full_name" | "createdAt" | "role" | "password_hash", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "full_name" | "createdAt" | "role" | "password_hash" | "resetToken" | "tokenExpiry", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   devices?: boolean | Prisma.User$devicesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -549,6 +617,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     role: string
     password_hash: string
+    resetToken: string | null
+    tokenExpiry: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -979,6 +1049,8 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'String'>
   readonly password_hash: Prisma.FieldRef<"User", 'String'>
+  readonly resetToken: Prisma.FieldRef<"User", 'String'>
+  readonly tokenExpiry: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 

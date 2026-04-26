@@ -1,10 +1,9 @@
 "use client"
 
-import { useState } from "react";
 
 export default function UsersTable({users, selectedRow, onSelect}) {
     return (
-        <div className="overflow-auto rounded-box border border-base-content/5 bg-base-100">
+        <div className="overflow-auto w-full rounded-box border border-base-content/5 bg-base-100">
             <table className="table">
                 <thead className="bg-primary text-primary-content">
                     <tr>

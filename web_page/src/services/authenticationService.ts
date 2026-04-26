@@ -3,7 +3,7 @@
 // import { compare } from "bcryptjs";
 // import * as jose from "jose"
 // import { cookies } from "next/headers";
-import {  myLogOut, mySignIn, credentials, getAuthUserFromToken} from "@/utils/authUtils"
+import {  myLogOut, mySignIn, credentials, getAuthUserFromToken, authResetToken } from "@/utils/authUtils"
 import { myAuth } from "@/utils/auth";
 
 
@@ -20,3 +20,10 @@ export async function auth(){
 export async function getAuthUser(){
     return await getAuthUserFromToken();
 }
+
+export async function verifyAuthResetToken(token:string){
+    const res = await authResetToken(token);
+    return res;
+}
+
+

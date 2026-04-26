@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllUsers, createUser , deleteUser, updateUser, getUserById, OutputUser, InputUser, UpdateUserInput, getUserCount} from "@/services/userService"
+import { getAllUsers, createUser, deleteUser, updateUser, getUserById, OutputUser, InputUser, UpdateUserInput, getUserCount, searchUsers, changeUserPassword} from "@/services/userService"
 
 
 type userStoreState = {
@@ -21,10 +21,10 @@ const useUserStore = create<UserStore>((set) => ({
     count: 0,
     isLoading: false,
     error: null,
-    fetchUsers: async () => {
+    fetchUsers: async (filters = {}) => {
         set({ isLoading: true });
         try {
-            const res = await getAllUsers();
+            const res = await getAllUsers(filters);
             set({ users: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
@@ -35,13 +35,25 @@ const useUserStore = create<UserStore>((set) => ({
     fetchUsersCount: async (filters = {}) => {
         set({ isLoading: true });
         try {
-            const res = await getUserCount({...filters});
+            const res = await getUserCount({ ...filters });
             set({ count: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
                 set({ error: e.message, isLoading: false });
             }
         }
+    },
+    searchAndFetchUsers: async (searchInput:string) => {
+        set({ isLoading: true });
+        try {
+            const res = await searchUsers(searchInput);
+            set({ users: res, isLoading: false });
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message, isLoading: false });
+            }
+        }
+
     },
     addUser: async (newUser: InputUser) => {
         try {
@@ -68,7 +80,7 @@ const useUserStore = create<UserStore>((set) => ({
     },
     updateUser: async ({ id, new_data }: UpdateUserInput) => {
         try {
-            const updatedUser: OutputUser= await updateUser({ id, new_data});
+            const updatedUser: OutputUser = await updateUser({ id, new_data });
             set((state) => ({
                 users: state.users.map((device) => device.id == id ? updatedUser : device),
             }));
@@ -79,20 +91,34 @@ const useUserStore = create<UserStore>((set) => ({
             }
         }
     },
-    getUserById: async (id:number) => {
-        try{
+    getUserById: async (id: number) => {
+        try {
             // we could cache this response with the array devices I think
-            const selectedUser: OutputUser|null = await getUserById(id);
-            if(!selectedUser){
+            const selectedUser: OutputUser | null = await getUserById(id);
+            if (!selectedUser) {
                 throw new Error(`device with id: ${id} not in db`);
             }
             return selectedUser;
 
-        }catch(e){
-            if(e instanceof Error){
-                set({error:e.message});
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message });
             }
         }
+
+    },
+    resetUserPassword: async ({new_password, resetToken}:{new_password: string, resetToken:string}) => {
+        try {
+            const user = await changeUserPassword({new_password: new_password, resetToken: resetToken});
+            if(null == user){
+                throw new Error(`unexpected error trying to change password`);
+            }
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message });
+            }
+        }
+
 
     }
 }));

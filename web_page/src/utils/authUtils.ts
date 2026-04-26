@@ -3,6 +3,7 @@ import { jwtVerify, SignJWT } from "jose";
 import { prisma } from "../../lib/prisma";
 import { compare } from "bcryptjs";
 import { myAuth } from "./auth";
+import { OutputUser } from "@/services/userService";
 export async function myLogOut() {
     const cookieStore = await cookies();
     cookieStore.delete("auth-token");
@@ -48,5 +49,18 @@ export async function getAuthUserFromToken() {
     console.log(JSON.stringify(auth_res.userData));
     const { full_name, email, role, userId } = auth_res.userData;
     return { full_name, email, role, userId };
+}
+
+export async function authResetToken(token: string): Promise<{ success: boolean, user: OutputUser | null}> {
+    const user = await prisma.user.findUnique({
+        where: {
+            resetToken: token,
+            tokenExpiry: { gte: new Date() }
+        }
+    });
+    if (user) {
+        return ({ success: true, user:user });
+    }
+    return ({ success: false, user:user});
 }
 

@@ -34,7 +34,7 @@ export default function LoginPage() {
 
                     <label className="label">Password</label>
                     <PasswordInput onValueChanged={(val) => setPassword(val)} validate={false}></PasswordInput>
-                    <Link className="link link-hover mt-4" href={"/"}>Recuperar contraseña</Link>
+                    <Link className="link link-hover mt-4" href={"/reset"}>Recuperar contraseña</Link>
 
                     <button type="submit" className="btn btn-primary mt-4">Login</button>
                     {error &&

@@ -1,6 +1,9 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
 import bcrypt from "bcryptjs";
+import { verifyAuthResetToken } from "@/services/authenticationService";
+import { assert } from "console";
+// import { User } from "../../generated/prisma/client";
 
 export interface InputUser {
     full_name: string,
@@ -8,12 +11,15 @@ export interface InputUser {
     role: string,
     password: string,
 }
+// export type OutputUser = Omit<User, 'password_hash'>;
 export interface OutputUser {
-    id: number,
-    full_name: string,
-    email: string,
-    role: string,
-    created_at?: Date,
+    id: number;
+    email: string;
+    full_name: string;
+    createdAt: Date;        
+    role: string;
+    resetToken?: string | null;  
+    tokenExpiry?: Date | null;   
 }
 export interface UpdateUserData {
     full_name: string,
@@ -25,15 +31,17 @@ export interface UpdateUserInput {
     new_data: Partial<UpdateUserData>,
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(filters = {}) {
     console.log(process.env.DATABASE_URL);
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+        where: { ...filters, },
+    });
     // const response = await fetch("/api/users");
     // const users = await response.json();
     return users;
 }
 
-export async function getUserById(id: number) {
+export async function getUserById(id: number) : Promise<OutputUser| null>  {
     const user = await prisma.user.findUnique({
         where: {
             id: id,
@@ -41,9 +49,20 @@ export async function getUserById(id: number) {
     });
     return user;
 }
-export async function getUserCount(filters = {}){
-    const count = await prisma.user.count({
+export async function searchUsers(searchInput:string){
+    const users = await prisma.user.findMany({
         where:{
+            OR:[
+                {full_name: { contains: searchInput, mode: "insensitive"}},
+                {email: { contains: searchInput, mode: "insensitive"}},
+            ],
+        }
+    });
+    return users;
+}
+export async function getUserCount(filters = {}) {
+    const count = await prisma.user.count({
+        where: {
             ...filters,
         }
     });
@@ -82,9 +101,31 @@ export async function updateUser({ id, new_data }: UpdateUserInput) {
         where: {
             id: id,
         },
-        data: {...new_data},
+        data: { ...new_data },
     });
     return user;
 
+}
+export async function changeUserPassword({new_password, resetToken} : {new_password:string, resetToken:string}){
+    const {success, user} = await verifyAuthResetToken(resetToken);
+    if(!success || !user){
+        console.log("invalid resetToken tried to change password");
+        return null;
+    }
+    
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(new_password, salt);
+    const updated_user = await prisma.user.update({
+        where:{
+            id: user.id,
+        },
+        data:{
+            password_hash: hash,
+            resetToken: null,
+            tokenExpiry: null,
+        }
+    });
+    assert(updated_user, "tried to change password to a unexisting user");
+    return updated_user; 
 }
 

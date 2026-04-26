@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { AuthTokenData } from "@/utils/auth"
-import { auth } from "@/services/authenticationService";
+import { auth, verifyAuthResetToken } from "@/services/authenticationService";
 import { updateUser, OutputUser, UpdateUserData, UpdateUserInput, getUserById, deleteUser } from "@/services/userService";
 
 type authStoreState = {
@@ -72,6 +72,27 @@ const useAuthStore = create<AuthStore>((set, get) => ({
             }
             const deletedUser: OutputUser = await deleteUser(id);
             set({authUserData:null});
+        }catch(e){
+            if(e instanceof Error){
+                set({error: e.message})
+            }
+        }
+    },
+    fetchAuthUserFromResetToken: async (token:string) => {
+        try{
+            const response = await verifyAuthResetToken(token);
+            if(!response.success || !response.user){
+                throw new Error("Error, not a valid token");
+            }
+            set({ authUserData: response.user, userId: response.user.id });
+        }catch(e){
+            if(e instanceof Error){
+                set({error: e.message})
+            }
+        }
+    },
+    resetPassword: async (password:string) =>{
+        try{
         }catch(e){
             if(e instanceof Error){
                 set({error: e.message})
