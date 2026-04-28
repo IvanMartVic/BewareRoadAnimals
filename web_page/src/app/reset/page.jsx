@@ -10,12 +10,8 @@ export default function ResetPage() {
     async function handleSubmit(e) {
         e.preventDefault();
         const { success, error } = await resetPassword(email);
-        if (success) {
-            alert('Se ha mandado un mensaje a tu correo electrónico')
-            router.push("/");
-        } else {
-            alert(`${error}`);
-        }
+        alert('Se ha mandado un mensaje a tu correo electrónico')
+        router.push("/");
     }
     return (
         <div className="flex h-screen w-screen bg-base-100 items-center justify-center">

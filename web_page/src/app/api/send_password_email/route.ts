@@ -4,11 +4,16 @@ import { Resend } from 'resend'
 import ResetPasswordMail from '@/emails/resetPasswordMail'
 import crypto from 'crypto';
 import { prisma } from '@/../lib/prisma';
+import { ErrorResponse } from 'resend';
 
 // Inicializar Resend con tu API Key
 const resend = new Resend(process.env.RESEND_API_KEY)
+export interface emailServiceResponse{
+    error? : ErrorResponse | unknown,
+    data? : object,
+}
 
-export async function POST(request: Request) {
+export async function POST(request: Request):Promise<NextResponse<emailServiceResponse>> {
     try {
         // Obtener datos del cuerpo de la petición
         const HOUR_IN_MSEC = 60 * 60 * 1000;
