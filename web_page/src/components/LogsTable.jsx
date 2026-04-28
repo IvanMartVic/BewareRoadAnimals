@@ -15,7 +15,7 @@ export default function LogsTable({ logs, selectedRow, onSelect }) {
                         return (<tr key={l.id}
                             onClick={() => onSelect?.(l.id)}
                             className={`${selectedRow == l.id ? "bg-neutral-500" : "bg-base-100"} hover:bg-base-300`}>
-                            <th>{l.timestamp.toISOString()}</th>
+                            <th>{l.timestamp.toLocaleString()}</th>
                             <td>{l.message}</td>
                             <td>{l.type}</td>
 

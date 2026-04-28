@@ -1,17 +1,28 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
 
-export async function getAllLogs(filters={}) {
+export async function getAllLogs(filters = {}) {
     const logs = await prisma.log.findMany({
-        where:{
+        where: {
             ...filters,
         }
     });
     return logs;
 }
-export async function getLogsCount(filters={}) {
+export async function getUserLogs({ filters = {}, userId }) {
+    const logs = await prisma.log.findMany({
+        where: {
+            deviceIn: {
+                userId: userId,
+            },
+            ...filters,
+        },
+    });
+    return logs;
+}
+export async function getLogsCount(filters = {}) {
     const logs = await prisma.log.count({
-        where:{
+        where: {
             ...filters,
             // deviceId:13,
         }
@@ -20,7 +31,7 @@ export async function getLogsCount(filters={}) {
 }
 
 
-export async function createLog({message, image}) {
+export async function createLog({ message, image }) {
     const new_log = await prisma.log.create({
         data: {
             message: message,
