@@ -25,7 +25,7 @@ export default function Home() {
     const date = new Date();
     return (
         <div
-            className="flex flex-col h-screen gap-4 justify-start items-start p-20">
+            className="flex flex-col h-screen gap-4 justify-start items-start p-[5vw]">
             <h1 className="text-xl">Bienvenido {authUserData?.full_name}</h1>
             <h2>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}  {date.getHours()}:{date.getMinutes()}</h2>
             <div

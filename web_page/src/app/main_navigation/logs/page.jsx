@@ -7,6 +7,7 @@ import useAuthStore from "@/stores/authStore";
 import { useCallback, useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import { use } from "react";
+import { useRouter } from "next/navigation";
 export default function LogViewPage({ searchParams }) {
     // http://localhost:3000/main_navigation/devices/logs?type=hola&deviceId=2 for type="hola" and deviceId="2"
     let filters = use(searchParams);
@@ -61,6 +62,7 @@ export default function LogViewPage({ searchParams }) {
     //         <LogDetails log={logs.find((l => l.id == selectedRow))}> </LogDetails>}
     //     </div>
 
+    const router = useRouter();
     return (
         <div
             className="flex flex-col h-screen items-start p-10">
@@ -93,7 +95,7 @@ export default function LogViewPage({ searchParams }) {
             </div>
 
             <div className="flex h-[90vh] w-full">
-                <LogsTable logs={logs} selectedRow={selectedRow} onSelect={(r) => setSelectedRow(r)}></LogsTable>
+                <LogsTable logs={logs} selectedRow={selectedRow} onSelect={(r) => router.push(`/main_navigation/logs/${r}`)}></LogsTable>
 
             </div>
 

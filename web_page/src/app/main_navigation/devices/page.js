@@ -44,7 +44,7 @@ export default function DevicesMainPage() {
             </div>
             <div className="flex h-9/10 w-full">
                 {!isLoading &&
-                    <Map position={[40.96882, -5.66388]} zoom={8} devices={devices} scrollWheelZoom={true} clickFunction={(deviceId) => router.push(`/main_navigation/devices/logs/${deviceId}`)}/>
+                    <Map position={[40.96882, -5.66388]} zoom={8} devices={devices} scrollWheelZoom={true} clickFunction={(deviceId) => router.push(`/main_navigation/devices/${deviceId}`)}/>
                 }
             </div>
         </div>

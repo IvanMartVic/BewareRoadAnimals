@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllLogs, deleteLog, getLogsCount, getUserLogs } from "@/services/logsService"
+import { getAllLogs, deleteLog, getLogsCount, getUserLogs, getLogById } from "@/services/logsService"
 
 
 const useLogStore = create((set, get) => ({
@@ -24,6 +24,7 @@ const useLogStore = create((set, get) => ({
                 res = await getAllLogs({ ...filters });
             }
             set({ logs: res, isLoading: false });
+            return res;
         } catch (e) {
             if (e instanceof Error) {
                 set({ error: e.message, isLoading: false });

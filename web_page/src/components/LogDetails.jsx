@@ -6,13 +6,14 @@ export default function LogDetails({ log }) {
 
     return (
 
-        <div className="card bg-base-300 w-full shadow-accent">
+        <div className="card bg-base-100 w-full shadow-accent">
             <div className="card-body">
-                <div className="rounded-box border border-base-content/5 bg-base-100">
+                <div className="overflow-auto h-full w-full rounded-box border border-base-100 bg-base-200 shadow-neutral-500">
                     <table className="table">
-                        <thead>
+                        <thead className="bg-primary text-primary-content">
                             <tr>
-                                <th className="justify-center text-center">Información del log</th>
+                                <th>Información del log</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,8 +36,8 @@ export default function LogDetails({ log }) {
                         </tbody>
                     </table>
                 </div>
-                {log.image && 
-                    <div className="flex flex-col gap-4 rounded-box border border-base-content/5 bg-base-100 h-8 items-center">
+                {log.image &&
+                    <div className="flex flex-col gap-4 rounded-box border border-base-content/5 bg-base-200 h-8 items-center">
                         <h1 className="text-center text-xl font-bold">Imágen</h1>
                         <Image src={imgSrc} alt="" width={400} height={400}></Image>
                     </div>
