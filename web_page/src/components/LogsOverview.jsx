@@ -31,8 +31,10 @@ export default function LogsOverview({ filters = DEFAULT_FILTERS }) {
         })));
     useEffect(() => {
         //hay una race-condition aquí si los filtros cambian rápidamente
-        const queryFilter = {...filters, deviceIn: { userId: authUserData.id}}
-        fetchLogTypeCount?.(queryFilter);
+        if(authUserData?.id){
+            const queryFilter = {...filters, deviceIn: { userId: authUserData.id}}
+            fetchLogTypeCount?.(queryFilter);
+        }
     }, [fetchLogTypeCount, filters, authUserData?.id])
     const router = useRouter();
     const urlDeviceFilter = filters.deviceId ? `deviceId=${filters.deviceId}` : "";

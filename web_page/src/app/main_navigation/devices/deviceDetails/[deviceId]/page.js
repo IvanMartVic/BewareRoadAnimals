@@ -13,7 +13,7 @@ import LogsOverview from "@/components/LogsOverview";
 export default function LogsMainPage() {
     const { deviceId } = useParams();
     const [pageDevice, setPageDevice] = useState(null);
-    const { fetchDevices, isLoading, devices, error } = useDeviceStore(
+    const { fetchDevices, isLoading, devices, deleteDevice,error } = useDeviceStore(
         useShallow((state) => ({
             fetchDevices: state.fetchDevices,
             isLoading: state.isLoading,
@@ -44,6 +44,14 @@ export default function LogsMainPage() {
             ssr: false
         }
     ), [])
+    const handleDelete = async () => {
+        const choice = confirm("Vas a eliminar un dispositivo");
+        if(choice){
+            deleteDevice(+deviceId);
+            router.push("/main_navigation/devices")
+        }
+
+    }
 
     const router = useRouter();
     const deviceFilter = useMemo(() => ({ deviceId: +deviceId }), [deviceId]);
@@ -56,6 +64,9 @@ export default function LogsMainPage() {
                     {!isLoading &&
                         <h1>Desplegado por {pageDevice?.deployedBy?.full_name || "desconocido"}</h1>
                     }
+                </div>
+                <div className="flex items-center p-[1vw]">
+                    <button className="btn btn-error btn-soft btn-sm" onClick={handleDelete}>Eliminar dispositivo</button>
                 </div>
             </div>
             <div className="flex w-full h-[60vh] p-[1vh] items-start">

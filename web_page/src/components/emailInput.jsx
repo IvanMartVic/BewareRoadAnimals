@@ -1,11 +1,11 @@
-export default function EmailInput({onValueChanged, value, validate=true, disabled=false}) {
+export default function EmailInput({ onValueChanged, value, validate = true, disabled = false }) {
 
     const handleChange = (event) => {
         onValueChanged(event.target.value.toLowerCase());
     }
     return (
         <>
-            <label className="input validator">
+            <label className={`input ${validate ? 'validator' : ''}`}>
                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g
                         strokeLinejoin="round"
@@ -18,10 +18,10 @@ export default function EmailInput({onValueChanged, value, validate=true, disabl
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                     </g>
                 </svg>
-                <input type="email" title="tipo ejemplo@mail" placeholder="email@site.com" required onChange={handleChange} value={value} disabled={disabled}/>
+                <input type={validate? "email" : "text"} title="tipo ejemplo@mail" placeholder="email@site.com" required onChange={handleChange} value={value} disabled={disabled} />
             </label>
             {validate &&
-            <p className="validator-hint hidden">Escriba una dirección de email válida</p>}
+                <p className="validator-hint hidden">Escriba una dirección de email válida</p>}
         </>
 
     )

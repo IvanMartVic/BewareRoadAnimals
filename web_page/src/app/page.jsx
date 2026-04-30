@@ -16,7 +16,6 @@ export default function LoginPage() {
         if (e && e.preventDefault){
             e.preventDefault();
         }
-        alert( `${password} ${email}` );
         const response = await SignIn({password:password, email:email});
         if(!response.success){
             setError(response);

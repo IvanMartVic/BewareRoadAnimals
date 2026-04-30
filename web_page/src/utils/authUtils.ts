@@ -22,7 +22,7 @@ export async function mySignIn({ password, email }: credentials) {
     if (!user) {
         return {
             success: false,
-            message: "No account found",
+            message: "Usuario o contraseña incorrectos",
         }
     }
     console.log(`signing user in ${email}`);
@@ -37,8 +37,12 @@ export async function mySignIn({ password, email }: credentials) {
         const cookieStore = await cookies();
         cookieStore.set("auth-token", jwt);
         console.log(jwt);
+        return { success: true };
     }
-    return { success: isUser };
+    return {
+        success: false,
+        message: "Usuario o contraseña incorrectos",
+    }
 }
 
 
@@ -51,7 +55,7 @@ export async function getAuthUserFromToken() {
     return { full_name, email, role, userId };
 }
 
-export async function authResetToken(token: string): Promise<{ success: boolean, user: OutputUser | null}> {
+export async function authResetToken(token: string): Promise<{ success: boolean, user: OutputUser | null }> {
     const user = await prisma.user.findUnique({
         where: {
             resetToken: token,
@@ -59,8 +63,8 @@ export async function authResetToken(token: string): Promise<{ success: boolean,
         }
     });
     if (user) {
-        return ({ success: true, user:user });
+        return ({ success: true, user: user });
     }
-    return ({ success: false, user:user});
+    return ({ success: false, user: user });
 }
 

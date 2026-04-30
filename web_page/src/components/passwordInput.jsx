@@ -1,12 +1,12 @@
-export default function PasswordInput({onValueChanged, validate=true}){
+export default function PasswordInput({ onValueChanged, validate = true }) {
     const handleChange = (event) => {
         onValueChanged(event.target.value);
     }
-    const pattern = validate ? "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}":"*" 
+    const pattern = validate ? "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" : undefined;
 
     return (
         <>
-            <label className="input validator">
+            <label className={`input ${validate ? 'validator' : ''}`}>
                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g
                         strokeLinejoin="round"
@@ -23,19 +23,19 @@ export default function PasswordInput({onValueChanged, validate=true}){
                 </svg>
                 <input
                     type="password"
-                    required
+                    required={validate}
                     placeholder="Contraseña"
-                    minLength="8"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    title="La contraseña tiene que tener más de 8 caracteres, al menos un número una letra mayúscula y una minúscula"
+                    minLength={validate ? 8 : undefined}
+                    pattern={pattern}
+                    title={validate ? "La contraseña tiene que tener más de 8 caracteres, al menos un número una letra mayúscula y una minúscula" : undefined}
                     onChange={handleChange}
                 />
             </label>
             {validate &&
-            <p className="validator-hint hidden">
-                tiene que tener 8 caracteres, con:
-                <br /> Al menos un número<br /> Al menos una letra mayúscula <br /> Al menos una letra minúscula
-            </p>}        
+                <p className="validator-hint hidden">
+                    tiene que tener 8 caracteres, con:
+                    <br /> Al menos un número<br /> Al menos una letra mayúscula <br /> Al menos una letra minúscula
+                </p>}
         </>
     )
 }
