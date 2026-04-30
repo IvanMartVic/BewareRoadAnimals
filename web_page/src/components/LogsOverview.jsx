@@ -3,9 +3,22 @@ import useLogStore from "@/stores/logStore"
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow"
+import useAuthStore from "@/stores/authStore"
 
 const DEFAULT_FILTERS = {}
 export default function LogsOverview({ filters = DEFAULT_FILTERS }) {
+    const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
+        useShallow((state) => ({
+            authUserData: state.authUserData,
+            fetchAuthUser: state.fetchAuthUser,
+            errorAuth: state.error,
+        })));
+    useEffect(() => {
+        fetchAuthUser();
+        if (errorAuth != null) {
+            alert(errorAuth);
+        }
+    }, [fetchAuthUser, errorAuth])
     const { fetchLogTypeCount, logCount, systemCount, detectCount, batteryWarningCount, isLoading, error } = useLogStore(
         useShallow((s) => ({
             fetchLogTypeCount: s.fetchLogTypeCount,
@@ -18,8 +31,9 @@ export default function LogsOverview({ filters = DEFAULT_FILTERS }) {
         })));
     useEffect(() => {
         //hay una race-condition aquí si los filtros cambian rápidamente
-        fetchLogTypeCount?.(filters);
-    }, [fetchLogTypeCount, filters])
+        const queryFilter = {...filters, deviceIn: { userId: authUserData.id}}
+        fetchLogTypeCount?.(queryFilter);
+    }, [fetchLogTypeCount, filters, authUserData?.id])
     const router = useRouter();
     const urlDeviceFilter = filters.deviceId ? `deviceId=${filters.deviceId}` : "";
 

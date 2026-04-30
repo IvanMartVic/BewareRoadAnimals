@@ -6,6 +6,7 @@ import useDeviceStore from "@/stores/deviceStore";
 import { useShallow } from "zustand/shallow";
 import Image from "next/image";
 import plus from "@/../public/plus_icon.jpg";
+import useAuthStore from "@/stores/authStore";
 
 
 export default function DevicesMainPage() {
@@ -17,12 +18,33 @@ export default function DevicesMainPage() {
             deleteDevice: state.deleteDevice,
             error: state.error,
         })));
+
+    const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
+        useShallow((state) => ({
+            authUserData: state.authUserData,
+            fetchAuthUser: state.fetchAuthUser,
+            errorAuth: state.error,
+        })));
+
     useEffect(() => {
-        fetchDevices();
+        fetchAuthUser();
+        if (errorAuth != null) {
+            alert(errorAuth);
+        }
+    }, [fetchAuthUser, errorAuth])
+
+    useEffect(() => {
+        if(authUserData?.id){
+            if(authUserData.role == "USER"){
+                fetchDevices({userId: authUserData.id});
+            }else{
+                fetchDevices();
+            }
+        }
         if (error != null) {
             alert(error);
         }
-    }, [fetchDevices, error]);
+    }, [fetchDevices, error, authUserData?.id]);
 
     const router = useRouter();
     const Map = useMemo(() => dynamic(

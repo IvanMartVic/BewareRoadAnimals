@@ -24,10 +24,10 @@ const useDeviceStore = create<DeviceStore>((set) => ({
     count: 0,
     isLoading: false,
     error: null,
-    fetchDevices: async () => {
+    fetchDevices: async (filters = {}) => {
         set({ isLoading: true });
         try {
-            const res = await getAllDevicesWithUser();
+            const res = await getAllDevicesWithUser(filters);
             set({ devices: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {

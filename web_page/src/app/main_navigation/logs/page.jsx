@@ -15,11 +15,6 @@ export default function LogViewPage({ searchParams }) {
     const deviceId = filters.deviceId;
     const userId = filters.userId;
     const [selectedRow, setSelectedRow] = useState(null);
-    const [filter, setFilter] = useState({
-        deviceId: (deviceId) ? +deviceId : "ALL",
-        type: (type) ? type : "ALL",
-        userId: (userId) ? +userId : "ALL",
-    });
     // const logs = await getAllLogs();
     const { logs, fetchLogs, isLoading, deleteAllLogs } = useLogStore(
         useShallow((state) => ({
@@ -29,12 +24,18 @@ export default function LogViewPage({ searchParams }) {
             deleteAllLogs: state.deleteAllLogs,
         }))
     );
-    const { authUserId, fetchAuthUser } = useAuthStore(
+    const { authUserId, fetchAuthUser, authUserData } = useAuthStore(
         useShallow((state) => ({
             authUserId: state.userId,
             fetchAuthUser: state.fetchAuthUser,
+            authUserData: state.authUserData,
         }))
     );
+    const [filter, setFilter] = useState({
+        deviceId: (deviceId) ? +deviceId : "ALL",
+        type: (type) ? type : "ALL",
+        userId: (userId) ? +userId : authUserId,
+    });
     const filterAndFetch = useCallback(() => {
         const queryFilter = { ...filter };
         if (queryFilter.type == "ALL") {
@@ -80,9 +81,12 @@ export default function LogViewPage({ searchParams }) {
                     <fieldset className="fieldset w-1/12">
                         <legend className="fieldset-legend">Usuario</legend>
                         <select value={filter.userId} onChange={(e) => setFilter({ ...filter, userId: ("ALL" == e.target.value) ? e.target.value : +e.target.value })} className="select ">
-                            <option value={"ALL" || ""} disabled={false}>ALL</option>
                             <option value={authUserId} disabled={false}>Mi usuario</option>
-                            {userId &&
+                            {authUserData && authUserData.role == "ADMIN" &&
+                                <option value={"ALL" || ""} disabled={false}>ALL</option>
+                            }
+
+                            {userId && userId != authUserId &&
                                 <option value={+userId} disabled={false}>Usuario: ID={userId}</option>
                             }
                         </select>

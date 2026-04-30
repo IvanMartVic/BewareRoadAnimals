@@ -2,17 +2,17 @@ import useDeviceStore from "@/stores/deviceStore"
 import { useEffect } from "react";
 import { useShallow } from "zustand/shallow"
 import { useRouter } from "next/navigation";
-export default function DevicesOverview() {
-    const { count, fetchDevicesCount, error } = useDeviceStore(useShallow(
+export default function DevicesUserOverview({id}) {
+    const {count, fetchDevicesCount, error} = useDeviceStore( useShallow(
         (s) => ({
             count: s.count,
             fetchDevicesCount: s.fetchDevicesCount,
             error: s.error,
         })
     ));
-    useEffect(() => {
-        fetchDevicesCount();
-    }, [fetchDevicesCount])
+    useEffect( () => {
+        fetchDevicesCount({userId: id});
+    },[fetchDevicesCount, id])
     const router = useRouter();
 
     return (
@@ -21,7 +21,7 @@ export default function DevicesOverview() {
                 <h1 className="card-title justify-start text-neutral-content">Dispositivos</h1>
                 <p className="ml-2 text-primary-content">dispositivos desplegados por el usuario</p>
                 <p className="justify-end text-end text-primary-content text-bold text-xl">{count}</p>
-                {error &&
+                {error && 
                     <p className="justify-end text-end text-error text-bold text-xl">{error}</p>
                 }
             </div>

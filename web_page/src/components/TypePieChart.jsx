@@ -66,7 +66,7 @@ export default function TypePieChart() {
                                 cx="50%"
                                 cy="50%"
                                 outerRadius={"90%"}
-                                isAnimationActive={true}
+                                isAnimationActive={false}
                                 label={renderPercentageLabel}
                                 labelLine={true}
                             />

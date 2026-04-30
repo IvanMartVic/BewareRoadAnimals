@@ -4,8 +4,23 @@ import avatar from "@/../public/avatar.jpg"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { LogOut } from "@/services/authenticationService"
+import useAuthStore from "@/stores/authStore"
+import { useShallow } from "zustand/shallow"
+import { useEffect } from "react"
 
 export default function Navbar({ pageContent }) {
+    const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
+        useShallow((state) => ({
+            authUserData: state.authUserData,
+            fetchAuthUser: state.fetchAuthUser,
+            errorAuth: state.error,
+        })));
+    useEffect(() => {
+        fetchAuthUser();
+        if (errorAuth != null) {
+            alert(errorAuth);
+        }
+    }, [fetchAuthUser, errorAuth])
     const router = useRouter();
     const logout = function() {
         // alert("logging out");
@@ -25,8 +40,8 @@ export default function Navbar({ pageContent }) {
                     <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>RoadAnimals</Link>
                 </div>
                 <div className="flex justify-end items-center gap-4 w-full">
-                        <li className="btn btn-primary btn-soft btn-sm w-20"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
-                        <li className="btn btn-error btn-soft btn-sm w-20"><button onClick={logout}>Cerrar Sesión</button></li>
+                    <li className="btn btn-primary btn-soft btn-sm w-20"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
+                    <li className="btn btn-error btn-soft btn-sm w-20"><button onClick={logout}>Cerrar Sesión</button></li>
                 </div>
             </div>
             <div className="flex-none drawer lg:drawer-open bg-base-300">
@@ -39,16 +54,18 @@ export default function Navbar({ pageContent }) {
                     <ul className="menu bg-base-300 min-h-full w-80 p-4">
                         {/* Sidebar content here */}
                         <li className="font-bold"><Link href={"/main_navigation"}>Página Principal</Link></li>
-                        <li>
-                            <details open>
-                                <summary className="font-bold">Usuarios</summary>
-                                <ul>
-                                    <li><Link href={"/main_navigation/users"}>Área de Usuarios </Link></li>
-                                    <li><Link href={"/main_navigation/users/newUser"}>Nuevo Usuario</Link></li>
-                                </ul>
+                        {authUserData && authUserData.role == "ADMIN" &&
+                            <li>
+                                <details open>
+                                    <summary className="font-bold">Usuarios</summary>
+                                    <ul>
+                                        <li><Link href={"/main_navigation/users"}>Área de Usuarios </Link></li>
+                                        <li><Link href={"/main_navigation/users/newUser"}>Nuevo Usuario</Link></li>
+                                    </ul>
 
-                            </details>
-                        </li>
+                                </details>
+                            </li>
+                        }
                         <li>
                             <details open>
                                 <summary className="font-bold">Dispositivos</summary>
@@ -60,7 +77,9 @@ export default function Navbar({ pageContent }) {
                             </details>
 
                         </li>
-                        <li className="font-bold"><Link href={"/main_navigation/logs"}>Logs</Link></li>
+                        {authUserData &&
+                            <li className="font-bold"><Link href={`/main_navigation/logs?userId=${authUserData.id}`}>Logs</Link></li>
+                        }
                         <li><Link href={"/main_navigation/about"}>Sobre Nosotros</Link></li>
                     </ul>
                 </div>

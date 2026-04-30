@@ -15,7 +15,7 @@ export interface UpdateDeviceInput {
     data: UpdateDeviceData,
 }
 
-export async function getAllDevicesWithUser() {
+export async function getAllDevicesWithUser(filters = {}) {
     const devices = await prisma.device.findMany( {
         include:{
             deployedBy:{
@@ -23,6 +23,9 @@ export async function getAllDevicesWithUser() {
                     full_name: true,
                 }
             }
+        },
+        where:{
+            ...filters,
         }
     } );
     return devices;
