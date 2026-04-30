@@ -27,7 +27,7 @@ export default function LogDetails({ log }) {
                             </tr>
                             <tr>
                                 <th>Mensaje completo</th>
-                                <th>{log.message} + mensaje muy largo largísimo pero que mucho</th>
+                                <th>{log.message}</th>
                             </tr>
                             <tr>
                                 <th>ID del dispositivo</th>
@@ -42,8 +42,6 @@ export default function LogDetails({ log }) {
                         <Image src={imgSrc} alt="" width={400} height={400}></Image>
                     </div>
                 }
-
-
             </div>
         </div>
     )

@@ -23,21 +23,10 @@ export default function Navbar({ pageContent }) {
                 </label>
                 <div className="flex-1">
                     <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>RoadAnimals</Link>
-
                 </div>
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-5">
-                        <div className="w-10 rounded-full">
-                            <Image src={avatar} alt=""></Image>
-                        </div>
-
-                    </div>
-                    <ul
-                        tabIndex="-1"
-                        className="menu dropdown-content bg-base-300 rounded-box z-1 mt-1 w-46 shadow-sm">
-                        <li className="btn btn-primary mb-1"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
-                        <li className="btn btn-error"><button onClick={logout}>Cerrar Sesión</button></li>
-                    </ul>
+                <div className="flex justify-end items-center gap-4 w-full">
+                        <li className="btn btn-primary btn-soft btn-sm w-20"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
+                        <li className="btn btn-error btn-soft btn-sm w-20"><button onClick={logout}>Cerrar Sesión</button></li>
                 </div>
             </div>
             <div className="flex-none drawer lg:drawer-open bg-base-300">
@@ -49,22 +38,22 @@ export default function Navbar({ pageContent }) {
                     <label htmlFor="sidebar" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-300 min-h-full w-80 p-4">
                         {/* Sidebar content here */}
+                        <li className="font-bold"><Link href={"/main_navigation"}>Página Principal</Link></li>
                         <li>
                             <details open>
                                 <summary className="font-bold">Usuarios</summary>
                                 <ul>
-                                    <li><Link href={"/main_navigation/users"}>Área de usuarios </Link></li>
+                                    <li><Link href={"/main_navigation/users"}>Área de Usuarios </Link></li>
                                     <li><Link href={"/main_navigation/users/newUser"}>Nuevo Usuario</Link></li>
                                 </ul>
 
                             </details>
-
                         </li>
                         <li>
                             <details open>
                                 <summary className="font-bold">Dispositivos</summary>
                                 <ul>
-                                    <li><Link href={"/main_navigation/devices"}>Area de dispositivos</Link></li>
+                                    <li><Link href={"/main_navigation/devices"}>Area de Dispositivos</Link></li>
                                     <li><Link href={"/main_navigation/devices/newDevice"}>Nuevo Dipositivo</Link></li>
                                 </ul>
 
@@ -72,7 +61,7 @@ export default function Navbar({ pageContent }) {
 
                         </li>
                         <li className="font-bold"><Link href={"/main_navigation/logs"}>Logs</Link></li>
-                        <li><Link href={"/main_navigation/about"}>Sobre nosotros</Link></li>
+                        <li><Link href={"/main_navigation/about"}>Sobre Nosotros</Link></li>
                     </ul>
                 </div>
             </div>

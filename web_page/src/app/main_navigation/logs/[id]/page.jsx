@@ -41,9 +41,9 @@ export default function LogDetailPage() {
 
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-start h-screen">
             {!isLoading && log ? (
-                <div className="w-1/3">
+                <div className="w-xl">
                     <LogDetails log={log} />
                 </div>
             ) : (

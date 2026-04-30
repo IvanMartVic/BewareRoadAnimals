@@ -58,15 +58,18 @@ export default function LogsMainPage() {
                     }
                 </div>
             </div>
-            <div className="flex w-full h-5/10 items-start">
-                <div className="flex h-full w-1/2">
+            <div className="flex w-full h-[60vh] p-[1vh] items-start">
+                <div className="flex h-full w-full">
                     {!isLoading && pageDevice &&
                         <Map position={[pageDevice?.coordLatitude, pageDevice?.coordLength]} zoom={13} devices={devices} />
                     }
                 </div>
             </div>
-            {deviceFilter && 
-                <LogsOverview filters={deviceFilter} ></LogsOverview>
+            {deviceFilter &&
+                <div className="flex p-[1vw] w-full">
+                    <LogsOverview filters={deviceFilter} ></LogsOverview>
+
+                </div>
             }
         </div>
     );

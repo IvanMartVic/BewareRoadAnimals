@@ -41,7 +41,7 @@ export default function MyProfilePage() {
     }
     const deleteUser = async () => {
         const c = confirm("vas a eliminar todos los datos de tu cuenta, ¿continuar?");
-        if(c){
+        if (c) {
             await deleteAuthUser();
             router.push("/");
         }
@@ -52,15 +52,9 @@ export default function MyProfilePage() {
 
 
     return (
-        <div className="flex justify-center items-center h-screen  gap-16 mr-72 pb-32">
-            <div className="avatar">
-                <div className="ring-primary ring-offset-base-100 w-100 rounded-full ring-2 ring-offset-2">
-                    <Image src={avatar} alt=""></Image>
-                </div>
-            </div>
+        <div className="flex justify-center items-center h-screen  gap-16">
             <form onSubmit={handleChanges}>
-                <fieldset className="fieldset">
-
+                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-sm border p-4 gap-7">
                     <legend className="fieldset-legend text-xl">Nombre y apellidos</legend>
                     <div className="flex flex-row items-center gap-2 ">
                         <NombreApellidosInput
@@ -71,8 +65,6 @@ export default function MyProfilePage() {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" /><path d="m15 5 4 4" /></svg>
                         </button>
                     </div>
-                </fieldset>
-                <fieldset className="fieldset">
                     <legend className="fieldset-legend text-xl">Correo electrónico</legend>
                     <div className="flex flex-row items-center gap-2">
                         <EmailInput value={authUserData?.email || "desconocido"} onValueChanged={(email) => setAuthUserData({ email: email })} disabled={email_disabled}> </EmailInput>
@@ -80,16 +72,14 @@ export default function MyProfilePage() {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" /><path d="m15 5 4 4" /></svg>
                         </button>
                     </div>
+                    <label className="text-xl" >ROL: {authUserData?.role || "desconocido"}</label>
+                    <div className="flex flex-row justify-between mt-5 gap-1">
+                        <button className="btn btn-primary" type="submit" >Aplicar Cambios</button>
+                        <li className="btn btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
+                    </div>
+                    <button className="btn btn-error w-full" type="button" onClick={deleteUser}>Borrar cuenta</button>
                 </fieldset>
-                <label className="text-xl" >ROL: {authUserData?.role || "desconocido"}</label>
-                <div className="flex flex-row justify-between mt-5 gap-1">
-                    <button className="btn btn-primary" type="submit" >Aplicar Cambios</button>
-                    <li className="btn btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
-                </div>
-                <button className="btn btn-error mt-10 w-full" type="button" onClick={deleteUser}>Borrar cuenta</button>
             </form>
-
-
         </div>
     );
 }
