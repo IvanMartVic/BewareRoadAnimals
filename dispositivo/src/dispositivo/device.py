@@ -2,7 +2,7 @@ import requests
 from dispositivo import model 
 from dataclasses import dataclass
 
-@dataclass(frozen=True):
+@dataclass(frozen=True)
 class SensorData:
     bateria:int 
     # image_frame:frame
@@ -13,7 +13,8 @@ class Device:
         self.model = model
 
     def deploy(self):
-        requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"}, timeout=0)
+        print(f"going for url: {self.server_url}/api/deployement")
+        requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"})
 
     def _low_battery_message(self):
         requests.post(url=f"{self.server_url}/logs",json={"id":self.id, "message":"batería baja", "type":"BATERIA"}, timeout=0)
