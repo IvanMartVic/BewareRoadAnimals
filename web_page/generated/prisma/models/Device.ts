@@ -46,6 +46,7 @@ export type DeviceMinAggregateOutputType = {
   coordLength: number | null
   userId: number | null
   deployedAt: Date | null
+  status: string | null
 }
 
 export type DeviceMaxAggregateOutputType = {
@@ -54,6 +55,7 @@ export type DeviceMaxAggregateOutputType = {
   coordLength: number | null
   userId: number | null
   deployedAt: Date | null
+  status: string | null
 }
 
 export type DeviceCountAggregateOutputType = {
@@ -62,6 +64,7 @@ export type DeviceCountAggregateOutputType = {
   coordLength: number
   userId: number
   deployedAt: number
+  status: number
   _all: number
 }
 
@@ -86,6 +89,7 @@ export type DeviceMinAggregateInputType = {
   coordLength?: true
   userId?: true
   deployedAt?: true
+  status?: true
 }
 
 export type DeviceMaxAggregateInputType = {
@@ -94,6 +98,7 @@ export type DeviceMaxAggregateInputType = {
   coordLength?: true
   userId?: true
   deployedAt?: true
+  status?: true
 }
 
 export type DeviceCountAggregateInputType = {
@@ -102,6 +107,7 @@ export type DeviceCountAggregateInputType = {
   coordLength?: true
   userId?: true
   deployedAt?: true
+  status?: true
   _all?: true
 }
 
@@ -197,6 +203,7 @@ export type DeviceGroupByOutputType = {
   coordLength: number
   userId: number
   deployedAt: Date
+  status: string
   _count: DeviceCountAggregateOutputType | null
   _avg: DeviceAvgAggregateOutputType | null
   _sum: DeviceSumAggregateOutputType | null
@@ -228,6 +235,7 @@ export type DeviceWhereInput = {
   coordLength?: Prisma.FloatFilter<"Device"> | number
   userId?: Prisma.IntFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeFilter<"Device"> | Date | string
+  status?: Prisma.StringFilter<"Device"> | string
   deployedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   logs?: Prisma.LogListRelationFilter
 }
@@ -238,6 +246,7 @@ export type DeviceOrderByWithRelationInput = {
   coordLength?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   deployedBy?: Prisma.UserOrderByWithRelationInput
   logs?: Prisma.LogOrderByRelationAggregateInput
 }
@@ -251,6 +260,7 @@ export type DeviceWhereUniqueInput = Prisma.AtLeast<{
   coordLength?: Prisma.FloatFilter<"Device"> | number
   userId?: Prisma.IntFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeFilter<"Device"> | Date | string
+  status?: Prisma.StringFilter<"Device"> | string
   deployedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   logs?: Prisma.LogListRelationFilter
 }, "id">
@@ -261,6 +271,7 @@ export type DeviceOrderByWithAggregationInput = {
   coordLength?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.DeviceCountOrderByAggregateInput
   _avg?: Prisma.DeviceAvgOrderByAggregateInput
   _max?: Prisma.DeviceMaxOrderByAggregateInput
@@ -277,12 +288,14 @@ export type DeviceScalarWhereWithAggregatesInput = {
   coordLength?: Prisma.FloatWithAggregatesFilter<"Device"> | number
   userId?: Prisma.IntWithAggregatesFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeWithAggregatesFilter<"Device"> | Date | string
+  status?: Prisma.StringWithAggregatesFilter<"Device"> | string
 }
 
 export type DeviceCreateInput = {
   coordLatitude: number
   coordLength: number
   deployedAt?: Date | string
+  status?: string
   deployedBy: Prisma.UserCreateNestedOneWithoutDevicesInput
   logs?: Prisma.LogCreateNestedManyWithoutDeviceInInput
 }
@@ -293,6 +306,7 @@ export type DeviceUncheckedCreateInput = {
   coordLength: number
   userId: number
   deployedAt?: Date | string
+  status?: string
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutDeviceInInput
 }
 
@@ -300,6 +314,7 @@ export type DeviceUpdateInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   deployedBy?: Prisma.UserUpdateOneRequiredWithoutDevicesNestedInput
   logs?: Prisma.LogUpdateManyWithoutDeviceInNestedInput
 }
@@ -310,6 +325,7 @@ export type DeviceUncheckedUpdateInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   logs?: Prisma.LogUncheckedUpdateManyWithoutDeviceInNestedInput
 }
 
@@ -319,12 +335,14 @@ export type DeviceCreateManyInput = {
   coordLength: number
   userId: number
   deployedAt?: Date | string
+  status?: string
 }
 
 export type DeviceUpdateManyMutationInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DeviceUncheckedUpdateManyInput = {
@@ -333,6 +351,7 @@ export type DeviceUncheckedUpdateManyInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DeviceListRelationFilter = {
@@ -351,6 +370,7 @@ export type DeviceCountOrderByAggregateInput = {
   coordLength?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type DeviceAvgOrderByAggregateInput = {
@@ -366,6 +386,7 @@ export type DeviceMaxOrderByAggregateInput = {
   coordLength?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type DeviceMinOrderByAggregateInput = {
@@ -374,6 +395,7 @@ export type DeviceMinOrderByAggregateInput = {
   coordLength?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type DeviceSumOrderByAggregateInput = {
@@ -456,6 +478,7 @@ export type DeviceCreateWithoutDeployedByInput = {
   coordLatitude: number
   coordLength: number
   deployedAt?: Date | string
+  status?: string
   logs?: Prisma.LogCreateNestedManyWithoutDeviceInInput
 }
 
@@ -464,6 +487,7 @@ export type DeviceUncheckedCreateWithoutDeployedByInput = {
   coordLatitude: number
   coordLength: number
   deployedAt?: Date | string
+  status?: string
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutDeviceInInput
 }
 
@@ -502,12 +526,14 @@ export type DeviceScalarWhereInput = {
   coordLength?: Prisma.FloatFilter<"Device"> | number
   userId?: Prisma.IntFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeFilter<"Device"> | Date | string
+  status?: Prisma.StringFilter<"Device"> | string
 }
 
 export type DeviceCreateWithoutLogsInput = {
   coordLatitude: number
   coordLength: number
   deployedAt?: Date | string
+  status?: string
   deployedBy: Prisma.UserCreateNestedOneWithoutDevicesInput
 }
 
@@ -517,6 +543,7 @@ export type DeviceUncheckedCreateWithoutLogsInput = {
   coordLength: number
   userId: number
   deployedAt?: Date | string
+  status?: string
 }
 
 export type DeviceCreateOrConnectWithoutLogsInput = {
@@ -539,6 +566,7 @@ export type DeviceUpdateWithoutLogsInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   deployedBy?: Prisma.UserUpdateOneRequiredWithoutDevicesNestedInput
 }
 
@@ -548,6 +576,7 @@ export type DeviceUncheckedUpdateWithoutLogsInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DeviceCreateManyDeployedByInput = {
@@ -555,12 +584,14 @@ export type DeviceCreateManyDeployedByInput = {
   coordLatitude: number
   coordLength: number
   deployedAt?: Date | string
+  status?: string
 }
 
 export type DeviceUpdateWithoutDeployedByInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   logs?: Prisma.LogUpdateManyWithoutDeviceInNestedInput
 }
 
@@ -569,6 +600,7 @@ export type DeviceUncheckedUpdateWithoutDeployedByInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   logs?: Prisma.LogUncheckedUpdateManyWithoutDeviceInNestedInput
 }
 
@@ -577,6 +609,7 @@ export type DeviceUncheckedUpdateManyWithoutDeployedByInput = {
   coordLatitude?: Prisma.FloatFieldUpdateOperationsInput | number
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -616,6 +649,7 @@ export type DeviceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   coordLength?: boolean
   userId?: boolean
   deployedAt?: boolean
+  status?: boolean
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   logs?: boolean | Prisma.Device$logsArgs<ExtArgs>
   _count?: boolean | Prisma.DeviceCountOutputTypeDefaultArgs<ExtArgs>
@@ -627,6 +661,7 @@ export type DeviceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   coordLength?: boolean
   userId?: boolean
   deployedAt?: boolean
+  status?: boolean
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["device"]>
 
@@ -636,6 +671,7 @@ export type DeviceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   coordLength?: boolean
   userId?: boolean
   deployedAt?: boolean
+  status?: boolean
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["device"]>
 
@@ -645,9 +681,10 @@ export type DeviceSelectScalar = {
   coordLength?: boolean
   userId?: boolean
   deployedAt?: boolean
+  status?: boolean
 }
 
-export type DeviceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "coordLatitude" | "coordLength" | "userId" | "deployedAt", ExtArgs["result"]["device"]>
+export type DeviceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "coordLatitude" | "coordLength" | "userId" | "deployedAt" | "status", ExtArgs["result"]["device"]>
 export type DeviceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   logs?: boolean | Prisma.Device$logsArgs<ExtArgs>
@@ -672,6 +709,7 @@ export type $DevicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     coordLength: number
     userId: number
     deployedAt: Date
+    status: string
   }, ExtArgs["result"]["device"]>
   composites: {}
 }
@@ -1102,6 +1140,7 @@ export interface DeviceFieldRefs {
   readonly coordLength: Prisma.FieldRef<"Device", 'Float'>
   readonly userId: Prisma.FieldRef<"Device", 'Int'>
   readonly deployedAt: Prisma.FieldRef<"Device", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Device", 'String'>
 }
     
 

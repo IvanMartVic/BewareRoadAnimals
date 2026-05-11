@@ -1,0 +1,12 @@
+export default function LogDetails({ log }) {
+
+    return (
+
+        <div className="card bg-secondary">
+            <div className="card-body">
+                <h1>LogId:{log.id}</h1>
+            </div>
+        </div>
+    )
+
+}

@@ -91,7 +91,8 @@ export const DeviceScalarFieldEnum = {
   coordLatitude: 'coordLatitude',
   coordLength: 'coordLength',
   userId: 'userId',
-  deployedAt: 'deployedAt'
+  deployedAt: 'deployedAt',
+  status: 'status'
 } as const
 
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]

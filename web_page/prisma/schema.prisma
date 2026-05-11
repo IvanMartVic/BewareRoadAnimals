@@ -27,13 +27,14 @@ model Device {
   deployedBy  User         @relation(fields: [userId], references: [id])
   logs        Log[]
   deployedAt DateTime @default(now())
+  status    String @default("INACTIVE")
 }
 
 model Log{
   id       Int    @id @default(autoincrement())
   deviceId Int
   message  String
-  image String
+  image String?
   deviceIn Device @relation(fields: [deviceId], references: [id])
   type String @default("SISTEMA")
   timestamp DateTime @default(now())
