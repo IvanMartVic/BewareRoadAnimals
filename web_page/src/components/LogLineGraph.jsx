@@ -15,10 +15,11 @@ function computeGraphData(logs) {
     return data;
 }
 export default function LogLineGraph() {
-    const { fetchLogs, logs, error } = useLogStore(useShallow((s) => ({
+    const { fetchLogs, logs, error, isLoading} = useLogStore(useShallow((s) => ({
         fetchLogs: s.fetchLogs,
         logs: s.logs,
         error: s.error,
+        isLoading: s.isLoading,
     })));
     const data = useMemo(() => computeGraphData(logs), [logs]);
     const fetchTodayLogs = useCallback( () => {
@@ -32,43 +33,43 @@ export default function LogLineGraph() {
         fetchTodayLogs();
     }, [fetchTodayLogs]);
     return (
-        /* The ResponsiveContainer takes the height/width of your "w-2/5 h-full" div */
-        <div style={{ width: '100%', height: '100%' }} className='bg-base-100'>
+        <>
+        {!isLoading && 
+            <div style={{ width: '100%', height: '100%' }} className='bg-base-100'>
             {error ?
                 (
                     <p className='text-error'>{error}</p>
 
                 ) : (
                     <ResponsiveContainer >
-                        <LineChart
-                            data={data}
-                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-3)" />
-                            <XAxis dataKey="time" stroke="var(--color-text-3)" />
-                            <YAxis stroke="var(--color-text-3)" />
-                            <Tooltip
-                                cursor={{ stroke: 'var(--color-border-2)' }}
-                                contentStyle={{
-                                    backgroundColor: 'var(--color-surface-raised)',
-                                    borderColor: 'var(--color-border-2)',
-                                }}
-                            />
-                            <Legend />
-                            <Line
-                                type="monotone"
-                                dataKey="count"
-                                stroke="var(--color-primary)"
-                                fill="ff0000"
-                                strokeWidth={3}
+                    <LineChart
+                    data={data}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                    >
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-3)" />
+                    <XAxis dataKey="time" stroke="var(--color-text-3)" />
+                    <YAxis stroke="var(--color-text-3)" />
+                    <Tooltip
+                    cursor={{ stroke: 'var(--color-border-2)' }}
+                    contentStyle={{
+                        backgroundColor: 'var(--color-surface-raised)',
+                            borderColor: 'var(--color-border-2)',
+                    }}
+                    />
+                    <Legend />
+                    <Line
+                    type="monotone"
+                    dataKey="count"
+                    stroke="var(--color-primary)"
+                    fill="ff0000"
+                    strokeWidth={3}
 
-                            />
-                        </LineChart>
+                    />
+                    </LineChart>
                     </ResponsiveContainer>
-
-
                 )}
-
-        </div>
+            </div>
+        }
+        </>
     );
 }

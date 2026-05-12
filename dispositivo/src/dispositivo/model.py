@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 from ultralytics import *
+from typing import Tuple
 class ObjectDetectionModel(ABC):
     @abstractmethod
-    def detect(self, image):
+    def detect(self, image) -> Tuple[bool, str]:
         pass
 
 class YoloModel(ObjectDetectionModel):
@@ -11,7 +12,16 @@ class YoloModel(ObjectDetectionModel):
         self._model = YOLO("yolo26n.pt") # modelo pre_entrenado
         
     def detect(self, image):
-        print(f"YOLO detecction {image}")
-        results = self._model.predict(image, show=True) 
+        # print(f"YOLO detecction {image}")
+        results = self._model.predict(image) 
+        for result in results:
+            summary = result.summary()
+            if len(summary) > 0:
+                print(f"summary len: {len(summary)}")
+                return True, result.to_json()
+            print(summary)
+
+        # print(f"YOLO detecction {results}")
+        return False, ""
 
 

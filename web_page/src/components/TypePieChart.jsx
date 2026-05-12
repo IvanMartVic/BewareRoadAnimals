@@ -33,13 +33,14 @@ const renderPercentageLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 
 export default function TypePieChart() {
-    const { fetchLogTypeCount, detectCount, systemCount, batteryWarningCount, error} = useLogStore(useShallow(
+    const { fetchLogTypeCount, detectCount, systemCount, batteryWarningCount, error, isLoading } = useLogStore(useShallow(
         (s) => ({
             fetchLogTypeCount: s.fetchLogTypeCount,
             detectCount: s.detectCount,
             systemCount: s.systemCount,
             batteryWarningCount: s.batteryWarningCount,
             error: s.error,
+            isLoading: s.isLoading,
         }
         )));
     const rawData = [
@@ -51,32 +52,36 @@ export default function TypePieChart() {
         fetchLogTypeCount();
     }, [fetchLogTypeCount]);
     return (
-        <div style={{ width: '100%', height: '100%' }} className='bg-base-100'>
-            {error ? (
-                <p className='text-error'>{error}</p>
+        <>
+            {!isLoading &&
+                <div style={{ width: '100%', height: '100%' }} className='bg-base-100'>
+                    {error ? (
+                        <p className='text-error'>{error}</p>
 
-            )
-                : (
-                    <ResponsiveContainer width="100%" height="100%">
-                        <PieChart margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
-                            <Pie
-                                data={rawData}
-                                dataKey="count"
-                                nameKey="type"
-                                cx="50%"
-                                cy="50%"
-                                outerRadius={"90%"}
-                                isAnimationActive={false}
-                                label={renderPercentageLabel}
-                                labelLine={true}
-                            />
-                            <Legend verticalAlign="bottom" height={36} />
-                            <Tooltip
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
-                )
+                    )
+                        : (
+                            <ResponsiveContainer width="100%" height="100%">
+                                <PieChart margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+                                    <Pie
+                                        data={rawData}
+                                        dataKey="count"
+                                        nameKey="type"
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={"90%"}
+                                        isAnimationActive={false}
+                                        label={renderPercentageLabel}
+                                        labelLine={true}
+                                    />
+                                    <Legend verticalAlign="bottom" height={36} />
+                                    <Tooltip
+                                    />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        )
+                    }
+                </div>
             }
-        </div>
+        </>
     );
 }

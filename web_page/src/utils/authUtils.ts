@@ -12,6 +12,9 @@ export interface credentials {
     password: string;
     email: string;
 }
+export interface deviceCredentials {
+    deviceId: number;
+}
 
 export async function mySignIn({ password, email }: credentials) {
     const user = await prisma.user.findUnique({
@@ -66,5 +69,18 @@ export async function authResetToken(token: string): Promise<{ success: boolean,
         return ({ success: true, user: user });
     }
     return ({ success: false, user: user });
+}
+
+export async function authDevice({ deviceId }: deviceCredentials) {
+    const device = await prisma.device.findUnique({
+        where: {
+            id: deviceId,
+            status: "ACTIVE",
+        }
+    });
+    if (device) {
+        return ({ success: true, device: device });
+    }
+    return ({ success: false, device: device });
 }
 
