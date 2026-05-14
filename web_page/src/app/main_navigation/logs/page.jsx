@@ -50,6 +50,23 @@ export default function LogViewPage({ searchParams }) {
         fetchLogs(queryFilter);
 
     }, [fetchLogs, filter]);
+    const deleteFetchLogs = async () => {
+        const choice = confirm(`eliminar ${logs.length} logs`);
+        if (choice) {
+            const queryFilter = { ...filter };
+            if (queryFilter.type == "ALL") {
+                delete queryFilter.type;
+            }
+            if (queryFilter.deviceId == "ALL") {
+                delete queryFilter.deviceId;
+            }
+            if (queryFilter.userId == "ALL") {
+                delete queryFilter.userId;
+            }
+            await deleteAllLogs(queryFilter);
+            filterAndFetch();
+        }
+    }
 
     useEffect(() => {
         filterAndFetch();
@@ -93,15 +110,18 @@ export default function LogViewPage({ searchParams }) {
                     </fieldset>
 
                 </div>
-                <div className="flex w-1/12 items-end">
-                    <button className="btn btn-secondary w-full mb-1" onClick={() => filterAndFetch()}>Recargar</button>
+                <div className="flex w-4/12 gap-4 items-end justify-end">
+                    <button className="btn btn-error mb-1" onClick={deleteFetchLogs}>Eliminar logs seleccionados</button>
+                    <button className="btn btn-secondary mb-1" onClick={() => filterAndFetch()}>Recargar</button>
                 </div>
             </div>
 
-            <div className="flex h-[90vh] w-full">
-                <LogsTable logs={logs} selectedRow={selectedRow} onSelect={(r) => router.push(`/main_navigation/logs/${r}`)}></LogsTable>
+            {!isLoading &&
+                <div className="flex h-[90vh] w-full">
+                    <LogsTable logs={logs} selectedRow={selectedRow} onSelect={(r) => router.push(`/main_navigation/logs/${r}`)}></LogsTable>
 
-            </div>
+                </div>
+            }
 
         </div>
     );

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllLogs, deleteLog, getLogsCount, getUserLogs, getLogById } from "@/services/logsService"
+import { getAllLogs, deleteLog, getLogsCount, getUserLogs, getLogById, filterAndDeleteLog } from "@/services/logsService"
 
 
 const useLogStore = create((set, get) => ({
@@ -74,8 +74,25 @@ const useLogStore = create((set, get) => ({
             }
         }
     },
-    deleteAllLogs: async () => {
-        set({ logs: [] });
+    deleteAllLogs: async (filters = {}) => {
+        set({ isLoading: true });
+        try {
+            let res;
+            if (filters.userId) {
+                const logFilters = { ...filters };
+                delete logFilters.userId;
+                res = await filterAndDeleteLog({ filters: logFilters,  userId: filters.userId  });
+
+            } else {
+                res = await filterAndDeleteLog({ ...filters });
+            }
+            set({ logs: [], isLoading: false });
+            return res;
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message, isLoading: false });
+            }
+        }
     },
 }));
 

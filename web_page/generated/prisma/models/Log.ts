@@ -193,7 +193,7 @@ export type LogGroupByOutputType = {
   id: number
   deviceId: number
   message: string
-  image: string
+  image: string | null
   type: string
   timestamp: Date
   _count: LogCountAggregateOutputType | null
@@ -225,7 +225,7 @@ export type LogWhereInput = {
   id?: Prisma.IntFilter<"Log"> | number
   deviceId?: Prisma.IntFilter<"Log"> | number
   message?: Prisma.StringFilter<"Log"> | string
-  image?: Prisma.StringFilter<"Log"> | string
+  image?: Prisma.StringNullableFilter<"Log"> | string | null
   type?: Prisma.StringFilter<"Log"> | string
   timestamp?: Prisma.DateTimeFilter<"Log"> | Date | string
   deviceIn?: Prisma.XOR<Prisma.DeviceScalarRelationFilter, Prisma.DeviceWhereInput>
@@ -235,7 +235,7 @@ export type LogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
-  image?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   deviceIn?: Prisma.DeviceOrderByWithRelationInput
@@ -248,7 +248,7 @@ export type LogWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.LogWhereInput | Prisma.LogWhereInput[]
   deviceId?: Prisma.IntFilter<"Log"> | number
   message?: Prisma.StringFilter<"Log"> | string
-  image?: Prisma.StringFilter<"Log"> | string
+  image?: Prisma.StringNullableFilter<"Log"> | string | null
   type?: Prisma.StringFilter<"Log"> | string
   timestamp?: Prisma.DateTimeFilter<"Log"> | Date | string
   deviceIn?: Prisma.XOR<Prisma.DeviceScalarRelationFilter, Prisma.DeviceWhereInput>
@@ -258,7 +258,7 @@ export type LogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   deviceId?: Prisma.SortOrder
   message?: Prisma.SortOrder
-  image?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   _count?: Prisma.LogCountOrderByAggregateInput
@@ -275,14 +275,14 @@ export type LogScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Log"> | number
   deviceId?: Prisma.IntWithAggregatesFilter<"Log"> | number
   message?: Prisma.StringWithAggregatesFilter<"Log"> | string
-  image?: Prisma.StringWithAggregatesFilter<"Log"> | string
+  image?: Prisma.StringNullableWithAggregatesFilter<"Log"> | string | null
   type?: Prisma.StringWithAggregatesFilter<"Log"> | string
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"Log"> | Date | string
 }
 
 export type LogCreateInput = {
   message: string
-  image: string
+  image?: string | null
   type?: string
   timestamp?: Date | string
   deviceIn: Prisma.DeviceCreateNestedOneWithoutLogsInput
@@ -292,14 +292,14 @@ export type LogUncheckedCreateInput = {
   id?: number
   deviceId: number
   message: string
-  image: string
+  image?: string | null
   type?: string
   timestamp?: Date | string
 }
 
 export type LogUpdateInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deviceIn?: Prisma.DeviceUpdateOneRequiredWithoutLogsNestedInput
@@ -309,7 +309,7 @@ export type LogUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   deviceId?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -318,14 +318,14 @@ export type LogCreateManyInput = {
   id?: number
   deviceId: number
   message: string
-  image: string
+  image?: string | null
   type?: string
   timestamp?: Date | string
 }
 
 export type LogUpdateManyMutationInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -334,7 +334,7 @@ export type LogUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   deviceId?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -430,7 +430,7 @@ export type LogUncheckedUpdateManyWithoutDeviceInNestedInput = {
 
 export type LogCreateWithoutDeviceInInput = {
   message: string
-  image: string
+  image?: string | null
   type?: string
   timestamp?: Date | string
 }
@@ -438,7 +438,7 @@ export type LogCreateWithoutDeviceInInput = {
 export type LogUncheckedCreateWithoutDeviceInInput = {
   id?: number
   message: string
-  image: string
+  image?: string | null
   type?: string
   timestamp?: Date | string
 }
@@ -476,7 +476,7 @@ export type LogScalarWhereInput = {
   id?: Prisma.IntFilter<"Log"> | number
   deviceId?: Prisma.IntFilter<"Log"> | number
   message?: Prisma.StringFilter<"Log"> | string
-  image?: Prisma.StringFilter<"Log"> | string
+  image?: Prisma.StringNullableFilter<"Log"> | string | null
   type?: Prisma.StringFilter<"Log"> | string
   timestamp?: Prisma.DateTimeFilter<"Log"> | Date | string
 }
@@ -484,14 +484,14 @@ export type LogScalarWhereInput = {
 export type LogCreateManyDeviceInInput = {
   id?: number
   message: string
-  image: string
+  image?: string | null
   type?: string
   timestamp?: Date | string
 }
 
 export type LogUpdateWithoutDeviceInInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -499,7 +499,7 @@ export type LogUpdateWithoutDeviceInInput = {
 export type LogUncheckedUpdateWithoutDeviceInInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -507,7 +507,7 @@ export type LogUncheckedUpdateWithoutDeviceInInput = {
 export type LogUncheckedUpdateManyWithoutDeviceInInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -573,7 +573,7 @@ export type $LogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     id: number
     deviceId: number
     message: string
-    image: string
+    image: string | null
     type: string
     timestamp: Date
   }, ExtArgs["result"]["log"]>
