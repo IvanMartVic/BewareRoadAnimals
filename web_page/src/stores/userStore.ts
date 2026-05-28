@@ -57,8 +57,10 @@ const useUserStore = create<UserStore>((set) => ({
     },
     addUser: async (newUser: InputUser) => {
         try {
-            const addedUser: OutputUser = await createUser(newUser);
-            set((state) => ({ users: [...state.users, addedUser] }));
+            const addedUser: OutputUser | undefined = await createUser(newUser);
+            if(addedUser){
+                set((state) => ({ users: [...state.users, addedUser] }));
+            }
         } catch (e) {
             if (e instanceof Error) {
                 set({ error: e.message });
@@ -67,7 +69,7 @@ const useUserStore = create<UserStore>((set) => ({
     },
     deleteUser: async (id: number) => {
         try {
-            const deletedUser: OutputUser = await deleteUser(id);
+            const deletedUser: OutputUser | undefined = await deleteUser(id);
             set((state) => ({
                 users: state.users.filter((device) => device.id != id)
             }));
@@ -80,10 +82,12 @@ const useUserStore = create<UserStore>((set) => ({
     },
     updateUser: async ({ id, new_data }: UpdateUserInput) => {
         try {
-            const updatedUser: OutputUser = await updateUser({ id, new_data });
-            set((state) => ({
-                users: state.users.map((device) => device.id == id ? updatedUser : device),
-            }));
+            const updatedUser: OutputUser | undefined = await updateUser({ id, new_data });
+            if(updatedUser){
+                set((state) => ({
+                    users: state.users.map((device) => device.id == id ? updatedUser : device),
+                }));
+            }
 
         } catch (e) {
             if (e instanceof Error) {
