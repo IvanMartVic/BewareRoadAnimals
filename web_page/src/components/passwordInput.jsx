@@ -2,7 +2,7 @@ export default function PasswordInput({ onValueChanged, validate = true }) {
     const handleChange = (event) => {
         onValueChanged(event.target.value);
     }
-    const pattern = validate ? "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" : undefined;
+    const pattern = validate ? "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*" : undefined;
 
     return (
         <>

@@ -1,11 +1,8 @@
 "use client"
-import avatar from "@/../public/avatar.jpg"
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import useAuthStore from "@/stores/authStore"
 import { useShallow } from "zustand/shallow";
-import useUserStore from "@/stores/userStore"
 import { useRouter } from "next/navigation";
 import EmailInput from "@/components/emailInput";
 import NombreApellidosInput from "@/components/nombreApellidosInput";
@@ -75,7 +72,7 @@ export default function MyProfilePage() {
                     <label className="text-xl" >ROL: {authUserData?.role || "desconocido"}</label>
                     <div className="flex flex-row justify-between mt-5 gap-1">
                         <button className="btn btn-primary" type="submit" >Aplicar Cambios</button>
-                        <li className="btn btn-accent"><Link href={"/main_navigation/users/myProfile/changePassword"}>Cambiar contraseña</Link></li>
+                        <li className="btn btn-accent"><Link href={`/reset/new_pass?jwt=true`}>Cambiar contraseña</Link></li>
                     </div>
                     <button className="btn btn-error w-full" type="button" onClick={deleteUser}>Borrar cuenta</button>
                 </fieldset>

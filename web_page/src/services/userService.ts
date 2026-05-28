@@ -1,7 +1,7 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
 import bcrypt from "bcryptjs";
-import { verifyAuthResetToken } from "@/services/authenticationService";
+import { verifyAuthResetToken, authAdmin } from "@/services/authenticationService";
 import { assert } from "console";
 // import { User } from "../../generated/prisma/client";
 
@@ -33,6 +33,10 @@ export interface UpdateUserInput {
 
 export async function getAllUsers(filters = {}) {
     console.log(process.env.DATABASE_URL);
+    const {success} = await authAdmin();
+    if(!success){
+        return;
+    }
     const users = await prisma.user.findMany({
         where: { ...filters, },
     });
@@ -42,6 +46,10 @@ export async function getAllUsers(filters = {}) {
 }
 
 export async function getUserById(id: number) : Promise<OutputUser| null>  {
+    const {success, userData} = await authAdmin();
+    if(!success && userData?.userId != id){
+        return null;
+    }
     const user = await prisma.user.findUnique({
         where: {
             id: id,
@@ -50,6 +58,10 @@ export async function getUserById(id: number) : Promise<OutputUser| null>  {
     return user;
 }
 export async function searchUsers(searchInput:string){
+    const {success} = await authAdmin();
+    if(!success){
+        return;
+    }
     const users = await prisma.user.findMany({
         where:{
             OR:[
@@ -61,6 +73,10 @@ export async function searchUsers(searchInput:string){
     return users;
 }
 export async function getUserCount(filters = {}) {
+    const {success} = await authAdmin();
+    if(!success){
+        return;
+    }
     const count = await prisma.user.count({
         where: {
             ...filters,
@@ -70,6 +86,10 @@ export async function getUserCount(filters = {}) {
 }
 
 export async function createUser(userData: InputUser) {
+    const {success} = await authAdmin();
+    if(!success){
+        return;
+    }
     const { full_name, email, password, role: isAdmin } = userData;
     let role = undefined;
     if (isAdmin) {
@@ -87,6 +107,10 @@ export async function createUser(userData: InputUser) {
 }
 
 export async function deleteUser(id: number) {
+    const {success, userData} = await authAdmin();
+    if(!success && userData?.userId != id){
+        return;
+    }
     const user = await prisma.user.delete({
         where: {
             id: id,
@@ -96,7 +120,10 @@ export async function deleteUser(id: number) {
 }
 
 export async function updateUser({ id, new_data }: UpdateUserInput) {
-
+    const {success, userData} = await authAdmin();
+    if(!success && userData?.userId != id){
+        return;
+    }
     const user = await prisma.user.update({
         where: {
             id: id,
