@@ -57,7 +57,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
             if (!id) {
                 throw new Error("Trying to update an undefined authUser (maybe use fetchAuthUser before calling updateAuthUser)")
             }
-            const updatedUser: OutputUser = await updateUser({ id: id, new_data: fields });
+            const updatedUser = await updateUser({ id: id, new_data: fields });
             set((state) => ({
                 authUserData: state.authUserData ? {
                     ...state.authUserData,
@@ -79,7 +79,7 @@ const useAuthStore = create<AuthStore>((set, get) => ({
             if (!id) {
                 throw new Error("Trying to update an undefined authUser (maybe use fetchAuthUser before calling updateAuthUser)")
             }
-            const deletedUser: OutputUser = await deleteUser(id);
+            const deletedUser = await deleteUser(id);
             set({ authUserData: null });
         } catch (e) {
             if (e instanceof Error) {
