@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import useLogStore from '@/stores/logStore';
 import useAuthStore from "@/stores/authStore";
 import { useShallow } from 'zustand/shallow';
@@ -6,7 +6,11 @@ import { useShallow } from 'zustand/shallow';
 // Mock data generator: [{ day: 0, hour: 0, value: 5 }, ...]
 const generateData = (logs) => {
     const data = [];
+    if(logs.length == 0){
+        return data;
+    }
     for (let m = 0; m < 12; m++) {
+        // console.log(`Logs: ${JSON.stringify(logs)}`)
         const month_logs = logs.filter((l) => l.timestamp.getMonth() == (m + 1))
         for (let h = 0; h < 24; h++) {
             data.push({
@@ -33,18 +37,25 @@ const Heatmap = () => {
             userId: s.userId,
             isLoadingAuth: s.isLoading,
         })));
-    const data = generateData(logs);
+    // const data = generateData(logs);
+    const data = useMemo(() => {
+        if (!isLoading) {
+            return generateData(logs)
+        }else{
+            return [];
+        }
+    }, [logs, isLoading]);
     const month = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
     const hours = Array.from({ length: 24 }, (_, i) => `${i}:00`);
 
     useEffect(() => {
-        if(!userId){
+        if (!userId) {
             fetchAuthUser()
         }
     }, [fetchAuthUser, userId]);
     useEffect(() => {
-        if(userId){
-            fetchLogs({userId:userId});
+        if (userId) {
+            fetchLogs({ userId: userId });
         }
     }, [fetchLogs, userId]);
 
@@ -58,7 +69,7 @@ const Heatmap = () => {
 
     return (
         <>
-            {!isLoading && !isLoadingAuth && 
+            {!isLoading && !isLoadingAuth &&
                 <div className="p-8 bg-white rounded-lg shadow-sm w-full h-full overflow-x-auto">
 
                     <h1 className='w-full text-center text-gray-500'>Resumen detecciones por meses</h1>

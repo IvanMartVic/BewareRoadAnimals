@@ -1,9 +1,7 @@
 "use client"
 import LogsTable from "@/components/LogsTable"
-// import { getAllLogs } from "@/services/logsService";
 import useLogStore from "@/stores/logStore";
 import useAuthStore from "@/stores/authStore";
-// import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import { use } from "react";
@@ -15,11 +13,10 @@ export default function LogViewPage({ searchParams }) {
     const deviceId = filters.deviceId;
     const userId = filters.userId;
     const [selectedRow, setSelectedRow] = useState(null);
-    // const logs = await getAllLogs();
-    const { logs, fetchLogs, isLoading, deleteAllLogs } = useLogStore(
+    const { logs, fetchLogsRT, isLoading, deleteAllLogs } = useLogStore(
         useShallow((state) => ({
             logs: state.logs,
-            fetchLogs: state.fetchLogs,
+            fetchLogsRT: state.fetchLogsRT,
             isLoading: state.isLoading,
             deleteAllLogs: state.deleteAllLogs,
         }))
@@ -37,7 +34,11 @@ export default function LogViewPage({ searchParams }) {
         userId: (userId) ? +userId : authUserId,
     });
     const filterAndFetch = useCallback(() => {
-        const queryFilter = { ...filter };
+        const queryFilter = {
+            deviceId: filter.deviceId,
+            type: filter.type,
+            userId: filter.userId,
+        };
         if (queryFilter.type == "ALL") {
             delete queryFilter.type;
         }
@@ -47,9 +48,9 @@ export default function LogViewPage({ searchParams }) {
         if (queryFilter.userId == "ALL") {
             delete queryFilter.userId;
         }
-        fetchLogs(queryFilter);
+        fetchLogsRT(queryFilter);
 
-    }, [fetchLogs, filter]);
+    }, [fetchLogsRT, filter.deviceId, filter.type, filter.userId]);
     const deleteFetchLogs = async () => {
         const choice = confirm(`eliminar ${logs.length} logs`);
         if (choice) {
@@ -75,10 +76,6 @@ export default function LogViewPage({ searchParams }) {
         fetchAuthUser();
     }, [fetchAuthUser]);
 
-    // <div className="flex w-1/4">
-    //     {selectedRow &&
-    //         <LogDetails log={logs.find((l => l.id == selectedRow))}> </LogDetails>}
-    //     </div>
 
     const router = useRouter();
     return (
@@ -125,6 +122,4 @@ export default function LogViewPage({ searchParams }) {
 
         </div>
     );
-
-
 }

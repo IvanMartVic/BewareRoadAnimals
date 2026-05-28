@@ -20,15 +20,24 @@ const useAuthStore = create<AuthStore>((set, get) => ({
     authUserData: null,
     userId: 0,
     error: null,
+    resetError: async() => {
+        set({error: null});
+    },
     fetchAuthUser: async () => {
         console.log("fetched called");
-        const res = await auth();
-        if (res?.success && res.userData?.userId) {
-            const id = res.userData.userId;
-            const userData = await getUserById(id);
-            set({ authUserData: userData, userId: id });
-        } else {
-            console.assert(false, "authentication failed inside app")
+        try {
+            const res = await auth();
+            if (res?.success && res.userData?.userId) {
+                const id = res.userData.userId;
+                const userData = await getUserById(id);
+                set({ authUserData: userData, userId: id });
+            } else {
+                throw new Error("Error, not a valid jwt");
+            }
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message })
+            }
         }
     },
     setAuthUserData: (newData: Partial<AuthTokenData>) => {
@@ -65,37 +74,37 @@ const useAuthStore = create<AuthStore>((set, get) => ({
 
     },
     deleteAuthUser: async () => {
-        try{
+        try {
             const id = get().userId;
             if (!id) {
                 throw new Error("Trying to update an undefined authUser (maybe use fetchAuthUser before calling updateAuthUser)")
             }
             const deletedUser: OutputUser = await deleteUser(id);
-            set({authUserData:null});
-        }catch(e){
-            if(e instanceof Error){
-                set({error: e.message})
+            set({ authUserData: null });
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message })
             }
         }
     },
-    fetchAuthUserFromResetToken: async (token:string) => {
-        try{
+    fetchAuthUserFromResetToken: async (token: string) => {
+        try {
             const response = await verifyAuthResetToken(token);
-            if(!response.success || !response.user){
+            if (!response.success || !response.user) {
                 throw new Error("Error, not a valid token");
             }
             set({ authUserData: response.user, userId: response.user.id });
-        }catch(e){
-            if(e instanceof Error){
-                set({error: e.message})
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message })
             }
         }
     },
-    resetPassword: async (password:string) =>{
-        try{
-        }catch(e){
-            if(e instanceof Error){
-                set({error: e.message})
+    resetPassword: async (password: string) => {
+        try {
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message })
             }
         }
     }

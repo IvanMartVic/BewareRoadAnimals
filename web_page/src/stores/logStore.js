@@ -11,6 +11,45 @@ const useLogStore = create((set, get) => ({
     emergencyCount: 0,
     isLoading: false,
     error: null,
+    eventSource: null,
+    fetchLogsRT: async (filters = {}) => {
+        try {
+            set({ isLoading: true })
+            const queryParams = new URLSearchParams(filters).toString();
+            const url = queryParams ? `/api/logs?${queryParams}` : '/api/logs'
+
+            if (get().eventSource) {
+                get().eventSource.close();
+            }
+
+            const eventSource = new EventSource(url);
+            eventSource.onopen = () => {
+                console.log("SSE connection to logs established");
+                set({ isLoading: false });
+            };
+
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                if (data.logs) {
+                    const parsedLogs = data.logs.map(l => ({
+                        ...l,
+                        timestamp: new Date(l.timestamp)
+                    }));
+                    set({ logs: parsedLogs, isLoading: false });
+                }
+            };
+            eventSource.onerror = (error) => {
+                console.error('SSE error: ', error);
+                eventSource.close();
+                set({ error: "SSE connection failed or disconected", isLoading: false });
+            }
+            set({ eventSource })
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message, isLoading: false });
+            }
+        }
+    },
     fetchLogs: async (filters = {}) => {
         set({ isLoading: true });
         try {
@@ -81,7 +120,7 @@ const useLogStore = create((set, get) => ({
             if (filters.userId) {
                 const logFilters = { ...filters };
                 delete logFilters.userId;
-                res = await filterAndDeleteLog({ filters: logFilters,  userId: filters.userId  });
+                res = await filterAndDeleteLog({ filters: logFilters, userId: filters.userId });
 
             } else {
                 res = await filterAndDeleteLog({ ...filters });

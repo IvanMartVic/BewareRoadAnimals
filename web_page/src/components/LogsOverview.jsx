@@ -15,9 +15,6 @@ export default function LogsOverview({ filters = DEFAULT_FILTERS }) {
         })));
     useEffect(() => {
         fetchAuthUser();
-        if (errorAuth != null) {
-            alert(errorAuth);
-        }
     }, [fetchAuthUser, errorAuth])
     const { fetchLogTypeCount, logCount, systemCount, detectCount, batteryWarningCount, isLoading, error } = useLogStore(
         useShallow((s) => ({

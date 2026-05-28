@@ -1,0 +1,129 @@
+import io
+from PIL import Image, ImageDraw
+from random import randrange 
+from rembg import remove
+from typing import NamedTuple
+
+class RealAnimal:
+    def __init__(self, height, width) -> None:
+        self.height = height 
+        self.width = width
+class PhotoAnimal:
+    def __init__(self, height, width) -> None:
+        self.height = height 
+        self.width = width
+
+
+
+BOAR_HEIGHT_METERS = 1 
+BOAR_WIDTH_METERS = 1.5
+DEER_HEIGHT_METERS = 1.5 
+DEER_WIDTH_METERS = 2
+Y_HORIZON_PRUEBA = 243
+ANIMALS = {"boar": RealAnimal(BOAR_HEIGHT_METERS, BOAR_WIDTH_METERS),
+           "deer": RealAnimal(DEER_HEIGHT_METERS, DEER_WIDTH_METERS)}
+LABELS = ["boar", "deer"]
+ROAD_LANE_WIDTH_METERS = 3.5 #width of a road lane in Spain
+
+class img2D_dimensions (NamedTuple):
+    h:int
+    w:int
+
+class position (NamedTuple):
+    x:int
+    y:int
+
+def get_animal_size_px(animal_name, pos:position, y_horizon, background_dim:img2D_dimensions):
+    animal = ANIMALS[animal_name]
+    # we know that up close in the image the road covers aproximately all the image width
+    close_px_w = background_dim.w * animal.width/(2*ROAD_LANE_WIDTH_METERS) 
+    close_px_h = animal.height/animal.width * close_px_w
+    # we aproximate the animal position up close so we can see the full animal
+    y_close = background_dim.h - close_px_h 
+    # we compute the dimensions in pixels of the animal in the position given using the horizon line and the up close estimation
+    px_height = close_px_h * abs(pos.y - y_horizon) / abs(y_close - y_horizon)
+    px_width = animal.width/animal.height * px_height
+    return PhotoAnimal(height=round(px_height), width=round(px_width))
+
+
+def get_externalObject(png_route, animal_name, background_dim:img2D_dimensions ):
+    photo = Image.open(png_route).convert("RGBA")
+    animal_position = position(x=randrange(background_dim.w), y=randrange(Y_HORIZON_PRUEBA, background_dim.h))
+    animal_size = get_animal_size_px(animal_name, animal_position, Y_HORIZON_PRUEBA, background_dim)
+    photo.resize((animal_size.height, animal_size.width))
+    return photo, animal_position, animal_size
+
+def create_sintetic_image(background_route, png_animal, output_name, animal_name):
+    background = Image.open(background_route).convert("RGBA")
+    animal, pos, animal_size = get_externalObject(png_animal, animal_name, img2D_dimensions(h=background.height, w=background.width))
+    background.paste(animal.convert("P"), (pos.x, pos.y), animal)
+    background.convert("RGB").save(f"./sintetic_data/images/{output_name}.jpg", "JPEG")
+    print(f"generating an animal in position {pos} with dimension {animal_size}")
+    return pos, animal_size, img2D_dimensions(h=background.height, w=background.width)
+
+def make_data_label(label, pos:position, img_dim:img2D_dimensions, animal_size:PhotoAnimal, path):
+    x_center = pos.x + animal_size.width/2
+    y_center = pos.y + int(animal_size.height/2)
+    box_width_norm = animal_size.width/img_dim.w
+    box_height_norm = animal_size.height/img_dim.h 
+    x_center_norm = x_center / img_dim.w
+    y_center_norm = y_center / img_dim.h
+    with open(path, "w") as f:
+        f.write(f"{label} {x_center_norm} {y_center_norm} {box_width_norm} {box_height_norm}")
+
+
+
+# def make_data_label(label, x1, y1, x2, y2, img_W, img_H, path):
+#     box_width = x2 - x1
+#     box_height = y2 - y1
+#     x_center = x1 + box_width/2 
+#     y_center = y1 + box_height/2 
+#     box_width_norm = box_width / img_W
+#     box_height_norm = box_height / img_H
+#     x_center_norm = x_center / img_W
+#     y_center_norm = y_center / img_H
+#     with open(path, "w") as f:
+#         f.write(f"{label} {x_center_norm} {y_center_norm} {box_width_norm} {box_height_norm}")
+
+# def create_sintetic_image(background_route, paste_obj, output_name):
+#     bk = Image.open(background_route).convert("RGBA")
+#     pt = Image.open(paste_obj).convert("RGBA")
+#     y_img = randrange(round(bk.height/3), bk.height - 100) 
+#     x_img = randrange(200, bk.width - 200)
+#     s_y, s_x = object_pxsize(y_img, y1=300, h1_px=150, y2=200, h2_px=10, real_height_meters=BOAR_HEIGHT_METERS, real_width_meters=BOAR_WIDTH_METERS)
+#     pt = pt.resize((s_x,s_y))
+#     pt_coords = (x_img, y_img)
+#     bk.paste(pt.convert("P"), pt_coords, pt)
+#     rect_coords = [x_img, y_img, x_img + s_x, y_img + s_y]
+#     print(f"{x_img, y_img, s_y}")
+#     bk.convert("RGB").save(f"./sintetic_data/images/{output_name}.jpg", "JPEG")
+#     make_data_label(label=0,x1 = x_img, y1 = y_img, x2= x_img + s_x, y2= y_img + s_y, img_W=bk.width, img_H=bk.height, path=f"./sintetic_data/labels/{output_name}.txt")
+
+
+
+# def getPNG(ruta):
+#     image = Image.open(ruta)
+#     out = remove(image)
+#     bbox = out.getbbox()
+#     if bbox:
+#         out = out.crop(bbox)
+#     out.save("./jabali.png")
+
+# # using a linear estimation of the size in pixels of an object in the y_img position in the image knowing its real proportions and the height in pixels
+# # of the object for two other points in the same photo
+# def object_pxsize(y_img, y1, h1_px, y2, h2_px, real_height_meters, real_width_meters):
+#     m = (h1_px - h2_px)/(y1 - y2)
+#     h_px = h2_px + m* (y_img - y2)
+#     w_px = real_width_meters/real_height_meters * h_px 
+#     return round(h_px), round(w_px)
+
+def sintetic_dataset(size):
+    for i in range(size):
+        pos, size, dim = create_sintetic_image(background_route="/home/iVase/Pictures/carretera-nacional.jpg", png_animal="./jabali.png", output_name=f"img_{i}", animal_name=LABELS[0])
+        make_data_label(0,pos, animal_size=size, img_dim=dim, path=f"./sintetic_data/labels/img_{i}")
+
+
+sintetic_dataset(10)
+
+
+

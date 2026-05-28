@@ -1,3 +1,6 @@
 *.pt
+sintetic_data/
+*.jpg
 __pycache__/ 
 .venv/
+

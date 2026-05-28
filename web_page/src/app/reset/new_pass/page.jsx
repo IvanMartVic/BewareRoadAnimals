@@ -15,35 +15,44 @@ export default function NewPassPage({ searchParams }) {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [equal, setEqual] = useState(true);
-    const { fetchAuthUserFromResetToken, error, authUserData } = useAuthStore(useShallow(
+    const { fetchAuthUserFromResetToken, fetchAuthUser, error, authUserData, resetError} = useAuthStore(useShallow(
         (s) => ({
             fetchAuthUserFromResetToken: s.fetchAuthUserFromResetToken,
             error: s.error,
             authUserData: s.authUserData,
+            fetchAuthUser: s.fetchAuthUser,
+            resetError: s.resetError,
         })));
     const resetUserPassword = useUserStore((s) => s.resetUserPassword);
     useEffect(() => {
-        if (!params.token) {
+        if (!params.jwt && !params.token) {
             router.push("/");
         }
-        fetchAuthUserFromResetToken(params.token);
+        if (params.token) {
+            fetchAuthUserFromResetToken(params.token);
+        } else if (params.jwt) {
+            fetchAuthUser();
+        }
+    }, [fetchAuthUserFromResetToken, params.token, router, fetchAuthUser, params.jwt]);
+    useEffect(() => {
         if (error) {
-            alert(error);
+            resetError();
             router.push("/");
         }
-    }, [fetchAuthUserFromResetToken, error, params.token, router]);
+
+    },[error, resetError, router])
     async function handleSubmit(e) {
         e.preventDefault();
-        if(password != repeatPassword){
+        if (password != repeatPassword) {
             setEqual(false);
             return
         }
         // stuff
-        await resetUserPassword({new_password:password, resetToken: params.token});
-        if(!error){
+        await resetUserPassword({ new_password: password, resetToken: params.token });
+        if (!error) {
             alert("la contraseña se reseteo con éxito");
             router.push("/main_navigation");
-        }else{
+        } else {
             alert(error);
             router.push("");
         }
@@ -56,7 +65,7 @@ export default function NewPassPage({ searchParams }) {
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 gap-2">
                     <legend className="fieldset-legend text-primary text-xl">Cambiar contraseña</legend>
                     <div>
-                        <EmailInput value = {authUserData?.email || "desconocido"} disabled={true}></EmailInput>
+                        <EmailInput value={authUserData?.email || "desconocido"} disabled={true}></EmailInput>
                     </div>
                     <div>
                         <legend className="fieldset-legend text-xs">Nueva contraseña</legend>
@@ -67,8 +76,8 @@ export default function NewPassPage({ searchParams }) {
                         <PasswordInput onValueChanged={(val) => setRepeatPassword(val)}></PasswordInput>
                     </div>
                     <button type="submit" className="btn btn-primary mt-4">Confirmar</button>
-                    {!equal && 
-                    <p className="text-error ml-5 font-bold">error: las contraseñas no coinciden</p>}
+                    {!equal &&
+                        <p className="text-error ml-5 font-bold">error: las contraseñas no coinciden</p>}
                 </fieldset>
             </form>
 
