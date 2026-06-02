@@ -1,6 +1,8 @@
 "use server"
 import { myAuth } from "@/utils/auth";
+import { prisma } from "@/../lib/prisma";
 import * as authUtils from "@/utils/authUtils"
+import { DeviceFilters } from "@/services/deviceService";
 
 
 export async function SignIn({ password, email }: authUtils.credentials) {
@@ -22,6 +24,33 @@ export async function authAdmin() {
         return { success: false };
     }
     return { success: auth_res.userData.role == "ADMIN", userData: auth_res.userData };
+}
+
+export async function authDeviceFilters(filter:DeviceFilters){
+    const auth_res = await auth();
+    if (!auth_res.success) {
+        return { success: false };
+    }
+    if(auth_res.userData.role == "ADMIN"){
+        return {success:true, userData: auth_res.userData};
+    }
+    const user_devices = await prisma.device.findMany({
+        where:{
+            userId: auth_res.userData.userId,
+        }
+    });
+    if(filter.id){
+        for(const device of user_devices){
+            if(device.id == filter.id){
+                return {success:true, userData: auth_res.userData};
+            }
+        }
+    }
+    if(filter.userId){
+        return {success:filter.userId === auth_res.userData.userId, userData: auth_res.userData};
+    }
+    console.error(`error usuario ${auth_res.userData.userId} no está autorizado para usar el filtro ${JSON.stringify(filter)}`)
+    return { success: false };
 }
 
 export async function getAuthUser() {

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById, getDevicesCount} from "@/services/deviceService"
+import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById, getDevicesCount } from "@/services/deviceService"
 
 
 interface OutputDevice extends InputDevice {
@@ -38,7 +38,7 @@ const useDeviceStore = create<DeviceStore>((set) => ({
     fetchDevicesCount: async (filters = {}) => {
         set({ isLoading: true });
         try {
-            const res = await getDevicesCount({...filters});
+            const res = await getDevicesCount({ ...filters });
             set({ count: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
@@ -58,9 +58,9 @@ const useDeviceStore = create<DeviceStore>((set) => ({
     },
     deleteDevice: async (id: number) => {
         try {
-            const deletedDevice: OutputDevice = await deleteDevice(id);
+            const deletedDevice: OutputDevice | undefined = await deleteDevice(id);
             set((state) => ({
-                devices: state.devices.filter((device) => device.id != id)
+                devices: state?.devices?.filter((device) => device.id != id)
             }));
             return deletedDevice;
         } catch (e) {
@@ -71,7 +71,10 @@ const useDeviceStore = create<DeviceStore>((set) => ({
     },
     updateDevice: async ({ id, data }: UpdateDeviceInput) => {
         try {
-            const updatedDevice: OutputDevice = await updateDevice({ id, data });
+            const updatedDevice: OutputDevice | undefined = await updateDevice({ id, data });
+            if (!updatedDevice) {
+                return;
+            }
             set((state) => ({
                 devices: state.devices.map((device) => device.id == id ? updatedDevice : device),
             }));
@@ -82,18 +85,18 @@ const useDeviceStore = create<DeviceStore>((set) => ({
             }
         }
     },
-    getDeviceById: async (id:number) => {
-        try{
+    getDeviceById: async (id: number) => {
+        try {
             // we could cache this response with the array devices I think
-            const selectedDevice: OutputDevice|null = await getDeviceById(id);
-            if(!selectedDevice){
+            const selectedDevice: OutputDevice | undefined | null = await getDeviceById(id);
+            if (!selectedDevice) {
                 throw new Error(`device with id: ${id} not in db`);
             }
             return selectedDevice;
 
-        }catch(e){
-            if(e instanceof Error){
-                set({error:e.message});
+        } catch (e) {
+            if (e instanceof Error) {
+                set({ error: e.message });
             }
         }
 

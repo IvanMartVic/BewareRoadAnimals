@@ -1,5 +1,6 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
+import { authAdmin, authDeviceFilters } from "@/services/authenticationService";
 
 export interface InputDevice {
     userId: number,
@@ -14,8 +15,18 @@ export interface UpdateDeviceInput {
     id: number,
     data: UpdateDeviceData,
 }
+export interface DeviceFilters{
+    userId?:number,
+    status?:string,
+    id?:number,
+}
 
 export async function getAllDevicesWithUser(filters = {}) {
+    //only admin is authorized to use this function
+    const {success} = await authDeviceFilters(filters);
+    if(!success){
+        return;
+    }
     const devices = await prisma.device.findMany( {
         include:{
             deployedBy:{
@@ -31,6 +42,10 @@ export async function getAllDevicesWithUser(filters = {}) {
     return devices;
 }
 export async function getDevicesCount(filters = {}) {
+    const {success} = await authDeviceFilters(filters);
+    if(!success){
+        return;
+    }
     const devices = await prisma.device.count( {
         where: {
             ...filters,
@@ -51,6 +66,10 @@ export async function createDevice({ userId, coordLatitude, coordLength}: InputD
 }
 
 export async function updateDevice({ data: new_data, id }: UpdateDeviceInput) {
+    const {success} = await authDeviceFilters({id:id});
+    if(!success){
+        return;
+    }
     const updated = await prisma.device.update({
         where: {
             id: id,
@@ -61,6 +80,10 @@ export async function updateDevice({ data: new_data, id }: UpdateDeviceInput) {
 }
 
 export async function getDeviceById(id: number) {
+    const {success} = await authDeviceFilters({id:id});
+    if(!success){
+        return;
+    }
     const device = await prisma.device.findUnique({
         where: {
             id: id,
@@ -70,6 +93,10 @@ export async function getDeviceById(id: number) {
 }
 
 export async function deleteDevice(id: number) {
+    const {success} = await authDeviceFilters({id:id});
+    if(!success){
+        return;
+    }
     const device = await prisma.device.delete({
         where: {
             id: id,
