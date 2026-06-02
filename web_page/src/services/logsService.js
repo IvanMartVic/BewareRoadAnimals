@@ -5,8 +5,14 @@ export async function getAllLogs(filters = {}) {
     const logs = await prisma.log.findMany({
         where: {
             ...filters,
+        },
+        orderBy:{
+            timestamp: 'desc',
         }
     });
+    for (let log of logs) {
+        console.log(log.timestamp);
+    }
     return logs;
 }
 export async function getUserLogs({ filters = {}, userId }) {

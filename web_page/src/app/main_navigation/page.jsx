@@ -5,10 +5,8 @@ import useAuthStore from "@/stores/authStore"
 import LogsOverview from "@/components/LogsOverview";
 import UsersOverview from "@/components/UsersOverview";
 import DevicesOverview from "@/components/DevicesOverview";
-import LogLineGraph from "@/components/LogLineGraph";
-import TypePieChart from "@/components/TypePieChart";
 import DevicesUserOverview from "@/components/DevicesUserOverview";
-import Demo from "@/components/heatmap";
+import DetectionsHeatmap from "@/components/heatmap";
 
 export default function Home() {
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
@@ -65,8 +63,8 @@ function AdminHome() {
                     <DevicesOverview />
                     <UsersOverview />
                 </div>
-                <div className="h-full w-4/5 relative">
-                    <Demo />
+                <div className="h-full w-2/5 relative">
+                    <DetectionsHeatmap />
                 </div>
             </div>
             <LogsOverview />
@@ -99,8 +97,9 @@ function UserHome() {
                 <div className="flex flex-col w-1/5 h-full gap-2 justify-center items-center">
                     <DevicesUserOverview id={authUserData.id} />
                 </div>
-                <div className="h-full w-2/5 relative"><LogLineGraph /></div>
-                <div className="bg-neutral h-full w-2/5 relative"><TypePieChart /></div>
+                <div className="h-full w-4/5 relative">
+                    <DetectionsHeatmap />
+                </div>
             </div>
             <LogsOverview />
 

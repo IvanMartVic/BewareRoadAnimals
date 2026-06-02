@@ -77,7 +77,7 @@ const Heatmap = () => {
 
                         <div className="flex flex-col justify-between pr-4 mt-8 text-xs text-gray-400">
                             {hours.map((h, i) => (
-                                <div key={h} className="h-4">{i % 3 === 0 ? h : ''}</div>
+                                <div key={h} className="h-3">{i % 3 === 0 ? h : ''}</div>
                             ))}
                         </div>
                         <div className="flex-1">
@@ -95,7 +95,7 @@ const Heatmap = () => {
                                                 <div
                                                     key={`${monthInx}-${hourIdx}`}
                                                     title={`${month[monthInx]}, hora ${hourIdx}: ${entry?.value} detecciones`}
-                                                    className={`h-3 w-full rounded-sm ${getColor(entry?.value || 0)} transition-colors hover:ring-1 hover:ring-gray-400`}
+                                                    className={`h-2 w-full rounded-sm ${getColor(entry?.value || 0)} transition-colors hover:ring-1 hover:ring-gray-400`}
                                                 />
                                             );
                                         })}

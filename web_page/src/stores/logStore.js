@@ -35,7 +35,8 @@ const useLogStore = create((set, get) => ({
                         ...l,
                         timestamp: new Date(l.timestamp)
                     }));
-                    set({ logs: parsedLogs, isLoading: false });
+                    const sortedLogs = parsedLogs.sort((a, b) => b.timestamp - a.timestamp);
+                    set({ logs: sortedLogs, isLoading: false });
                 }
             };
             eventSource.onerror = (error) => {
@@ -62,7 +63,8 @@ const useLogStore = create((set, get) => ({
             } else {
                 res = await getAllLogs({ ...filters });
             }
-            set({ logs: res, isLoading: false });
+            const sortedLogs = res.sort((a, b) => b.timestamp - a.timestamp);
+            set({ logs: sortedLogs, isLoading: false });
             return res;
         } catch (e) {
             if (e instanceof Error) {

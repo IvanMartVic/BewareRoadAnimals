@@ -13,12 +13,13 @@ export default function LogViewPage({ searchParams }) {
     const deviceId = filters.deviceId;
     const userId = filters.userId;
     const [selectedRow, setSelectedRow] = useState(null);
-    const { logs, fetchLogsRT, isLoading, deleteAllLogs } = useLogStore(
+    const { logs, fetchLogsRT, fetchLogs, isLoading, deleteAllLogs } = useLogStore(
         useShallow((state) => ({
             logs: state.logs,
             fetchLogsRT: state.fetchLogsRT,
             isLoading: state.isLoading,
             deleteAllLogs: state.deleteAllLogs,
+            fetchLogs: state.fetchLogs,
         }))
     );
     const { authUserId, fetchAuthUser, authUserData } = useAuthStore(
@@ -48,9 +49,10 @@ export default function LogViewPage({ searchParams }) {
         if (queryFilter.userId == "ALL") {
             delete queryFilter.userId;
         }
+        fetchLogs(queryFilter);
         fetchLogsRT(queryFilter);
 
-    }, [fetchLogsRT, filter.deviceId, filter.type, filter.userId]);
+    }, [fetchLogsRT, fetchLogs, filter.deviceId, filter.type, filter.userId]);
     const deleteFetchLogs = async () => {
         const choice = confirm(`eliminar ${logs.length} logs`);
         if (choice) {
