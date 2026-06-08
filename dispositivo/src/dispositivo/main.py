@@ -11,9 +11,10 @@ def simulateBatterySensor():
 
 if __name__ == "__main__":
     m = model.YoloModel()
-    d = device.Device(13, "http://localhost:3000/api/device", m)
+    # d = device.Device(13, "http://localhost:3000/api/device", m)
+    d = device.Device(13, "https://beware-road-animals-2iyu.vercel.app/api/device", m)
     d.deploy();
-    cap = cv2.VideoCapture("/home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/videoplayback.mp4");
+    cap = cv2.VideoCapture("/home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/sintetic_data/test_video.avi");
     if not cap.isOpened():
         print("could not open video stream")
         exit()

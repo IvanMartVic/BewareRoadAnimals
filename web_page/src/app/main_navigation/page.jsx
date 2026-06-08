@@ -7,6 +7,7 @@ import UsersOverview from "@/components/UsersOverview";
 import DevicesOverview from "@/components/DevicesOverview";
 import DevicesUserOverview from "@/components/DevicesUserOverview";
 import DetectionsHeatmap from "@/components/heatmap";
+import DaysHeatmap from "@/components/heatmap_dias";
 
 export default function Home() {
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
@@ -65,6 +66,9 @@ function AdminHome() {
                 </div>
                 <div className="h-full w-2/5 relative">
                     <DetectionsHeatmap />
+                </div>
+                <div className="h-full w-2/5 relative">
+                    <DaysHeatmap/>
                 </div>
             </div>
             <LogsOverview />

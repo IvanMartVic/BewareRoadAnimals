@@ -9,7 +9,8 @@ class ObjectDetectionModel(ABC):
 class YoloModel(ObjectDetectionModel):
     def __init__(self) -> None:
         super().__init__()
-        self._model = YOLO("yolo26n.pt") # modelo pre_entrenado
+        # self._model = YOLO("yolo26n.pt") # modelo pre_entrenado
+        self._model = YOLO("/home/iVase/software/proyectos/tfg_road_animals/road_animals/runs/detect/train12/weights/best.pt") # modelo pre_entrenado
         
     def detect(self, image):
         # print(f"YOLO detecction {image}")
