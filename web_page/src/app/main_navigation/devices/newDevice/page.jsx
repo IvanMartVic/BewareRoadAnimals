@@ -6,6 +6,8 @@ import CoordinatesIput from "@/components/coordinatesInput";
 import useDeviceStore from "@/stores/deviceStore"
 import useAuthStore from "@/stores/authStore"
 import { useShallow } from "zustand/shallow";
+import { useModal } from "@/context/AlertContext"
+
 
 export default function NewDevicePage() {
     const router = useRouter();
@@ -25,6 +27,8 @@ export default function NewDevicePage() {
     const [markerPosition, setMarkerPosition] = useState(SALAMANCA_POS);
     const markerRef = useRef(null);
 
+    const { showAlert } = useModal();
+
     const handleSubmit = async (e) => {
         if (e && e.preventDefault) {
             e.preventDefault();
@@ -34,7 +38,7 @@ export default function NewDevicePage() {
             const length = markerPosition[1];
 
             await addDevice({ userId: authUserData.id, coordLatitude: latitude, coordLength: length });
-            alert(`dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}`);
+            await showAlert({ message: `dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}` });
             router.push("/main_navigation/devices");
         }
     }

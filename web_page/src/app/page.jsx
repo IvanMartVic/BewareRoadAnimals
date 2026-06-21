@@ -3,9 +3,10 @@ import PasswordInput from "@/components/passwordInput";
 import EmailInput from "@/components/emailInput";
 import { useState } from "react";
 import { SignIn } from "@/services/authenticationService"
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -13,11 +14,11 @@ export default function LoginPage() {
     const [error, setError] = useState(null);
     const router = useRouter();
     const handleSubmit = async (e) => {
-        if (e && e.preventDefault){
+        if (e && e.preventDefault) {
             e.preventDefault();
         }
-        const response = await SignIn({password:password, email:email});
-        if(!response.success){
+        const response = await SignIn({ password: password, email: email });
+        if (!response.success) {
             setError(response);
             return;
         }
@@ -34,14 +35,12 @@ export default function LoginPage() {
                     <label className="label">Contraseña</label>
                     <PasswordInput onValueChanged={(val) => setPassword(val)} validate={false}></PasswordInput>
                     <Link className="link link-hover mt-4" href={"/reset"}>Recuperar contraseña</Link>
-
                     <button type="submit" className="btn btn-primary mt-4">Inciar Sesión</button>
                     {error &&
-                    <p className="text-red-200 font-bold">{error?.message}</p>
+                        <p className="text-red-200 font-bold">{error?.message}</p>
                     }
                 </fieldset>
             </form>
-
         </div>
     );
 }

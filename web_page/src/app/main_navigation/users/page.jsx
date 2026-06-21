@@ -40,12 +40,6 @@ export default function UsersMainPage() {
         router.push(`/main_navigation/users/updateUser/${newId}`);
     }
 
-    async function deleteSelectedUser() {
-        const user = await deleteUser(selectedId);
-        alert(`usuario ${user.full_name} eliminado`);
-    }
-
-
     const router = useRouter();
     return (
         <div

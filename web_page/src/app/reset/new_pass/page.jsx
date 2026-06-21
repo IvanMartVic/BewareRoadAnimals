@@ -7,6 +7,7 @@ import { useShallow } from "zustand/shallow";
 import { useRouter } from "next/navigation";
 import PasswordInput from "@/components/passwordInput"
 import EmailInput from "@/components/emailInput";
+import { useModal } from "@/context/AlertContext"
 
 
 export default function NewPassPage({ searchParams }) {
@@ -15,7 +16,7 @@ export default function NewPassPage({ searchParams }) {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [equal, setEqual] = useState(true);
-    const { fetchAuthUserFromResetToken, fetchAuthUser, error, authUserData, resetError} = useAuthStore(useShallow(
+    const { fetchAuthUserFromResetToken, fetchAuthUser, error, authUserData, resetError } = useAuthStore(useShallow(
         (s) => ({
             fetchAuthUserFromResetToken: s.fetchAuthUserFromResetToken,
             error: s.error,
@@ -40,7 +41,8 @@ export default function NewPassPage({ searchParams }) {
             router.push("/");
         }
 
-    },[error, resetError, router])
+    }, [error, resetError, router])
+    const { showAlert } = useModal();
     async function handleSubmit(e) {
         e.preventDefault();
         if (password != repeatPassword) {
@@ -50,10 +52,10 @@ export default function NewPassPage({ searchParams }) {
         // stuff
         await resetUserPassword({ new_password: password, resetToken: params.token });
         if (!error) {
-            alert("la contraseña se reseteo con éxito");
+            await showAlert({ message: "la contraseña se reseteo con éxito" });
             router.push("/main_navigation");
         } else {
-            alert(error);
+            await showAlert({ message: error, title: "Oh ha ocurrido un error" });
             router.push("");
         }
     }

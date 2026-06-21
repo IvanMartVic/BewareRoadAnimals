@@ -4,6 +4,7 @@ import NombreApellidosInput from "@/components/nombreApellidosInput";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/stores/userStore"
+import { useModal } from "@/context/AlertContext"
 
 export default function UserUpdateForm({ user, submitRoute }) {
     const [name, setName] = useState(user.full_name);
@@ -24,9 +25,10 @@ export default function UserUpdateForm({ user, submitRoute }) {
         e.target.reset();
         afterSubmit();
     }
+    const { showConfirm } = useModal();
     const handleDelete = async () => {
-        const choice = confirm(`¿está seguro de que quiere eliminar al usuario ${user.full_name}?`);
-        if(choice){
+        const choice = await showConfirm({ message: `¿está seguro de que quiere eliminar al usuario ${user.full_name}?` });
+        if (choice) {
             deleteUser(user.id);
             router.push("/main_navigation/users");
         }

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import { use } from "react";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/context/AlertContext"
 export default function LogViewPage({ searchParams }) {
     // http://localhost:3000/main_navigation/devices/logs?type=hola&deviceId=2 for type="hola" and deviceId="2"
     let filters = use(searchParams);
@@ -53,8 +54,10 @@ export default function LogViewPage({ searchParams }) {
         fetchLogsRT(queryFilter);
 
     }, [fetchLogsRT, fetchLogs, filter.deviceId, filter.type, filter.userId]);
+
+    const { showConfirm } = useModal();
     const deleteFetchLogs = async () => {
-        const choice = confirm(`eliminar ${logs.length} logs`);
+        const choice = await showConfirm({ message: `vas a eliminar ${logs.length} logs`, title: "eliminar logs" });
         if (choice) {
             const queryFilter = { ...filter };
             if (queryFilter.type == "ALL") {

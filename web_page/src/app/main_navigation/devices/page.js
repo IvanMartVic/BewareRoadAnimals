@@ -28,21 +28,15 @@ export default function DevicesMainPage() {
 
     useEffect(() => {
         fetchAuthUser();
-        if (errorAuth != null) {
-            alert(errorAuth);
-        }
     }, [fetchAuthUser, errorAuth])
 
     useEffect(() => {
-        if(authUserData?.id){
-            if(authUserData.role == "USER"){
-                fetchDevices({userId: authUserData.id});
-            }else{
+        if (authUserData?.id) {
+            if (authUserData.role == "USER") {
+                fetchDevices({ userId: authUserData.id });
+            } else {
                 fetchDevices();
             }
-        }
-        if (error != null) {
-            alert(error);
         }
     }, [fetchDevices, error, authUserData?.id]);
 

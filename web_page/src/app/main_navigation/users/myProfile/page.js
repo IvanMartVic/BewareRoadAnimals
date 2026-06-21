@@ -6,6 +6,7 @@ import { useShallow } from "zustand/shallow";
 import { useRouter } from "next/navigation";
 import EmailInput from "@/components/emailInput";
 import NombreApellidosInput from "@/components/nombreApellidosInput";
+import { useModal } from "@/context/AlertContext"
 
 export default function MyProfilePage() {
     const [name_disabled, set_name_disabled] = useState(true);
@@ -20,6 +21,7 @@ export default function MyProfilePage() {
             deleteAuthUser: state.deleteAuthUser,
         }))
     );
+    const { showAlert } = useModal();
 
     useEffect(() => {
         fetchAuthUser();
@@ -33,11 +35,12 @@ export default function MyProfilePage() {
             const new_data = { full_name: authUserData?.full_name, email: authUserData?.email }
             await updateAuthUser(new_data);
         }
-        alert("información cambiada con éxito");
+        await showAlert({ message: "Información cambiada con éxito" });
         router.push("/main_navigation")
     }
+    const { showConfirm } = useModal();
     const deleteUser = async () => {
-        const c = confirm("vas a eliminar todos los datos de tu cuenta, ¿continuar?");
+        const c = await showConfirm({ message: "vas a eliminar todos los datos de tu cuenta ¿continuar?" })
         if (c) {
             await deleteAuthUser();
             router.push("/");

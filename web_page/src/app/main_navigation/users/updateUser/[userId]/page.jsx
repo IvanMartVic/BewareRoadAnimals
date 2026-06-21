@@ -1,27 +1,18 @@
-// import { useState, use, useEffect } from "react";
 import { getUserById } from "@/services/userService";
 import UserUpdateForm from "@/components/userUpdateForm";
-// import { useRouter } from "next/navigation";
 
 
-export default async function UserUpdatePage({params}){
-    // const {userId} = use(params);
-    // const [user, setUser] = useState(null);
-    // const router = useRouter();
-    // useEffect(() => {
-    //     getUserById(+userId).then((user)=> setUser(user));
-    //     // alert(JSON.stringify(user));
-    // }, [userId]);
-    const {userId} = await params;
+export default async function UserUpdatePage({ params }) {
+    const { userId } = await params;
     const user = await getUserById(+userId);
     console.log(JSON.stringify(user));
     return (
-    <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-screen">
             {user && <UserUpdateForm key={user.id} user={user} submitRoute={"/main_navigation/users"}></UserUpdateForm>}
-    </div>
+        </div>
     );
 
 
-    
+
 
 }

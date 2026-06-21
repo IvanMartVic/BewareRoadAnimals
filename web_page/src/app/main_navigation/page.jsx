@@ -9,6 +9,7 @@ import DevicesUserOverview from "@/components/DevicesUserOverview";
 import DetectionsHeatmap from "@/components/heatmap";
 import DaysHeatmap from "@/components/heatmap_dias";
 
+
 export default function Home() {
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
         useShallow((state) => ({
@@ -18,9 +19,6 @@ export default function Home() {
         })));
     useEffect(() => {
         fetchAuthUser();
-        if (errorAuth != null) {
-            alert(errorAuth);
-        }
     }, [fetchAuthUser, errorAuth])
 
     return (
@@ -47,10 +45,7 @@ function AdminHome() {
         })));
     useEffect(() => {
         fetchAuthUser();
-        if (errorAuth != null) {
-            alert(errorAuth);
-        }
-    }, [fetchAuthUser, errorAuth])
+    }, [fetchAuthUser])
 
     const date = new Date();
     return (
@@ -68,7 +63,7 @@ function AdminHome() {
                     <DetectionsHeatmap />
                 </div>
                 <div className="h-full w-2/5 relative">
-                    <DaysHeatmap/>
+                    <DaysHeatmap />
                 </div>
             </div>
             <LogsOverview />
@@ -85,10 +80,7 @@ function UserHome() {
         })));
     useEffect(() => {
         fetchAuthUser();
-        if (errorAuth != null) {
-            alert(errorAuth);
-        }
-    }, [fetchAuthUser, errorAuth])
+    }, [fetchAuthUser])
 
     const date = new Date();
     return (

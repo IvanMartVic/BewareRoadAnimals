@@ -1,14 +1,13 @@
 "use client"
 import Link from "next/link"
-import avatar from "@/../public/avatar.jpg"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { LogOut } from "@/services/authenticationService"
 import useAuthStore from "@/stores/authStore"
 import { useShallow } from "zustand/shallow"
 import { useEffect } from "react"
+import { useModal } from "@/context/AlertContext"
 
-export default function Navbar({ pageContent }) {
+export default function Navbar({ children }) {
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
         useShallow((state) => ({
             authUserData: state.authUserData,
@@ -17,14 +16,11 @@ export default function Navbar({ pageContent }) {
         })));
     useEffect(() => {
         fetchAuthUser();
-        if (errorAuth != null) {
-            alert(errorAuth);
-        }
     }, [fetchAuthUser, errorAuth])
     const router = useRouter();
-    const logout = function() {
-        // alert("logging out");
-        const choice = confirm("¿Cerrar Sesion?");
+    const { showConfirm } = useModal();
+    const logout = async function() {
+        const choice = await showConfirm({ message: "¿Cerrar Sesión?" });
         if (choice) {
             LogOut();
             router.push("/");
@@ -47,7 +43,7 @@ export default function Navbar({ pageContent }) {
             <div className="flex-none drawer lg:drawer-open bg-base-300">
                 <input id="sidebar" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content bg-base-100">
-                    {pageContent}
+                    {children}
                 </div>
                 <div className="drawer-side is-drawer-close:hidden">
                     <label htmlFor="sidebar" aria-label="close sidebar" className="drawer-overlay"></label>

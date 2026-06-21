@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import LogDetails from "@/components/LogDetails"
 import { useParams, useRouter } from "next/navigation";
 import { useShallow } from "zustand/shallow";
+import { useModal } from "@/context/AlertContext"
+
 export default function LogDetailPage() {
     const { id } = useParams();
     const { logs, fetchLogs, isLoading, error } = useLogStore(
@@ -15,20 +17,12 @@ export default function LogDetailPage() {
         }))
     );
     const router = useRouter();
-    // const [log, setLog] = useState(null);
     const log = useMemo(() => logs.find((l) => l.id === +id), [logs, id]);
-    // useEffect(() => {
-    //     let pageLog = 
-    //     if (!pageLog) {
-    //         fetchLogs({ id: +id });
-    //         pageLog = logs[0];
-    //     }
-    //     setLog(pageLog);
-    // }, [fetchLogs, id, logs, setLog]);
+    const { showAlert } = useModal();
     const fetchLogId = useCallback(async () => {
         const logs = await fetchLogs({ id: +id });
         if (logs && logs.length == 0) {
-            alert(`error: no existe log con id:${id}`);
+            await showAlert({ message: `error: no existe log con id:${id}`, title: "Oh ha ocurrido un error" });
             router.push("/main_navigation/logs");
         }
     }, [fetchLogs, id, router])

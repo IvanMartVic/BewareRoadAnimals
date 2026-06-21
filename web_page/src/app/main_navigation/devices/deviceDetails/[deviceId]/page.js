@@ -8,12 +8,13 @@ import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import LogsOverview from "@/components/LogsOverview";
+import { useModal } from "@/context/AlertContext";
 
 
 export default function LogsMainPage() {
     const { deviceId } = useParams();
     const [pageDevice, setPageDevice] = useState(null);
-    const { fetchDevices, isLoading, devices, deleteDevice,error } = useDeviceStore(
+    const { fetchDevices, isLoading, devices, deleteDevice, error } = useDeviceStore(
         useShallow((state) => ({
             fetchDevices: state.fetchDevices,
             isLoading: state.isLoading,
@@ -23,10 +24,7 @@ export default function LogsMainPage() {
         })));
     useEffect(() => {
         fetchDevices();
-        if (error != null) {
-            alert(error);
-        }
-    }, [fetchDevices, error]);
+    }, [fetchDevices]);
     useEffect(() => {
         if (devices) {
             const device = devices.find((d) => d.id == deviceId);
@@ -44,9 +42,10 @@ export default function LogsMainPage() {
             ssr: false
         }
     ), [])
+    const { showConfirm } = useModal();
     const handleDelete = async () => {
-        const choice = confirm("Vas a eliminar un dispositivo");
-        if(choice){
+        const choice = await showConfirm({ message: "Vas a eliminar un dispositivo ¿continuar?" });
+        if (choice) {
             deleteDevice(+deviceId);
             router.push("/main_navigation/devices")
         }

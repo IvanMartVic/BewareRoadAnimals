@@ -3,14 +3,17 @@ import EmailInput from "@/components/emailInput"
 import { useState } from "react";
 import { resetPassword } from "@/services/emailService"
 import { useRouter } from "next/navigation";
+import { useModal } from "@/context/AlertContext"
+
 export default function ResetPage() {
     const [email, setEmail] = useState("");
     const router = useRouter();
 
+    const { showAlert } = useModal();
     async function handleSubmit(e) {
         e.preventDefault();
-        const { success, error } = await resetPassword(email);
-        alert('Se ha mandado un mensaje a tu correo electrónico')
+        await resetPassword(email);
+        await showAlert({ message: 'Se ha mandado un mensaje a tu correo electrónico' })
         router.push("/");
     }
     return (
