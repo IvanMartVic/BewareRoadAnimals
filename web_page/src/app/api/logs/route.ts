@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getAllLogs, getUserLogs } from "@/services/logsService"
+import { getMostRecentLog } from "@/services/logsService"
 
 export const dynamic = 'force-dynamic'
 
@@ -7,35 +7,29 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const filters = Object.fromEntries(searchParams.entries());
     console.log(`creating a RT connection with filters: ${JSON.stringify(filters)}`)
+    let interval: NodeJS.Timeout;
     const stream = new ReadableStream({
         start(controller) {
             const encoder = new TextEncoder();
             controller.enqueue(
                 encoder.encode(`data: ${JSON.stringify({ message: "connected" })}\n\n`)
             );
-            const interval = setInterval(async () => {
+            interval = setInterval(async () => {
                 let res;
-                if (filters.userId) {
-                    const logFilters = { ...filters };
-                    delete logFilters.userId;
-                    res = await getUserLogs({ filters: logFilters, userId: +filters.userId });
-
-                } else {
-                    res = await getAllLogs({ ...filters });
-                }
+                res = await getMostRecentLog({ filters: filters });
                 const data = {
-                    logs: res,
+                    log: res,
                 };
                 controller.enqueue(
                     encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
                 );
             }, 1000);
 
-            req.signal.addEventListener('abort', () => {
-                clearInterval(interval);
-                controller.close();
-            });
         },
+        cancel() {
+            console.log("SSE client disconected clearing up intervals");
+            clearInterval(interval);
+        }
     });
     return new Response(stream, {
         headers: {

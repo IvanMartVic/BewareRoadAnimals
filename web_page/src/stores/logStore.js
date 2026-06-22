@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllLogs, deleteLog, getLogsCount, getUserLogs, getLogById, filterAndDeleteLog } from "@/services/logsService"
+import { getAllLogs, deleteLog, getLogsCount, getUserLogs, filterAndDeleteLog } from "@/services/logsService"
 
 
 const useLogStore = create((set, get) => ({
@@ -17,10 +17,10 @@ const useLogStore = create((set, get) => ({
             set({ isLoading: true })
             const queryParams = new URLSearchParams(filters).toString();
             const url = queryParams ? `/api/logs?${queryParams}` : '/api/logs'
-
             if (get().eventSource) {
                 get().eventSource.close();
             }
+            get().fetchLogs(filters);
 
             const eventSource = new EventSource(url);
             eventSource.onopen = () => {
@@ -30,13 +30,19 @@ const useLogStore = create((set, get) => ({
 
             eventSource.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                if (data.logs) {
-                    const parsedLogs = data.logs.map(l => ({
-                        ...l,
-                        timestamp: new Date(l.timestamp)
-                    }));
-                    const sortedLogs = parsedLogs.sort((a, b) => b.timestamp - a.timestamp);
-                    set({ logs: sortedLogs, isLoading: false });
+                if (data.log) {
+                    // const parsedLog = data.log.map(l => ({
+                    //     ...l,
+                    //     timestamp: new Date(l.timestamp)
+                    // }));
+                    const parsedLog = { ...data.log, timestamp: new Date(data.log.timestamp) };
+                    const currentMostRecent = get().logs[0];
+                    if (!currentMostRecent || parsedLog.timestamp > currentMostRecent.timestamp) {
+                        set({ logs: [parsedLog, ...get().logs], isLoading: false });
+
+                    }
+
+                    // const sortedLogs = parsedLogs.sort((a, b) => b.timestamp - a.timestamp);
                 }
             };
             eventSource.onerror = (error) => {
@@ -55,10 +61,13 @@ const useLogStore = create((set, get) => ({
         set({ isLoading: true });
         try {
             let res;
-            if (filters.userId) {
+            if ("userId" in filters) {
                 const logFilters = { ...filters };
                 delete logFilters.userId;
                 res = await getUserLogs({ filters: logFilters, userId: filters.userId });
+                if (res.length == 0) {
+                    //posible error set here
+                }
 
             } else {
                 res = await getAllLogs({ ...filters });
@@ -106,7 +115,7 @@ const useLogStore = create((set, get) => ({
         try {
             const deletedLog = await deleteLog(id);
             set((state) => ({
-                logs: state.log.filter((log) => log.id != id)
+                logs: state.logs.filter((log) => log.id != id)
             }));
             return deletedLog;
         } catch (e) {

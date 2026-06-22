@@ -1,12 +1,15 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
 
-export async function getAllLogs(filters = {}) {
+const PAGE_SIZE = 100;
+export async function getAllLogs(filters = {}, page_number = 0) {
     const logs = await prisma.log.findMany({
+        take: PAGE_SIZE,
+        skip: page_number * PAGE_SIZE,
         where: {
             ...filters,
         },
-        orderBy:{
+        orderBy: {
             timestamp: 'desc',
         }
     });
@@ -15,8 +18,10 @@ export async function getAllLogs(filters = {}) {
     }
     return logs;
 }
-export async function getUserLogs({ filters = {}, userId }) {
+export async function getUserLogs({ filters = {}, userId, page_number = 0 }) {
     const logs = await prisma.log.findMany({
+        take: PAGE_SIZE,
+        skip: page_number * PAGE_SIZE,
         where: {
             deviceIn: {
                 userId: userId,
@@ -85,7 +90,7 @@ export async function filterAndDeleteLog({ filters = {}, userId }) {
                 ...filters,
             },
         });
-    }else{
+    } else {
         logs = await prisma.log.deleteMany({
             where: {
                 ...filters,
@@ -94,6 +99,34 @@ export async function filterAndDeleteLog({ filters = {}, userId }) {
 
     }
     return logs;
+}
+export async function getMostRecentLog({ filters = {} }) {
+    let log;
+    const logFilters = { ...filters };
+    if (filters.userId) {
+        delete logFilters.userId;
+        log = await prisma.log.findFirst({
+            where: {
+                deviceIn: {
+                    userId: +filters.userId,
+                },
+                ...logFilters,
+            },
+            orderBy: {
+                timestamp: 'desc',
+            }
+        });
+    } else {
+        log = await prisma.log.findFirst({
+            where: {
+                ...logFilters,
+            },
+            orderBy: {
+                timestamp: 'desc',
+            }
+        });
+    }
+    return log;
 }
 
 
