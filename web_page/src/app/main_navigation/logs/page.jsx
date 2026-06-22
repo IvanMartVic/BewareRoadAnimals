@@ -28,8 +28,8 @@ export default function LogViewPage({ searchParams }) {
         }))
     );
     const [pageFilter, setFilter] = useState({
-        deviceId: (searchFilters.deviceId) ? +deviceId : "ALL",
-        type: (searchFilters.type) ? type : "ALL",
+        deviceId: (searchFilters.deviceId) ? +searchFilters.deviceId : "ALL",
+        type: (searchFilters.type) ? searchFilters.type : "ALL",
         userId: (searchFilters.userId),
     });
     const filterAndFetch = useCallback(() => {
