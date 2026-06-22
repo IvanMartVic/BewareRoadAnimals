@@ -85,10 +85,10 @@ export default function LogViewPage({ searchParams }) {
     const router = useRouter();
     return (
         <div
-            className="flex flex-col h-screen items-start p-10">
-            <div className="flex w-full gap-2 justify-between">
-                <div className="flex flex-row w-full gap-4 justify-start items-start">
-                    <fieldset className="fieldset w-1/12">
+            className="flex flex-col h-full items-start p-10">
+            <div className="flex md:flex-row flex-col w-full gap-2 justify-between">
+                <div className="flex md:flex-row flex-col w-full gap-4 justify-start items-start">
+                    <fieldset className="fieldset w-full md:w-auto md:min-w-37.5">
                         <legend className="fieldset-legend">Tipo de log</legend>
                         <select value={filter.type} onChange={(e) => setFilter({ ...filter, type: e.target.value })} className="select ">
                             <option disabled={false}>ALL</option>
@@ -97,7 +97,7 @@ export default function LogViewPage({ searchParams }) {
                             <option>DETECCION</option>
                         </select>
                     </fieldset>
-                    <fieldset className="fieldset w-1/12">
+                    <fieldset className="fieldset w-full md:w-auto md:min-w-37.5">
                         <legend className="fieldset-legend">Usuario</legend>
                         <select value={filter.userId} onChange={(e) => setFilter({ ...filter, userId: ("ALL" == e.target.value) ? e.target.value : +e.target.value })} className="select ">
                             <option value={authUserId} disabled={false}>Mi usuario</option>
@@ -110,9 +110,8 @@ export default function LogViewPage({ searchParams }) {
                             }
                         </select>
                     </fieldset>
-
                 </div>
-                <div className="flex w-4/12 gap-4 items-end justify-end">
+                <div className="flex flex-row w-full gap-4 items-end md:justify-end justify-between">
                     <button className="btn btn-error mb-1" onClick={deleteFetchLogs}>Eliminar logs seleccionados</button>
                     <button className="btn btn-secondary mb-1" onClick={() => filterAndFetch()}>Recargar</button>
                 </div>
