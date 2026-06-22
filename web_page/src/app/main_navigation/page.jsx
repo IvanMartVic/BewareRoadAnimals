@@ -50,19 +50,20 @@ function AdminHome() {
     const date = new Date();
     return (
         <div
-            className="flex flex-col h-screen gap-4 justify-start items-start p-[5vw]">
+            className="flex flex-col md:h-screen gap-4 justify-start items-start p-[5vw]">
             <h1 className="text-xl">Bienvenido {authUserData?.full_name}</h1>
             <h2>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}  {date.getHours()}:{date.getMinutes()}</h2>
             <div
-                className="flex flex-row h-3/5 justify-start gap-4 items-start mt-5 w-full">
-                <div className="flex flex-col w-1/5 h-full gap-2 justify-between items-center">
+                className="flex flex-col justify-start gap-4 items-start mt-5 w-full
+        md:flex-row h-full ">
+                <div className="flex flex-col w-full md:w-1/5 h-full gap-2 justify-between items-center">
                     <DevicesOverview />
                     <UsersOverview />
                 </div>
-                <div className="h-full w-2/5 relative">
+                <div className="shrink-0 md:w-2/5 md:h-full h-[320px] w-[400px] relative">
                     <DetectionsHeatmap />
                 </div>
-                <div className="h-full w-2/5 relative">
+                <div className="shrink-0 md:w-2/5 md:h-full h-[320px] w-[400px] relative">
                     <DaysHeatmap />
                 </div>
             </div>

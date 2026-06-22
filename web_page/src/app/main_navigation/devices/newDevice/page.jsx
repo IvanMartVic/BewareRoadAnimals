@@ -51,7 +51,11 @@ export default function NewDevicePage() {
     ), [])
 
     return (
-        <div className="flex justify-between items-start p-10 h-screen gap-7">
+        <div className="flex md:flex-row flex-col items-start justify-start p-10 h-screen gap-1">
+            <div className="h-[90vh] w-full md:w-4/5">
+                <Map position={SALAMANCA_POS} markerPosition={markerPosition} scrollWheelZoom={true} setMarkerPosition={setMarkerPosition} markerRef={markerRef} zoom={8} />
+
+            </div>
             <form onSubmit={handleSubmit}>
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-s border p-4 gap-7">
                     <legend className="fieldset-legend text-xl text-primary">Nuevo Dispositivo</legend>
@@ -66,10 +70,6 @@ export default function NewDevicePage() {
                     <button type="submit" className="btn btn-primary mt-4">Añadir</button>
                 </fieldset>
             </form>
-            <div className="h-[90vh] w-3/4">
-                <Map position={SALAMANCA_POS} markerPosition={markerPosition} scrollWheelZoom={true} setMarkerPosition={setMarkerPosition} markerRef={markerRef} zoom={8} />
-
-            </div>
 
         </div>
     );

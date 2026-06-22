@@ -5,16 +5,16 @@ import { useShallow } from 'zustand/shallow';
 
 // Mock data generator: [{ day: 0, hour: 0, value: 5 }, ...]
 const getDayHelper = (timestamp_day) => {
-    if(timestamp_day == 0){
+    if (timestamp_day == 0) {
         return 6;
-    }else{
+    } else {
         return timestamp_day - 1;
     }
 
 }
 const generateData = (logs) => {
     const data = [];
-    if(logs.length == 0){
+    if (logs.length == 0) {
         return data;
     }
     for (let m = 0; m < 12; m++) {
@@ -49,12 +49,12 @@ const Heatmap = () => {
     const data = useMemo(() => {
         if (!isLoading) {
             return generateData(logs)
-        }else{
+        } else {
             return [];
         }
     }, [logs, isLoading]);
     const month = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-    const days = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie','Sab', 'Dom'];
+    const days = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
 
     useEffect(() => {
         if (!userId) {
@@ -78,32 +78,32 @@ const Heatmap = () => {
     return (
         <>
             {!isLoading && !isLoadingAuth &&
-                <div className="p-[5%] bg-white rounded-lg shadow-sm w-full h-full overflow-x-auto flex flex-col">
-
-                    <h1 className='w-full text-center text-gray-500'>Detecciones por días de la semana</h1>
-                    <div className="flex h-full justify-center items-center">
-
-                        <div className="flex flex-col justify-between pr-[3%] mt-[8%] text-xs text-gray-400 h-11/12">
+                <div className="flex flex-col p-4 bg-white rounded-lg shadow-sm w-full h-full min-h-0 min-w-0 overflow-auto">
+                    <h1 className='w-full text-center text-gray-500 font-medium mb-4 shrink-0'>
+                        Detecciones por días de la semana
+                    </h1>
+                    <div className="flex flex-1 h-full min-h-0 w-full">
+                        <div className="flex flex-col justify-between pr-3 pt-6 pb-0.5 text-xs text-gray-400 shrink-0">
                             {days.map((h, i) => (
                                 <div key={i} className="h-[1/9]">{h}</div>
                             ))}
                         </div>
-                        <div className="flex-1 h-full">
+                        <div className="flex flex-col flex-1 h-full min-h-0">
                             {/* X-Axis: Days */}
-                            <div className="grid grid-cols-12 mb-[0.5%] text-xs text-gray-400 text-center">
+                            <div className="grid grid-cols-12 gap-1 mb-1 text-xs text-gray-400 text-center shrink-0">
                                 {month.map(day => <div key={day} className='w-1/12'>{day}</div>)}
                             </div>
 
-                            <div className="grid grid-cols-12 gap-1 h-full">
+                            <div className="grid grid-cols-12 grid-rows-7 gap-1 flex-1 h-full min-h-0">
                                 {Array.from({ length: 7 }).map((_, dayIdx) => (
                                     <React.Fragment key={dayIdx}>
                                         {month.map((_, monthInx) => {
-                                            const entry = data.find(d => d.month === monthInx && d.day=== dayIdx);
+                                            const entry = data.find(d => d.month === monthInx && d.day === dayIdx);
                                             return (
                                                 <div
                                                     key={`${monthInx}-${dayIdx}`}
                                                     title={`${month[monthInx]}, ${days[dayIdx]}: ${entry?.value} detecciones`}
-                                                    className={`h-[1/7] w-full rounded-sm ${getColor(entry?.value || 0)} transition-colors hover:ring-1 hover:ring-gray-400`}
+                                                    className={`h-full w-full rounded-sm ${getColor(entry?.value || 0)} transition-colors hover:ring-1 hover:ring-gray-400`}
                                                 />
                                             );
                                         })}

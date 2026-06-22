@@ -45,9 +45,9 @@ export default function Navbar({ children }) {
                 <div className="drawer-content bg-base-100">
                     {children}
                 </div>
-                <div className="drawer-side is-drawer-close:hidden">
+                <div className="drawer-side is-drawer-close:hidden relative z-10">
                     <label htmlFor="sidebar" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu bg-base-300 min-h-full w-80 p-4">
+                    <ul className="menu bg-base-300 min-h-full p-4">
                         {/* Sidebar content here */}
                         <li className="font-bold"><Link href={"/main_navigation"}>Página Principal</Link></li>
                         {authUserData && authUserData.role == "ADMIN" &&
