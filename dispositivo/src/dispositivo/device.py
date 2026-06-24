@@ -19,7 +19,8 @@ class Device:
 
     def deploy(self):
         print(f"going for url: {self.server_url}/deployement")
-        requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"})
+        # requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"})
+        self._generic_sys_log("dispositivo desplegado")
 
     def _low_battery_message(self, battery):
         requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":f"batería del dispositivo al {battery}%", "type":"BATERIA"})
@@ -38,8 +39,8 @@ class Device:
         if data.bateria < BATTERY_THRESHOLD:
             self._low_battery_message(data.bateria);
         is_detection, detection = self._process_image(data.image_frame)
-        img_compress = frame_to_base64(data.image_frame)
         if is_detection:
+            img_compress = frame_to_base64(data.image_frame)
             print(f"sending detect message to {self.server_url}/log")
             self._send_detection_log(detection, img_compress)
 

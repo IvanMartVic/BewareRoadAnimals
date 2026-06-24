@@ -26,7 +26,7 @@ if __name__ == "__main__":
         scaled_frame = cv2.resize(frame, (640, 384), interpolation=cv2.INTER_NEAREST)
         sensor_data = SensorData(bateria=simulateBatterySensor(),image_frame=scaled_frame)
         d.process_data(sensor_data)
-        cv2.imshow("hola", frame)
+        cv2.imshow("img", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         # break #for testing
