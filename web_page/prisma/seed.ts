@@ -1,7 +1,6 @@
 import "dotenv/config";
 import { prisma } from "@/../lib/prisma"
 import fs from 'fs';
-import path from 'path';
 
 function randomDate(start: Date, end: Date) {
     const start_millis = start.getTime();
