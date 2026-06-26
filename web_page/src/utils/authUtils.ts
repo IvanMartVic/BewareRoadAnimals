@@ -16,7 +16,7 @@ export interface deviceCredentials {
     deviceId: number;
 }
 
-export async function mySignIn({ password, email }: credentials) {
+export async function mySignIn({ password, email }: credentials): Promise<{ success: boolean, message?: string }> {
     const user = await prisma.user.findUnique({
         where: {
             email: email,

@@ -17,8 +17,8 @@ export async function auth() {
 }
 export async function authDevice({ deviceId }: authUtils.deviceCredentials) {
     return authUtils.authDevice({ deviceId });
-
 }
+
 export async function authAdmin() {
     const auth_res = await auth();
     if (!auth_res.success) {
