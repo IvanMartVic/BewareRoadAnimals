@@ -1,0 +1,475 @@
+export const enums = [];
+
+export const models = [
+  {
+    "name": "User",
+    "dbName": null,
+    "schema": null,
+    "fields": [
+      {
+        "name": "id",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": true,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "Int",
+        "nativeType": null,
+        "default": {
+          "name": "autoincrement",
+          "args": []
+        },
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "email",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": true,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "full_name",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "createdAt",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "DateTime",
+        "nativeType": null,
+        "default": {
+          "name": "now",
+          "args": []
+        },
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "role",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "String",
+        "nativeType": null,
+        "default": "USER",
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "password_hash",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "devices",
+        "kind": "object",
+        "isList": true,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "Device",
+        "nativeType": null,
+        "relationName": "DeviceToUser",
+        "relationFromFields": [],
+        "relationToFields": [],
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "resetToken",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": false,
+        "isUnique": true,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "tokenExpiry",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": false,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "DateTime",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      }
+    ],
+    "primaryKey": null,
+    "uniqueFields": [],
+    "uniqueIndexes": [],
+    "isGenerated": false
+  },
+  {
+    "name": "Device",
+    "dbName": null,
+    "schema": null,
+    "fields": [
+      {
+        "name": "id",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": true,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "Int",
+        "nativeType": null,
+        "default": {
+          "name": "autoincrement",
+          "args": []
+        },
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "coordLatitude",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "Float",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "coordLength",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "Float",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "userId",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": true,
+        "hasDefaultValue": false,
+        "type": "Int",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "deployedBy",
+        "kind": "object",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "User",
+        "nativeType": null,
+        "relationName": "DeviceToUser",
+        "relationFromFields": [
+          "userId"
+        ],
+        "relationToFields": [
+          "id"
+        ],
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "logs",
+        "kind": "object",
+        "isList": true,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "Log",
+        "nativeType": null,
+        "relationName": "DeviceToLog",
+        "relationFromFields": [],
+        "relationToFields": [],
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "deployedAt",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "DateTime",
+        "nativeType": null,
+        "default": {
+          "name": "now",
+          "args": []
+        },
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "status",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "String",
+        "nativeType": null,
+        "default": "INACTIVE",
+        "isGenerated": false,
+        "isUpdatedAt": false
+      }
+    ],
+    "primaryKey": null,
+    "uniqueFields": [],
+    "uniqueIndexes": [],
+    "isGenerated": false
+  },
+  {
+    "name": "Log",
+    "dbName": null,
+    "schema": null,
+    "fields": [
+      {
+        "name": "id",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": true,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "Int",
+        "nativeType": null,
+        "default": {
+          "name": "autoincrement",
+          "args": []
+        },
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "deviceId",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": true,
+        "hasDefaultValue": false,
+        "type": "Int",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "message",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "image",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": false,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "deviceIn",
+        "kind": "object",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "Device",
+        "nativeType": null,
+        "relationName": "DeviceToLog",
+        "relationFromFields": [
+          "deviceId"
+        ],
+        "relationToFields": [
+          "id"
+        ],
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "type",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "String",
+        "nativeType": null,
+        "default": "SISTEMA",
+        "isGenerated": false,
+        "isUpdatedAt": false
+      },
+      {
+        "name": "timestamp",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": false,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": true,
+        "type": "DateTime",
+        "nativeType": null,
+        "default": {
+          "name": "now",
+          "args": []
+        },
+        "isGenerated": false,
+        "isUpdatedAt": false
+      }
+    ],
+    "primaryKey": null,
+    "uniqueFields": [],
+    "uniqueIndexes": [],
+    "isGenerated": false
+  }
+];
+
+export const types = [];
+
+export const indexes = [
+  {
+    "model": "User",
+    "type": "id",
+    "isDefinedOnField": true,
+    "fields": [
+      {
+        "name": "id"
+      }
+    ]
+  },
+  {
+    "model": "User",
+    "type": "unique",
+    "isDefinedOnField": true,
+    "fields": [
+      {
+        "name": "email"
+      }
+    ]
+  },
+  {
+    "model": "User",
+    "type": "unique",
+    "isDefinedOnField": true,
+    "fields": [
+      {
+        "name": "resetToken"
+      }
+    ]
+  },
+  {
+    "model": "Device",
+    "type": "id",
+    "isDefinedOnField": true,
+    "fields": [
+      {
+        "name": "id"
+      }
+    ]
+  },
+  {
+    "model": "Log",
+    "type": "id",
+    "isDefinedOnField": true,
+    "fields": [
+      {
+        "name": "id"
+      }
+    ]
+  }
+];

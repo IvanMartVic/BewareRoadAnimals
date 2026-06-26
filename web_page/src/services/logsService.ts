@@ -1,8 +1,21 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
+import { authLogFilters } from "@/services/authenticationService";
+
+export interface LogFilters {
+    id?: number;
+    userId?: number;
+    timestamp?: Date;
+    type?: string;
+    deviceId?: number;
+}
 
 const PAGE_SIZE = 100;
-export async function getAllLogs(filters = {}, page_number = 0) {
+export async function getAllLogs(filters: LogFilters = {}, page_number: number = 0) {
+    const { success } = await authLogFilters(filters);
+    if (!success) {
+        return;
+    }
     const logs = await prisma.log.findMany({
         take: PAGE_SIZE,
         skip: page_number * PAGE_SIZE,
@@ -18,7 +31,12 @@ export async function getAllLogs(filters = {}, page_number = 0) {
     }
     return logs;
 }
-export async function getUserLogs({ filters = {}, userId, page_number = 0 }) {
+export async function getUserLogs({ filters = {}, userId, page_number = 0 }:
+    { filters: LogFilters, userId: number, page_number: number }) {
+    const { success } = await authLogFilters(filters);
+    if (!success) {
+        return;
+    }
     const logs = await prisma.log.findMany({
         take: PAGE_SIZE,
         skip: page_number * PAGE_SIZE,
@@ -32,6 +50,10 @@ export async function getUserLogs({ filters = {}, userId, page_number = 0 }) {
     return logs;
 }
 export async function getLogsCount(filters = {}) {
+    const { success } = await authLogFilters(filters);
+    if (!success) {
+        return;
+    }
     const logs = await prisma.log.count({
         where: {
             ...filters,
@@ -41,28 +63,11 @@ export async function getLogsCount(filters = {}) {
     return logs;
 }
 
-
-export async function createLog({ message, image }) {
-    const new_log = await prisma.log.create({
-        data: {
-            message: message,
-            image: image,
-        }
-    });
-    return new_log;
-}
-
-export async function updateLog({ data: new_data, id }) {
-    const updated = await prisma.log.update({
-        where: {
-            id: id,
-        },
-        data: { ...new_data },
-    });
-    return updated;
-}
-
-export async function getLogById(id) {
+export async function getLogById(id: number) {
+    const { success } = await authLogFilters({ id: id });
+    if (!success) {
+        return;
+    }
     const log = await prisma.log.findUnique({
         where: {
             id: id,
@@ -71,7 +76,11 @@ export async function getLogById(id) {
     return log;
 }
 
-export async function deleteLog(id) {
+export async function deleteLog(id: number) {
+    const { success } = await authLogFilters({ id: id });
+    if (!success) {
+        return;
+    }
     const log = await prisma.log.delete({
         where: {
             id: id,
@@ -79,13 +88,17 @@ export async function deleteLog(id) {
     });
     return log;
 }
-export async function filterAndDeleteLog({ filters = {}, userId }) {
+export async function filterAndDeleteLog({ filters = {} }: { filters: LogFilters }) {
+    const { success } = await authLogFilters(filters);
+    if (!success) {
+        return;
+    }
     let logs;
-    if (userId) {
+    if (filters.userId) {
         logs = await prisma.log.deleteMany({
             where: {
                 deviceIn: {
-                    userId: userId,
+                    userId: filters.userId,
                 },
                 ...filters,
             },
@@ -100,7 +113,11 @@ export async function filterAndDeleteLog({ filters = {}, userId }) {
     }
     return logs;
 }
-export async function getMostRecentLog({ filters = {} }) {
+export async function getMostRecentLog({ filters = {} }: { filters: LogFilters }) {
+    const { success } = await authLogFilters(filters);
+    if (!success) {
+        return;
+    }
     let log;
     const logFilters = { ...filters };
     if (filters.userId) {

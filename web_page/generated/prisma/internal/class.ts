@@ -17,10 +17,10 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.4.0",
-  "engineVersion": "ab56fe763f921d033a6c195e7ddeb3e255bdbb57",
+  "clientVersion": "7.8.0",
+  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id            Int       @id @default(autoincrement())\n  email         String    @unique\n  full_name     String\n  createdAt     DateTime  @default(now())\n  role          String    @default(\"USER\")\n  password_hash String\n  devices       Device[]\n  resetToken    String?   @unique\n  tokenExpiry   DateTime?\n}\n\nmodel Device {\n  id            Int      @id @default(autoincrement())\n  coordLatitude Float\n  coordLength   Float\n  userId        Int\n  deployedBy    User     @relation(fields: [userId], references: [id])\n  logs          Log[]\n  deployedAt    DateTime @default(now())\n  status        String   @default(\"INACTIVE\")\n}\n\nmodel Log {\n  id        Int      @id @default(autoincrement())\n  deviceId  Int\n  message   String\n  image     String?\n  deviceIn  Device   @relation(fields: [deviceId], references: [id])\n  type      String   @default(\"SISTEMA\")\n  timestamp DateTime @default(now())\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ngenerator dmmf {\n  provider = \"prisma-mock\"\n  output   = \"../generated/dmmf\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id            Int       @id @default(autoincrement())\n  email         String    @unique\n  full_name     String\n  createdAt     DateTime  @default(now())\n  role          String    @default(\"USER\")\n  password_hash String\n  devices       Device[]\n  resetToken    String?   @unique\n  tokenExpiry   DateTime?\n}\n\nmodel Device {\n  id            Int      @id @default(autoincrement())\n  coordLatitude Float\n  coordLength   Float\n  userId        Int\n  deployedBy    User     @relation(fields: [userId], references: [id])\n  logs          Log[]\n  deployedAt    DateTime @default(now())\n  status        String   @default(\"INACTIVE\")\n}\n\nmodel Log {\n  id        Int      @id @default(autoincrement())\n  deviceId  Int\n  message   String\n  image     String?\n  deviceIn  Device   @relation(fields: [deviceId], references: [id])\n  type      String   @default(\"SISTEMA\")\n  timestamp DateTime @default(now())\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -67,7 +67,9 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
@@ -89,7 +91,9 @@ export interface PrismaClientConstructor {
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
@@ -174,9 +178,9 @@ export interface PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => runtime.Types.Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<R>
 

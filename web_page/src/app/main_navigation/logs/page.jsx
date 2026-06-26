@@ -36,7 +36,7 @@ export default function LogViewPage({ searchParams }) {
         const queryFilter = {
             deviceId: (pageFilter.deviceId),
             type: (pageFilter.type),
-            userId: (pageFilter.userId) ? +pageFilter.userId : authUserId,
+            userId: (pageFilter.userId) ? (pageFilter.userId == "ALL" ? "ALL" : +pageFilter.userId) : authUserId,
         };
         if (queryFilter.type == "ALL") {
             delete queryFilter.type;
