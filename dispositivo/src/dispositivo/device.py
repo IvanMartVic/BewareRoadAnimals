@@ -27,7 +27,7 @@ class Device:
 
     def _process_image(self, image):
         is_detect, res = self.model.detect(image)
-        print(res)
+        # print(res)
         return is_detect,res;
     def _send_detection_log(self, detection, image_base64):
         requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":detection, "type":"DETECCION", "image":image_base64})
@@ -41,7 +41,7 @@ class Device:
         is_detection, detection = self._process_image(data.image_frame)
         if is_detection:
             img_compress = frame_to_base64(data.image_frame)
-            print(f"sending detect message to {self.server_url}/log")
+            # print(f"sending detect message to {self.server_url}/log")
             self._send_detection_log(detection, img_compress)
 
 

@@ -18,9 +18,9 @@ class YoloModel(ObjectDetectionModel):
         for result in results:
             summary = result.summary()
             if len(summary) > 0:
-                print(f"summary len: {len(summary)}")
+                # print(f"summary len: {len(summary)}")
                 return True, result.to_json()
-            print(summary)
+            # print(summary)
 
         # print(f"YOLO detecction {results}")
         return False, ""
