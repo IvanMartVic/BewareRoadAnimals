@@ -16,6 +16,7 @@ class Device:
         self.id = id
         self.server_url = server_url
         self.model = model
+        self._lastInference = None
 
     def deploy(self):
         print(f"going for url: {self.server_url}/deployement")
@@ -30,19 +31,35 @@ class Device:
         # print(res)
         return is_detect,res;
     def _send_detection_log(self, detection, image_base64):
-        requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":detection, "type":"DETECCION", "image":image_base64})
+        if image_base64 == "":
+            requests.post(url=f"{self.server_url}/log",
+                          json={"id":self.id, 
+                                "message":f"Animal detectado, ver detecciones anteriores para detalles", "type":"DETECCION"})
+        else:
+            requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":detection, "type":"DETECCION", "image":image_base64})
 
     def _generic_sys_log(self,message):
         requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":message, "type":"SISTEMA"})
+
+    def _repeated_detection(self, detection):
+        if self._lastInference is None:
+            return False
+        else:
+            return self._lastInference["is_detection"]
 
     def process_data(self,data:SensorData):
         if data.bateria < BATTERY_THRESHOLD:
             self._low_battery_message(data.bateria);
         is_detection, detection = self._process_image(data.image_frame)
         if is_detection:
-            img_compress = frame_to_base64(data.image_frame)
+            if self._repeated_detection(detection):
+                img_compress = "";
+            else:
+                img_compress = frame_to_base64(data.image_frame)
             # print(f"sending detect message to {self.server_url}/log")
             self._send_detection_log(detection, img_compress)
+
+        self._lastInference = { "is_detection" : is_detection, "detection" : detection}
 
 
 

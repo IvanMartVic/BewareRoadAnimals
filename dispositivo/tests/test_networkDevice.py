@@ -35,8 +35,8 @@ def test_networkDetectionSize():
     assert payload_size < MAX_DETECT_SIZE_BYTES, f"The message size is too big {payload_size} bytes"
 
 TEST_CASES = [
-        ({"video":"10_detect_video.avi"},{"nLogs":2}),
-        ({"video":"30_alternated_2-1_video.avi"},{"nLogs":11}),
+        ({"video":"10_detect_video.avi"},{"nLogs":1}),
+        ({"video":"30_alternated_2-1_video.avi"},{"nLogs":10}),
         ]
 
 @responses.activate
@@ -58,5 +58,11 @@ def test_device_does_not_send_repeated_detections(input_data, expected_output):
             )
     video_path = str(BASE_DIR / "assets" / input_data["video"])
     main.main(1, videoInput=video_path, serverApi="http://localhost:3000/api/device", verbose=False)
-    assert len(responses.calls) == expected_output["nLogs"]
+    images_sent = 0
+    for call in responses.calls:
+        res = call.request
+        if "image" in res.body.decode('utf-8'):
+            images_sent += 1
+
+    assert images_sent == expected_output["nLogs"]
 
