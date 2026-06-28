@@ -163,7 +163,7 @@ def sintetic_dataset(replication):
                         pasted_idx = 0
                 if sub_entry.is_file():
                     for i in range(replication):
-                        pos, size, dim = create_sintetic_image(background_route="/home/iVase/Pictures/carretera-nacional.jpg", png_animal=sub_entry.path, output_path=f"./sintetic_data/{current_folder}/images/img_{contador}.jpg", animal_name=LABELS[animal_idx])
+                        pos, size, dim = create_sintetic_image(background_route="/home/ivan/Pictures/carretera-nacional.jpg", png_animal=sub_entry.path, output_path=f"./sintetic_data/{current_folder}/images/img_{contador}.jpg", animal_name=LABELS[animal_idx])
                         if not pos or not size or not dim:
                             continue
                         print(f"{contador}: generating a {LABELS[animal_idx]} in position {pos} with dimension {size.height, size.width}\t {sub_entry.path}")
