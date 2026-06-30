@@ -3,4 +3,5 @@ sintetic_data/
 *.jpg
 __pycache__/ 
 .venv/
+models/
 

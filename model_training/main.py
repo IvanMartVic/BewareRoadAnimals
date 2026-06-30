@@ -1,19 +1,42 @@
-from ultralytics import *
+from ultralytics import YOLO
+from pathlib import Path
+import os
 
-def model():
-    model = YOLO("yolo26n.pt") # modelo pre_entrenado
-    # results = model.train(data="./sintetic_data/data.yaml", epochs=10, imgsz=640)
-    results = model.train(
-        data="./sintetic_data/data.yaml", 
-        epochs=50, 
-        imgsz=640,
-        batch=16,          # Explicitly set a batch size
-        mixup=0.2,         # Helps blend synthetic images together
-        mosaic=1.0         # Creates composite scenes to prevent background overfitting
-    )
-    results = model.predict("./videoplayback.mp4", show=True, save=True) 
-    print(results)
-    model.export()
+PRETRAIN_DIR = "./models/pretrain"
+MODEL_NAMES = ["yolo26n.pt", "yolov10n.pt", "yolo12n.pt"]
+def download_models():
+    os.makedirs(name=PRETRAIN_DIR, exist_ok=True)
+    original_wd = os.getcwd()
+    os.chdir(PRETRAIN_DIR)
+
+    try:
+        for name in MODEL_NAMES:
+            location = Path(PRETRAIN_DIR) / name
+            if not location.exists():
+                YOLO(name)
+    finally:
+        os.chdir(original_wd)
+
+
+
+
+def train():
+    download_models()
+
+    for name in MODEL_NAMES:
+        #download model
+        location = Path(PRETRAIN_DIR) / name
+        model = YOLO(location) # modelo pre_entrenado
+        results = model.train(
+            data="./sintetic_data/data.yaml", 
+            epochs=50, 
+            imgsz=640,
+            device=0,
+            # batch=16,          
+            # mixup=0.2,        
+            # mosaic=1.0         
+        )
+        model.export(format="onnx")
 
 if __name__ == "__main__":
-    model();
+    train();
