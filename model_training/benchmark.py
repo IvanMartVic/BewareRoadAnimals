@@ -9,7 +9,7 @@ MODEL_NAMES = ["yolo26n_final.onnx", "yolov10n_final.onnx", "yolo12n_final.onnx"
 data = []
 for name in MODEL_NAMES:
     location = Path(FINAL_MODELS_DIR) / name
-    results = benchmark(model=location, data="./sintetic_data/data.yaml")
+    results = benchmark(model=location, data="./sintetic_data/data.yaml", imgsz=640, device="cpu")
     df = pd.DataFrame(results)
     df.insert(0, "model", name)
     data.append(df)
