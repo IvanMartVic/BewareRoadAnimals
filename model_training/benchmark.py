@@ -7,7 +7,7 @@ import pandas as pd
 FINAL_MODELS_DIR = "./models/final"
 MODEL_NAMES = ["yolo26n_final.pt", "yolov10n_final.pt", "yolo12n_final.pt"]
 
-INT8_MODELS = ["yolo26n_final_int8.onnx", "yolov10n_final_int8.onnx", "yolo12n_final_int8.onnx"]
+INT8_MODELS = ["yolo26n_final_int8.tflite", "yolov10n_final_int8.tflite", "yolo12n_final_int8.tflite"]
 
 data = []
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -37,7 +37,7 @@ for name in INT8_MODELS:
     fps = 1000 / total_speed
     row_data = {
         "model": name,
-        "Format": "ONNX",
+        "Format": "tflite",
         "mAP50-95": round(map50_95, 4),
         "mAP50": round(map50, 4),
         "Inference (ms)": round(inference_speed, 2),

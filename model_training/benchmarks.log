@@ -1,0 +1,579 @@
+
+Benchmarks complete for models/final/yolo26n_final.onnx on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++--------------------------------------------------------------------------------------------------------+
+|      Format                  Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================================+
+| 1    PyTorch                 ❌         0.0         -                     -                        -   |
+| 2    TorchScript             ❌         0.0         -                     -                        -   |
+| 3    ONNX                    ❌         0.0         -                     -                        -   |
+| 4    OpenVINO                ❌         0.0         -                     -                        -   |
+| 5    TensorRT                ❌         0.0         -                     -                        -   |
+| 6    CoreML                  ❌         0.0         -                     -                        -   |
+| 7    TensorFlow SavedModel   ❌         0.0         -                     -                        -   |
+| 8    TensorFlow GraphDef     ❌         0.0         -                     -                        -   |
+| 9    TensorFlow Lite         ❌         0.0         -                     -                        -   |
+| 10   TensorFlow Edge TPU     ❌         0.0         -                     -                        -   |
+| 11   TensorFlow.js           ❌         0.0         -                     -                        -   |
+| 12   PaddlePaddle            ❌         0.0         -                     -                        -   |
+| 13   MNN                     ❌         0.0         -                     -                        -   |
+| 14   NCNN                    ❌         0.0         -                     -                        -   |
+| 15   IMX                     ❌         0.0         -                     -                        -   |
+| 16   RKNN                    ❌         0.0         -                     -                        -   |
+| 17   ExecuTorch              ❌         0.0         -                     -                        -   |
+| 18   Axelera                 ❌         0.0         -                     -                        -   |
++--------------------------------------------------------------------------------------------------------+
+
+Benchmarks complete for models/final/yolov10n_final.onnx on ./sintetic_data/data.yaml at imgsz=640 (0.26s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++--------------------------------------------------------------------------------------------------------+
+|      Format                  Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================================+
+| 1    PyTorch                 ❌         0.0         -                     -                        -   |
+| 2    TorchScript             ❌         0.0         -                     -                        -   |
+| 3    ONNX                    ❌         0.0         -                     -                        -   |
+| 4    OpenVINO                ❌         0.0         -                     -                        -   |
+| 5    TensorRT                ❌         0.0         -                     -                        -   |
+| 6    CoreML                  ❌         0.0         -                     -                        -   |
+| 7    TensorFlow SavedModel   ❌         0.0         -                     -                        -   |
+| 8    TensorFlow GraphDef     ❌         0.0         -                     -                        -   |
+| 9    TensorFlow Lite         ❌         0.0         -                     -                        -   |
+| 10   TensorFlow Edge TPU     ❌         0.0         -                     -                        -   |
+| 11   TensorFlow.js           ❌         0.0         -                     -                        -   |
+| 12   PaddlePaddle            ❌         0.0         -                     -                        -   |
+| 13   MNN                     ❌         0.0         -                     -                        -   |
+| 14   NCNN                    ❌         0.0         -                     -                        -   |
+| 15   IMX                     ❌         0.0         -                     -                        -   |
+| 16   RKNN                    ❌         0.0         -                     -                        -   |
+| 17   ExecuTorch              ❌         0.0         -                     -                        -   |
+| 18   Axelera                 ❌         0.0         -                     -                        -   |
++--------------------------------------------------------------------------------------------------------+
+
+Benchmarks complete for models/final/yolo12n_final.onnx on ./sintetic_data/data.yaml at imgsz=640 (0.26s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++--------------------------------------------------------------------------------------------------------+
+|      Format                  Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================================+
+| 1    PyTorch                 ❌         0.0         -                     -                        -   |
+| 2    TorchScript             ❌         0.0         -                     -                        -   |
+| 3    ONNX                    ❌         0.0         -                     -                        -   |
+| 4    OpenVINO                ❌         0.0         -                     -                        -   |
+| 5    TensorRT                ❌         0.0         -                     -                        -   |
+| 6    CoreML                  ❌         0.0         -                     -                        -   |
+| 7    TensorFlow SavedModel   ❌         0.0         -                     -                        -   |
+| 8    TensorFlow GraphDef     ❌         0.0         -                     -                        -   |
+| 9    TensorFlow Lite         ❌         0.0         -                     -                        -   |
+| 10   TensorFlow Edge TPU     ❌         0.0         -                     -                        -   |
+| 11   TensorFlow.js           ❌         0.0         -                     -                        -   |
+| 12   PaddlePaddle            ❌         0.0         -                     -                        -   |
+| 13   MNN                     ❌         0.0         -                     -                        -   |
+| 14   NCNN                    ❌         0.0         -                     -                        -   |
+| 15   IMX                     ❌         0.0         -                     -                        -   |
+| 16   RKNN                    ❌         0.0         -                     -                        -   |
+| 17   ExecuTorch              ❌         0.0         -                     -                        -   |
+| 18   Axelera                 ❌         0.0         -                     -                        -   |
++--------------------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (6.78s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6636                39.92                    25.05 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.21s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6579                47.55                    21.03 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.49s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7557                49.63                    20.15 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.29s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (4.80s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6636                31.58                    31.67 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (6.07s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6579                37.61                    26.59 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.19s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7557                49.32                    20.28 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.29s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.25s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6636                31.28                    31.96 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.90s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         8.9         0.6579                36.62                    27.3 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.02s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         10.1        0.7557                48.54                    20.6 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.29s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.29s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (4.69s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6636                30.42                    32.88 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.91s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         8.9         0.6579                36.63                    27.3 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.07s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7557                48.91                    20.45 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.29s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (0.30s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.46s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                31.46                    31.79 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.95s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                36.98                    27.04 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.13s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                48.97                    20.42 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (18.52s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         2.9         0.0                   96.25                    10.39 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (19.55s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         2.6         0.0                   99.12                    10.09 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (26.90s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         3.2         0.0                   126.35                   7.91 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.45s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                31.92                    31.33 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.95s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                37.15                    26.91 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.35s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                49.22                    20.32 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.86s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         4.7         0.6374                33.06                    30.25 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.54s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         4.5         0.6441                34.27                    29.18 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.26s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         5.1         0.7512                51.78                    19.31 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.94s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                43.78                    22.84 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.94s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                54.37                    18.39 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (9.96s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                67.87                    14.73 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.60s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                41.76                    23.94 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.68s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                51.17                    19.54 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (9.40s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                65.66                    15.23 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.51s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                41.95                    23.84 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.45s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                49.43                    20.23 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (9.54s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                63.71                    15.7 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (8.11s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                45.25                    22.1 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.51s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                49.42                    20.24 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (11.14s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                78.94                    12.67 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final_int8.onnx on ./sintetic_data/data.yaml at imgsz=640 (0.26s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final_int8.onnx on ./sintetic_data/data.yaml at imgsz=640 (0.26s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final_int8.onnx on ./sintetic_data/data.yaml at imgsz=640 (0.26s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS |
++========================================================================================+
+| 1   ONNX     ❌         0.0         -                     -                        -   |
++----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.63s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                41.27                    24.23 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.73s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                50.84                    19.67 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (9.56s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                65.55                    15.26 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.44s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                31.59                    31.65 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (5.92s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                36.49                    27.4 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.61s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                49.7                     20.12 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (11.59s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         9.4         0.6636                31.32                    31.93 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.07s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6579                37.2                     26.88 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.88s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         10.1        0.7557                48.53                    20.6 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo26n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.94s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++-----------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS  |
++=========================================================================================+
+| 1   ONNX     ✅         9.4         0.6406                30.76                    32.5 |
++-----------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolov10n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (7.24s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         8.9         0.6421                36.8                     27.17 |
++------------------------------------------------------------------------------------------+
+
+Benchmarks complete for /home/iVase/software/proyectos/tfg_road_animals/road_animals/model_training/models/final/yolo12n_final.pt on ./sintetic_data/data.yaml at imgsz=640 (8.62s)
+Benchmarks legend:  - ✅ Success  - ❎ Export passed but validation failed  - ❌️ Export failed
++------------------------------------------------------------------------------------------+
+|     Format   Status❔   Size (MB)   metrics/mAP50-95(B)   Inference time (ms/im)   FPS   |
++==========================================================================================+
+| 1   ONNX     ✅         10.1        0.7471                48.96                    20.42 |
++------------------------------------------------------------------------------------------+
