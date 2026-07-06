@@ -17,6 +17,8 @@ export const metadata = {
     description: "AI animal detection page",
 };
 
+
+
 export default function RootLayout({ children }) {
     return (
         <div
