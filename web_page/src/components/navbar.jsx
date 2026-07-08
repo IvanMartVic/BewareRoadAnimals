@@ -6,6 +6,7 @@ import useAuthStore from "@/stores/authStore"
 import { useShallow } from "zustand/shallow"
 import { useEffect } from "react"
 import { useModal } from "@/context/AlertContext"
+import Image from "next/image"
 
 export default function Navbar({ children }) {
     const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
@@ -32,8 +33,16 @@ export default function Navbar({ children }) {
                 <label htmlFor="sidebar" className="btn btn-ghost">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
                 </label>
-                <div className="flex-1">
-                    <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>RoadAnimals</Link>
+                <div className="flex flex-row">
+                    <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>
+                        <Image
+                            src="/favicon.ico"
+                            alt="Logo"
+                            width={40}
+                            height={40}
+                        />
+
+                        RoadAnimals</Link>
                 </div>
                 <div className="flex justify-end items-center gap-4 w-full">
                     <li className="btn btn-primary btn-soft btn-sm w-20"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
