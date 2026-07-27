@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllLogs, deleteLog, getLogsCount, getUserLogs, filterAndDeleteLog } from "@/services/logsService"
+import { getLogs, deleteLog, getLogsCount, filterAndDeleteLog } from "@/services/logsService"
 
 
 const useLogStore = create((set, get) => ({
@@ -12,16 +12,29 @@ const useLogStore = create((set, get) => ({
     isLoading: false,
     error: null,
     eventSource: null,
+    logApiFilters: null,
+    fetchAndMonitorDetections: async () => {
+        const anHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+        const filters = {
+            timestampGte: anHourAgo.toISOString(), type: "DETECCION"
+        }
+        get().fetchLogsRT(filters)
+    },
     fetchLogsRT: async (filters = {}) => {
         try {
-            set({ isLoading: true })
+            const fetchedLogs = get().fetchLogs(filters);
+
+            // if a eventSource is already created and does not fetch new logs do not start a new one
+            if (get().eventSource && fetchedLogs == null) {
+                return
+            }
+            // set({ logApiFilters: filters });
+            set({ isLoading: true });
             const queryParams = new URLSearchParams(filters).toString();
             const url = queryParams ? `/api/logs?${queryParams}` : '/api/logs'
             if (get().eventSource) {
                 get().eventSource.close();
             }
-            get().fetchLogs(filters);
-
             const eventSource = new EventSource(url);
             eventSource.onopen = () => {
                 console.log("SSE connection to logs established");
@@ -58,20 +71,25 @@ const useLogStore = create((set, get) => ({
         }
     },
     fetchLogs: async (filters = {}) => {
+        if (get().logApiFilters != null && JSON.stringify(get().logApiFilters) === JSON.stringify(filters)) {
+            return null
+        }
+        set({ logApiFilters: filters });
         set({ isLoading: true });
         try {
             let res;
-            if ("userId" in filters) {
-                const logFilters = { ...filters };
-                delete logFilters.userId;
-                res = await getUserLogs({ filters: logFilters, userId: filters.userId });
-                if (res.length == 0) {
-                    //posible error set here
-                }
+            res = await getLogs({ filters: { ...filters } })
+            //if ("userId" in filters) {
+            //    const logFilters = { ...filters };
+            //    delete logFilters.userId;
+            //    res = await getUserLogs({ filters: logFilters, userId: filters.userId });
+            //    if (res.length == 0) {
+            //        //posible error set here
+            //    }
 
-            } else {
-                res = await getAllLogs({ ...filters });
-            }
+            //} else {
+            //    res = await getAllLogs({ ...filters });
+            //}
             const sortedLogs = res.sort((a, b) => b.timestamp - a.timestamp);
             set({ logs: sortedLogs, isLoading: false });
             return res;

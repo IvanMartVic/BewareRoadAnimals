@@ -6,13 +6,15 @@ import useAuthStore from "@/stores/authStore"
 import { useShallow } from "zustand/shallow"
 import { useEffect } from "react"
 import { useModal } from "@/context/AlertContext"
+import Image from "next/image"
 
 export default function Navbar({ children }) {
-    const { authUserData, fetchAuthUser, errorAuth } = useAuthStore(
+    const { authUserData, fetchAuthUser, errorAuth, cleanStore } = useAuthStore(
         useShallow((state) => ({
             authUserData: state.authUserData,
             fetchAuthUser: state.fetchAuthUser,
             errorAuth: state.error,
+            cleanStore: state.cleanStore,
         })));
     useEffect(() => {
         fetchAuthUser();
@@ -24,21 +26,41 @@ export default function Navbar({ children }) {
         if (choice) {
             LogOut();
             router.push("/");
+            cleanStore();
         }
     }
     return (
         <>
             <div className="navbar bg-base-300">
-                <label htmlFor="sidebar" className="btn btn-ghost">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
-                </label>
-                <div className="flex-1">
-                    <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>RoadAnimals</Link>
+                {authUserData &&
+                    <label htmlFor="sidebar" className="btn btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
+                    </label>
+
+                }
+                <div className="flex flex-row">
+                    <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>
+                        <Image
+                            src="/favicon.ico"
+                            alt="Logo"
+                            width={40}
+                            height={40}
+                        />
+
+                        RoadAnimals</Link>
                 </div>
-                <div className="flex justify-end items-center gap-4 w-full">
-                    <li className="btn btn-primary btn-soft btn-sm w-20"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
-                    <li className="btn btn-error btn-soft btn-sm w-20"><button onClick={logout}>Cerrar Sesión</button></li>
-                </div>
+                {authUserData ?
+                    <div className="flex justify-end items-center gap-4 w-full">
+                        <li className="btn btn-primary btn-soft btn-sm w-20"><Link href={"/main_navigation/users/myProfile"}>Ver Perfil </Link></li>
+                        <li className="btn btn-error btn-soft btn-sm w-20"><button onClick={logout}>Cerrar Sesión</button></li>
+                    </div>
+
+                    :
+                    <div className="flex justify-end items-center gap-4 w-full">
+                        <Link className="btn btn-primary btn-sm w-45" href={"/login"}>Iniciar Sesión</Link>
+                    </div>
+
+                }
             </div>
             <div className="flex-none drawer lg:drawer-open bg-base-300">
                 <input id="sidebar" type="checkbox" className="drawer-toggle" />
@@ -76,6 +98,7 @@ export default function Navbar({ children }) {
                         {authUserData &&
                             <li className="font-bold"><Link href={`/main_navigation/logs?userId=${authUserData.id}`}>Logs</Link></li>
                         }
+                        <li className="font-bold"><Link href={"/"}>Monitorización reciente</Link></li>
                         <li><Link href={"/main_navigation/about"}>Sobre Nosotros</Link></li>
                     </ul>
                 </div>

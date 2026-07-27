@@ -1,46 +1,47 @@
 "use client"
-import PasswordInput from "@/components/passwordInput";
-import EmailInput from "@/components/emailInput";
-import { useState } from "react";
-import { SignIn } from "@/services/authenticationService"
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import useLogStore from "@/stores/logStore";
+import { useShallow } from "zustand/shallow";
+import { useEffect, useMemo } from "react";
+import Navbar from "@/components/navbar";
+import dynamic from "next/dynamic";
+import { DetectWarningNotification } from "@/components/detectWarningNotification";
 
 
-
-export default function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
-    const router = useRouter();
-    const handleSubmit = async (e) => {
-        if (e && e.preventDefault) {
-            e.preventDefault();
+export default function PresentationPage() {
+    const { logs, fetchAndMonitorDetections, error } = useLogStore(useShallow((s) => ({
+        logs: s.logs,
+        fetchAndMonitorDetections: s.fetchAndMonitorDetections,
+        error: s.error,
+    })));
+    useEffect(() => {
+        fetchAndMonitorDetections();
+    }, [fetchAndMonitorDetections]);
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/LogsMap'),
+        {
+            loading: () => <p>A map is loading</p>,
+            ssr: false
         }
-        const response = await SignIn({ password: password, email: email });
-        if (!response.success) {
-            setError(response);
-            return;
-        }
-        router.push("/main_navigation");
-    }
+    ), [])
+
     return (
-        <div className="flex justify-center items-center h-screen bg-base-300">
-            <form onSubmit={handleSubmit}>
-                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                    <legend className="fieldset-legend text-primary text-xl">Iniciar Sesion</legend>
-                    <label className="label">Correo electrónico</label>
-                    <EmailInput onValueChanged={(val) => setEmail(val)} validate={false}></EmailInput>
+        <div className="flex-row w-full h-full bg-base-200">
+            <Navbar />
+            <div className="flex md:w-screen md:flex-row md:h-full bg-base-200 md:p-5 md:gap-4 md: justify-between">
+                <div className="md:w-3/5 md:h-[90vh] md:bg-primary">
+                    <Map position={[40.96882, -5.66388]} zoom={8} logs={logs} scrollWheelZoom={false} clickFunction={() => console.log("click")} />
+                </div>
+                <div className="flex flex-col md:w-1/3 md: h-full bg-secondary p-5 gap-4">
+                    <h1 className="text-primary font-bold text-xl"> Detecciones última hora </h1>
+                    {logs.map((l) => (<DetectWarningNotification key={l.id} detection={l} />))}
+                </div>
 
-                    <label className="label">Contraseña</label>
-                    <PasswordInput onValueChanged={(val) => setPassword(val)} validate={false}></PasswordInput>
-                    <Link className="link link-hover mt-4" href={"/reset"}>Recuperar contraseña</Link>
-                    <button type="submit" className="btn btn-primary mt-4">Inciar Sesión</button>
-                    {error &&
-                        <p className="text-red-200 font-bold">{error?.message}</p>
-                    }
-                </fieldset>
-            </form>
+            </div >
         </div>
-    );
+    )
+
+
+
 }

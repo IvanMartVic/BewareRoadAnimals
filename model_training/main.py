@@ -3,7 +3,8 @@ from pathlib import Path
 import os
 
 PRETRAIN_DIR = "./models/pretrain"
-MODEL_NAMES = ["yolo26n.pt", "yolov10n.pt", "yolo12n.pt"]
+FINAL_DIR = "./models/final"
+MODEL_NAMES = ["yolo26n.pt", "yolov10n.pt", "yolo12n.pt", "yolov8n.pt"]
 def download_models():
     os.makedirs(name=PRETRAIN_DIR, exist_ok=True)
     original_wd = os.getcwd()
@@ -17,6 +18,15 @@ def download_models():
     finally:
         os.chdir(original_wd)
 
+def final_model_exists(name):
+    final_name, _  = name.split('.')
+    final_name = f"{final_name}_final.pt"
+    final_location = Path(FINAL_DIR) / final_name
+    if os.path.exists(final_location):
+        print(f"model {final_location} exists ... skiping train")
+        return True
+    else:
+        return False
 
 
 
@@ -26,6 +36,8 @@ def train():
     for name in MODEL_NAMES:
         #download model
         location = Path(PRETRAIN_DIR) / name
+        if final_model_exists(name):
+            continue
         model = YOLO(location) # modelo pre_entrenado
         results = model.train(
             data="./sintetic_data/data.yaml", 

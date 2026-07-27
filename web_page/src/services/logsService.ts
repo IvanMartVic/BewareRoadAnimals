@@ -8,46 +8,61 @@ export interface LogFilters {
     timestamp?: Date;
     type?: string;
     deviceId?: number;
+    timestampGte?: string;
 }
 
 const PAGE_SIZE = 100;
-export async function getAllLogs(filters: LogFilters = {}, page_number: number = 0) {
+export async function getLogs({
+    filters = {},
+    page_number = 0,
+}: {
+    filters: LogFilters;
+    page_number?: number;
+}) {
     const { success } = await authLogFilters(filters);
-    if (!success) {
-        return;
-    }
+    if (!success) return;
+
+    const { userId, timestampGte, ...otherFilters } = filters;
+
+    // console.log("Filtro recibido:", filters);
+    // console.log("En Date():", new Date(filters.timestampGte).toISOString());
+    // console.log("En hora local:", new Date(filters.timestampGte).toString());
+
+    // const where_clause = {
+    //     ...otherFilters,
+    //     ...(userId && {
+    //         deviceIn: { userId: +userId }
+    //     }),
+    //     ...(timestampGte && {
+    //         timestamp: { gte: new Date(timestampGte) }
+    //     }),
+    // }
+    // console.log(JSON.stringify(where_clause))
+
+
     const logs = await prisma.log.findMany({
         take: PAGE_SIZE,
         skip: page_number * PAGE_SIZE,
         where: {
-            ...filters,
+            ...otherFilters,
+            ...(userId && {
+                deviceIn: { userId: +userId },
+            }),
+            ...(timestampGte && {
+                timestamp: { gte: new Date(timestampGte) },
+            }),
         },
-        orderBy: {
-            timestamp: 'desc',
-        }
-    });
-    for (let log of logs) {
-        console.log(log.timestamp);
-    }
-    return logs;
-}
-export async function getUserLogs({ filters = {}, userId, page_number = 0 }:
-    { filters: LogFilters, userId: number, page_number: number }) {
-    const { success } = await authLogFilters(filters);
-    if (!success) {
-        return;
-    }
-    const logs = await prisma.log.findMany({
-        take: PAGE_SIZE,
-        skip: page_number * PAGE_SIZE,
-        where: {
+        include: {
             deviceIn: {
-                userId: userId,
+                select: {
+                    coordLatitude: true,
+                    coordLength: true,
+                },
             },
-            ...filters,
         },
     });
-    return logs;
+    // console.log(JSON.stringify(logs))
+    return logs
 }
 export async function getLogsCount(filters = {}) {
     const { success } = await authLogFilters(filters);
@@ -113,37 +128,51 @@ export async function filterAndDeleteLog({ filters = {} }: { filters: LogFilters
     }
     return logs;
 }
+
 export async function getMostRecentLog({ filters = {} }: { filters: LogFilters }) {
     const { success } = await authLogFilters(filters);
-    if (!success) {
-        return;
-    }
-    let log;
-    const logFilters = { ...filters };
-    if (filters.userId) {
-        delete logFilters.userId;
-        log = await prisma.log.findFirst({
-            where: {
-                deviceIn: {
-                    userId: +filters.userId,
-                },
-                ...logFilters,
-            },
-            orderBy: {
-                timestamp: 'desc',
+    if (!success) return;
+
+    const { userId, timestampGte, ...otherFilters } = filters;
+    // console.log("Filtro recibido:", filters.timestampGte);
+    // console.log("En Date():", new Date(filters.timestampGte).toISOString());
+    // console.log("En hora local:", new Date(filters.timestampGte).toString());
+    // const where_clause = {
+    //     ...otherFilters,
+    //     ...(userId && {
+    //         deviceIn: { userId: +userId }
+    //     }),
+    //     ...(timestampGte && {
+    //         timestamp: { gte: new Date(timestampGte) }
+    //     }),
+    // }
+    // console.log(JSON.stringify(where_clause))
+
+
+    const log = await prisma.log.findFirst({
+        where: {
+            ...otherFilters,
+            ...(userId && {
+                deviceIn: { userId: +userId }
+            }),
+            ...(timestampGte && {
+                timestamp: { gte: new Date(timestampGte) }
+            }),
+        },
+        include: {
+            deviceIn: {
+                select: {
+                    coordLatitude: true,
+                    coordLength: true,
+                }
             }
-        });
-    } else {
-        log = await prisma.log.findFirst({
-            where: {
-                ...logFilters,
-            },
-            orderBy: {
-                timestamp: 'desc',
-            }
-        });
-    }
-    return log;
+        },
+        orderBy: {
+            timestamp: 'desc',
+        }
+    });
+    // console.error(JSON.stringify(log))
+    return log
 }
 
 

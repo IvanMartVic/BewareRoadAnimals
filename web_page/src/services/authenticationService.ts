@@ -55,6 +55,16 @@ export async function authDeviceFilters(filter: DeviceFilters) {
 }
 
 export async function authLogFilters(filter: LogFilters) {
+    const anHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    if (filter.timestampGte) {
+        const parsedDate = new Date(filter.timestampGte);
+        if (isNaN(parsedDate.getTime())) {
+            return { success: false, error: "Invalid date format provided." };
+        }
+        if (parsedDate < anHourAgo) {
+            return { success: true };
+        }
+    }
     const auth_res = await auth();
     if (!auth_res.success) {
         return { success: false };
