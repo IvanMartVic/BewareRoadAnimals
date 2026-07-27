@@ -20,8 +20,8 @@ const useAuthStore = create<AuthStore>((set, get) => ({
     authUserData: null,
     userId: 0,
     error: null,
-    resetError: async() => {
-        set({error: null});
+    resetError: async () => {
+        set({ error: null });
     },
     fetchAuthUser: async () => {
         console.log("fetched called");
@@ -107,6 +107,13 @@ const useAuthStore = create<AuthStore>((set, get) => ({
                 set({ error: e.message })
             }
         }
+    },
+    cleanStore: () => {
+        set({
+            authUserData: null,
+            userId: 0,
+            error: null,
+        });
     }
 
 }));

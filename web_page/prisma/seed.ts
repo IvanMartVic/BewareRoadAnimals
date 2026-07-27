@@ -8,6 +8,19 @@ function randomDate(start: Date, end: Date) {
     const between_millis = Math.random() * (end_millis - start_millis) + start_millis;
     return new Date(between_millis);
 }
+async function generateRecentDetection({ numDetect, deviceId }: { numDetect: number, deviceId: number }) {
+    const message = '[{"name":"boar","class":18,"confidence":0.68255,"box":{"x1":97.74059,"y1":250.08957,"x2":181.88467,"y2":307.3385}}]'
+    for (let i = 0; i < numDetect; i++) {
+        const log = await prisma.log.create({
+            data: {
+                deviceId: deviceId,
+                message: message,
+                image: "no vacio",
+                type: "DETECCION",
+            }
+        })
+    }
+}
 
 async function generateLogs({ numDetect, numSys, numBat, deviceId }: { numDetect: number, numSys: number, numBat: number, deviceId: number }) {
     const logTypes = ["DETECCION", "SISTEMA", "BATERIA"];
@@ -94,7 +107,8 @@ async function generateDevice() {
 async function main() {
     await generateAdmin();
     await generateDevice();
-    await generateLogs({ numDetect: 200, numSys: 10, numBat: 20, deviceId: 17 })
+    await generateRecentDetection({ numDetect: 10, deviceId: 17 });
+    // await generateLogs({ numDetect: 200, numSys: 10, numBat: 20, deviceId: 17 })
 }
 main()
     .then(async () => {
