@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="es" data-theme="roadlight">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
             >
                 <ModalProvider>
                     {children}

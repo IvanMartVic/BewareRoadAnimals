@@ -19,25 +19,30 @@ export default function LogsMap(props) {
     });
     // clickFunction = clickFunction ?? (() => { });
     let detectDetailsMessage = (log) => {
-        const details = JSON.parse(log.message)
-        const names = {}
-        for (let d of details) {
-            const animal = d.name
-            if (names[animal] != undefined) {
-                names[animal] += 1
-            } else {
-                names[animal] = 1
-            }
-        }
         let message = ""
-        for (const [key, value] of Object.entries(names)) {
-            message += value + key + "detectados"
+        if (log.image != null) {
+            const details = JSON.parse(log.message)
+            const names = {}
+            for (let d of details) {
+                const animal = d.name
+                if (names[animal] != undefined) {
+                    names[animal] += 1
+                } else {
+                    names[animal] = 1
+                }
+            }
+            for (const [key, value] of Object.entries(names)) {
+                message += value + key + "detectados"
+            }
+        } else {
+            message = log.message
         }
         return message
     }
     return (
         <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} dragging={false}
-            doubleClickZoom={false} touchZoom={false} keyboard={false} zoomControl={false} style={{ height: "100%", width: "100%" }}>
+            doubleClickZoom={false} touchZoom={false} keyboard={false} zoomControl={false} style={{ height: "100%", width: "100%" }}
+            className="z-0">
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

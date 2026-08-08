@@ -28,17 +28,22 @@ export default function PresentationPage() {
 
     return (
         <div className="flex-row w-full h-full bg-base-200">
-            <Navbar />
-            <div className="flex md:w-screen md:flex-row md:h-full bg-base-200 md:p-5 md:gap-4 md: justify-between">
-                <div className="md:w-3/5 md:h-[90vh] md:bg-primary">
-                    <Map position={[40.96882, -5.66388]} zoom={8} logs={logs} scrollWheelZoom={false} clickFunction={() => console.log("click")} />
-                </div>
-                <div className="flex flex-col md:w-1/3 md: h-full bg-secondary p-5 gap-4">
-                    <h1 className="text-primary font-bold text-xl"> Detecciones última hora </h1>
-                    {logs.map((l) => (<DetectWarningNotification key={l.id} detection={l} />))}
-                </div>
+            <Navbar isDrawerAbsolute={true}>
+                <div className="flex flex-col-reverse md:w-screen md:flex-row md:h-full bg-base-200 md:p-0 md:justify-start">
+                    <div className="md:w-4/5 md:h-[95vh] h-[80vh] md:bg-primary w-screen">
+                        <Map position={[40.96882, -5.66388]} zoom={8} logs={logs} scrollWheelZoom={false} clickFunction={() => console.log("click")} />
+                    </div>
+                    <div className="flex flex-col md:w-1/5 h-[60vh] w-screen md:h-[95vh] bg-secondary p-5 gap-4">
+                        <h1 className="text-primary font-bold text-xl"> Detecciones última hora </h1>
+                        <div className="flex flex-col w-full h-full gap-4 overflow-auto">
+                            {logs.map((l) => (<DetectWarningNotification key={l.id} detection={l} />))}
 
-            </div >
+                        </div>
+                    </div>
+
+                </div >
+            </Navbar>
+
         </div>
     )
 

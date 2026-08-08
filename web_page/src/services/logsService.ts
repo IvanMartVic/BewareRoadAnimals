@@ -108,24 +108,18 @@ export async function filterAndDeleteLog({ filters = {} }: { filters: LogFilters
     if (!success) {
         return;
     }
-    let logs;
-    if (filters.userId) {
-        logs = await prisma.log.deleteMany({
-            where: {
-                deviceIn: {
-                    userId: filters.userId,
-                },
-                ...filters,
-            },
-        });
-    } else {
-        logs = await prisma.log.deleteMany({
-            where: {
-                ...filters,
-            },
-        });
-
-    }
+    const { userId, timestampGte, ...otherFilters } = filters;
+    const logs = await prisma.log.deleteMany({
+        where: {
+            ...otherFilters,
+            ...(userId && {
+                deviceIn: { userId: +userId },
+            }),
+            ...(timestampGte && {
+                timestamp: { gte: new Date(timestampGte) },
+            }),
+        },
+    });
     return logs;
 }
 

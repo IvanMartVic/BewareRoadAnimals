@@ -1,6 +1,4 @@
 "use client"
-// import { emailServiceResponse } from "@/app/api/send_password_email/route";
-import { ErrorResponse } from "resend";
 export async function resetPassword(email: string) {
     try {
         const response = await fetch('/api/send_password_email', {
@@ -14,8 +12,8 @@ export async function resetPassword(email: string) {
         if (!response.ok) {
             error = 'Error al enviar email de confirmación';
             console.error(error);
-            const data = (await response.json()); 
-            if(data.error){
+            const data = (await response.json());
+            if (data.error) {
                 console.error(JSON.stringify(data.error));
             }
         }

@@ -20,7 +20,8 @@ export default function MyMap(props) {
     // clickFunction = clickFunction ?? (() => { });
 
     return (
-        <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} style={{ height: "100%", width: "100%" }}>
+        <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} style={{ height: "100%", width: "100%" }}
+            className="flex-2">
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

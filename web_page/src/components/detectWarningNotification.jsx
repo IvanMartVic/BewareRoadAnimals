@@ -40,54 +40,63 @@ export function DetectWarningNotification({ detection }) {
 
     async function buildDetailsMessage(log) {
         if (!log?.message) return "Sin datos de detección";
+        const time = `${new Date(log?.timestamp).getHours()}: ${new Date(log?.timestamp).getMinutes()}`;
 
         try {
-            const details = JSON.parse(log.message);
-            const names = {};
-
-            for (const d of details) {
-                const animal = d.name;
-                names[animal] = (names[animal] || 0) + 1;
-            }
-
             const locationText = await getLocationName(
                 log.deviceIn?.coordLatitude,
                 log.deviceIn?.coordLength
             );
+            if (log?.image != null && log?.image != "") {
+                const details = JSON.parse(log.message);
+                const names = {};
 
-            const parts = [];
-            for (const [animal, count] of Object.entries(names)) {
-                parts.push(`${count} ${animal}`);
+                for (const d of details) {
+                    const animal = d.name;
+                    names[animal] = (names[animal] || 0) + 1;
+                }
+                const parts = [];
+                for (const [animal, count] of Object.entries(names)) {
+                    parts.push(`${count} ${animal}`);
+                }
+                return `${parts.join(", ")} en ${locationText} (${time})`;
+            } else {
+                return `Detección repetida en ${locationText} (${time})`
             }
 
-            return `${parts.join(", ")} en ${locationText}`;
+
         } catch (e) {
             return "Error al procesar la alerta";
         }
     }
     function buildSimpleMessage(log) {
         if (!log?.message) return "Sin datos de detección";
+        const time = `${new Date(log?.timestamp).getHours()}: ${new Date(log?.timestamp).getMinutes()}`;
 
         try {
-            const details = JSON.parse(log.message);
-            const names = {};
-
-            for (const d of details) {
-                const animal = d.name;
-                names[animal] = (names[animal] || 0) + 1;
-            }
-
             const locationText = [
-                log.deviceIn?.coordLatitude,
-                log.deviceIn?.coordLength
+                Number(log.deviceIn?.coordLatitude).toFixed(3),
+                Number(log.deviceIn?.coordLength).toFixed(3),
             ];
+            if (log?.image != null && log?.image != "") {
+                const details = JSON.parse(log.message);
+                const names = {};
 
-            const parts = [];
-            for (const [animal, count] of Object.entries(names)) {
-                parts.push(`${count} ${animal}`);
+                for (const d of details) {
+                    const animal = d.name;
+                    names[animal] = (names[animal] || 0) + 1;
+                }
+
+
+                const parts = [];
+                for (const [animal, count] of Object.entries(names)) {
+                    parts.push(`${count} ${animal}`);
+                }
+
+                return `${parts.join(", ")} en coords ${locationText} (${time})`;
+            } else {
+                return `Detección repetida en coords: ${locationText} (${time})`
             }
-
-            return `${parts.join(", ")} en ${locationText}`;
         } catch (e) {
             return "Error al procesar la alerta";
         }

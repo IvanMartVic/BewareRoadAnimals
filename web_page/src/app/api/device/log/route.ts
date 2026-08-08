@@ -10,16 +10,16 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: "invalid json or empty body" }, { status: 400 });
             }
             await prisma.log.create({
-                data:{
-                    deviceId:+data.id,
+                data: {
+                    deviceId: +data.id,
                     type: data.type,
                     message: data.message,
                     image: data.image,
                 }
             });
-            console.log("deteccion recivida " + data.id + data.image)
-            return NextResponse.json({message:"detection received from device " + data.id}, {status:200});
-        }else{
+            console.log("deteccion recivida de dispositivo " + data.id)
+            return NextResponse.json({ message: "detection received from device " + data.id }, { status: 200 });
+        } else {
             throw new Error("no data.id")
         }
 

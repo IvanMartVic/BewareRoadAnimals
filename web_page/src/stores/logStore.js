@@ -43,18 +43,17 @@ const useLogStore = create((set, get) => ({
 
             eventSource.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                if (data.log) {
-                    // const parsedLog = data.log.map(l => ({
-                    //     ...l,
-                    //     timestamp: new Date(l.timestamp)
-                    // }));
-                    const parsedLog = { ...data.log, timestamp: new Date(data.log.timestamp) };
-                    const currentMostRecent = get().logs[0];
-                    if (!currentMostRecent || parsedLog.timestamp > currentMostRecent.timestamp) {
-                        set({ logs: [parsedLog, ...get().logs], isLoading: false });
+                if (data?.logs?.length > 0) {
+                    const parsedLogs = data.logs.map(l => ({
+                        ...l,
+                        timestamp: new Date(l.timestamp)
+                    }));
+                    set({ logs: [...parsedLogs, ...get().logs], isLoading: false });
+                    // const parsedLog = { ...data.log, timestamp: new Date(data.log.timestamp) };
+                    // const currentMostRecent = get().logs[0];
+                    // if (!currentMostRecent || parsedLog.timestamp > currentMostRecent.timestamp) {
 
-                    }
-
+                    // }
                     // const sortedLogs = parsedLogs.sort((a, b) => b.timestamp - a.timestamp);
                 }
             };
@@ -146,7 +145,7 @@ const useLogStore = create((set, get) => ({
         set({ isLoading: true });
         try {
             let res;
-            res = await filterAndDeleteLog({ ...filters });
+            res = await filterAndDeleteLog({ filters: filters });
             // if (filters.userId) {
             //     const logFilters = { ...filters };
             //     delete logFilters.userId;
