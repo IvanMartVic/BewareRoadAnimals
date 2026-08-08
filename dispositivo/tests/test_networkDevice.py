@@ -9,6 +9,9 @@ from dispositivo import main
 
 BASE_DIR = Path(__file__).resolve().parent
 MAX_DETECT_SIZE_BYTES = 200000 #200 KB as an upperbound for a detection log
+PROJECT_LIB = BASE_DIR.parent / "lib" 
+TEST_VIDEO_PATH = PROJECT_LIB / "sintetic_data_video.avi"
+MODEL_PATH = PROJECT_LIB / "yolo26n.pt"
 @responses.activate
 def test_networkDetectionSize():
     api_url = "http://localhost:3000/api/device/log"
@@ -23,7 +26,7 @@ def test_networkDetectionSize():
     if frame is None:
          raise FileNotFoundError(f"can't load image in {image_path}")
     scaled_frame = cv2.resize(frame, (640, 384), interpolation=cv2.INTER_NEAREST)
-    m = model.YoloModel()
+    m = model.YoloModel(MODEL_PATH)
     d = device.Device(0, "http://localhost:3000/api/device", m)
     sensor_data = device.SensorData(bateria=100,image_frame=scaled_frame)
     d.process_data(sensor_data)
@@ -57,7 +60,7 @@ def test_device_does_not_send_repeated_detections(input_data, expected_output):
             status=200,
             )
     video_path = str(BASE_DIR / "assets" / input_data["video"])
-    main.main(1, videoInput=video_path, serverApi="http://localhost:3000/api/device", verbose=False)
+    main.main(1, videoInput=video_path, serverApi="http://localhost:3000/api/device", verbose=False, model_path=MODEL_PATH)
     images_sent = 0
     for call in responses.calls:
         res = call.request

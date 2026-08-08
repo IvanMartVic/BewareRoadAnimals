@@ -20,7 +20,7 @@ class Device:
 
     def deploy(self):
         print(f"going for url: {self.server_url}/deployement")
-        # requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"})
+        requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"})
         self._generic_sys_log("dispositivo desplegado")
 
     def _low_battery_message(self, battery):

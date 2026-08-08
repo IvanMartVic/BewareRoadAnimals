@@ -7,10 +7,11 @@ class ObjectDetectionModel(ABC):
         pass
 
 class YoloModel(ObjectDetectionModel):
-    def __init__(self) -> None:
+    def __init__(self, yoloPath) -> None:
         super().__init__()
         # self._model = YOLO("yolo26n.pt") # modelo pre_entrenado
-        self._model = YOLO("/home/ivan//Downloads/train12/weights/best.pt") # modelo pre_entrenado
+        print(f"loading model {yoloPath}")
+        self._model = YOLO(yoloPath) # modelo pre_entrenado
         
     def detect(self, image):
         # print(f"YOLO detecction {image}")
