@@ -8,11 +8,26 @@ import 'react-leaflet-markercluster/styles'
 
 export default function LogsMap(props) {
     let { position, zoom, logs, scrollWheelZoom, clickFunction } = props
-
-    var redIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    var boarIcon = new L.Icon({
+        iconUrl: '/wild-boar.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
         iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    var deerIcon = new L.Icon({
+        iconUrl: '/deer-shape.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    var deerQuestionIcon = new L.Icon({
+        iconUrl: '/deer-question.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [19, 30],
         iconAnchor: [12, 41],
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
@@ -32,12 +47,51 @@ export default function LogsMap(props) {
                 }
             }
             for (const [key, value] of Object.entries(names)) {
-                message += value + key + "detectados"
+                let out_key
+                switch (key) {
+                    case "deer":
+                        out_key = "ciervo";
+                        break;
+                    case "boar":
+                        out_key = "jabalí";
+                        break;
+                }
+                message += value + " " + out_key + " detectados"
             }
         } else {
             message = log.message
         }
         return message
+    }
+    let animalIcon = (log) => {
+        let icon = "";
+        if (log.image != null) {
+            const details = JSON.parse(log.message)
+            const names = {}
+            for (let d of details) {
+                const animal = d.name
+                if (names[animal] != undefined) {
+                    names[animal] += 1
+                } else {
+                    names[animal] = 1
+                }
+            }
+            let maxValue = 0;
+            for (const [key, value] of Object.entries(names)) {
+                if (value > maxValue) {
+                    maxValue = value;
+                    icon = key
+                }
+            }
+        }
+        switch (icon) {
+            case "boar":
+                return boarIcon;
+            case "deer":
+                return deerIcon;
+            default:
+                return deerQuestionIcon;
+        }
     }
     return (
         <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} dragging={false}
@@ -52,7 +106,7 @@ export default function LogsMap(props) {
                     return (
                         <Marker key={l.id}
                             position={[l.deviceIn.coordLatitude, l.deviceIn.coordLength]}
-                            icon={redIcon}
+                            icon={animalIcon(l)}
                             eventHandlers={{ click: (e) => clickFunction?.(l.id) }}>
                             <Popup>
                                 {detectDetailsMessage(l)}  <br />

@@ -39,7 +39,7 @@ export default function Navbar({ children, isDrawerAbsolute = false }) {
 
                 }
                 <div className="flex flex-row">
-                    <Link className="btn btn-ghost text-xl text-base-content font-bold" href={"/main_navigation"}>
+                    <Link className="btn btn-ghost text-xs text-base-content font-bold sm:text-xl" href={"/main_navigation"}>
                         <Image
                             src="/favicon.ico"
                             alt="Logo"
@@ -67,7 +67,7 @@ export default function Navbar({ children, isDrawerAbsolute = false }) {
                 <div className="drawer-content bg-base-100">
                     {children}
                 </div>
-                <div className={`drawer-side is-drawer-close:hidden absolute md:${isDrawerAbsolute ? "absolute" : "relative"} z-1000`}>
+                <div className={`drawer-side is-drawer-close:hidden absolute ${isDrawerAbsolute ? "md:absolute" : "md:relative"} z-1000`}>
                     <label htmlFor="sidebar" aria-label="close sidebar" className="drawer-overlay"></label>
                     <ul className="menu bg-base-300 min-h-full p-4">
                         {/* Sidebar content here */}
