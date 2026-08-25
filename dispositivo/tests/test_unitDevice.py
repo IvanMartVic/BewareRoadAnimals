@@ -5,6 +5,7 @@ import cv2
 from dispositivo import device
 from dispositivo import model
 from dispositivo.utils import frame_to_base64
+import os
 
 TEST_CASES = [
         ("image_detection.jpeg",True),
@@ -14,6 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent
 PROJECT_LIB = BASE_DIR.parent / "lib" 
 TEST_VIDEO_PATH = PROJECT_LIB / "sintetic_data_video.avi"
 MODEL_PATH = PROJECT_LIB / "yolo26n.pt"
+os.environ["JWT"] = "jwt"
+
 @pytest.mark.parametrize("input_data, expected_output", TEST_CASES)
 def test_processImage(input_data, expected_output):
     image_path = str(BASE_DIR / "assets" / input_data)

@@ -56,7 +56,7 @@ def test_device_does_not_send_repeated_detections(input_data, expected_output):
     responses.add(
             responses.POST,
             api_url,
-            json=("status", "success"),
+            json={"status": "success", "jwt":"heyyy soy valido"},
             status=200,
             )
     video_path = str(BASE_DIR / "assets" / input_data["video"])
@@ -68,4 +68,5 @@ def test_device_does_not_send_repeated_detections(input_data, expected_output):
             images_sent += 1
 
     assert images_sent == expected_output["nLogs"]
+
 

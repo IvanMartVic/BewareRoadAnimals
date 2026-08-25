@@ -2,10 +2,12 @@ import requests
 from dispositivo import model 
 from dispositivo.utils import frame_to_base64
 from dataclasses import dataclass
-
+import os
 import numpy as np
 
 BATTERY_THRESHOLD = 10
+class AuthenticationException(Exception):
+    pass
 
 @dataclass(frozen=True)
 class SensorData:
@@ -20,26 +22,75 @@ class Device:
 
     def deploy(self):
         print(f"going for url: {self.server_url}/deployement")
-        requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"})
-        self._generic_sys_log("dispositivo desplegado")
+        try:
+            deploy_token = os.environ.get("DEPLOY_TOKEN")
+            print(f"trying key {deploy_token}")
+            headers = {
+                    "deployToken": deploy_token,
+                    "Content-Type":"application/json"
+                    }
+            response = requests.post(url=f"{self.server_url}/deployement",json={"id":self.id , "type":"SISTEMA"}, headers = headers)
+            response.raise_for_status()
+            data = response.json()
+            jwt = data.get("jwt")
+            os.environ["JWT"] = jwt
+            return response
+        except requests.exceptions.RequestException as e:
+            raise AuthenticationException("unable to reauthenticate in the server")
 
     def _low_battery_message(self, battery):
-        requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":f"batería del dispositivo al {battery}%", "type":"BATERIA"})
+        payload = {"id":self.id, "message":f"batería del dispositivo al {battery}%", "type":"BATERIA"}
+        return self._send_message(payload)
+
+    def _send_message(self, payload):
+        jwt = os.environ.get("JWT")
+        if not jwt:
+            print("Error no JWT in environment")
+            return None
+        headers = {
+                "Authorization":f"Bearer {jwt}",
+                "Content-Type":"application/json"
+                }
+        response = requests.post(url=f"{self.server_url}/log",
+                                 json=payload, headers= headers)
+        try:
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as e:
+            if response.status_code == 401:
+                print("JWT invalid or expired attempting refreshing")
+                deploy_response = self.deploy()
+                print(f"redeployement response status: {deploy_response.status_code}")
+                jwt = os.environ.get("JWT")
+                headers = {
+                        "Authorization":f"Bearer {jwt}",
+                        "Content-Type":"application/json"
+                        }
+                response = requests.post(url=f"{self.server_url}/log",
+                                         json=payload, headers= headers)
+                if response.status_code != 200:
+                    print(f"this jwt is unvalid:\n ${jwt}\n")
+                    raise AuthenticationException("Not able to reach the server after refreshing token");
+                return response
+
 
     def _process_image(self, image):
         is_detect, res = self.model.detect(image)
         # print(res)
         return is_detect,res;
     def _send_detection_log(self, detection, image_base64):
+        payload:dict[str, str] = {}
         if image_base64 == "":
-            requests.post(url=f"{self.server_url}/log",
-                          json={"id":self.id, 
-                                "message":f"Animal detectado, ver detecciones anteriores para detalles", "type":"DETECCION"})
+            payload = {"id":self.id,"message":f"Animal detectado, ver detecciones anteriores para detalles", "type":"DETECCION"}
         else:
-            requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":detection, "type":"DETECCION", "image":image_base64})
+            payload = {"id":self.id, "message":detection, "type":"DETECCION", "image":image_base64}
+        return self._send_message(payload)
+
+
 
     def _generic_sys_log(self,message):
-        requests.post(url=f"{self.server_url}/log",json={"id":self.id, "message":message, "type":"SISTEMA"})
+        payload = {"id":self.id, "message":message, "type":"SISTEMA"}
+        return self._send_message(payload)
 
     def _repeated_detection(self, detection):
         if self._lastInference is None:
