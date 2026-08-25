@@ -1,6 +1,18 @@
 import "dotenv/config";
 import { prisma } from "@/../lib/prisma"
 import fs from 'fs';
+import path from "path";
+const IMAGEPATH = path.join(process.cwd(), 'public', 'image_detection.jpeg');
+function getBase64Image(): string {
+    const imagePath = IMAGEPATH;
+    if (!fs.existsSync(imagePath)) {
+        throw new Error(`No se encontró la imagen en la ruta: ${imagePath}`);
+    }
+
+    const fileBuffer = fs.readFileSync(imagePath);
+    return `${fileBuffer.toString('base64')}`;
+}
+const mockImage64 = getBase64Image();
 
 function randomDate(start: Date, end: Date) {
     const start_millis = start.getTime();
@@ -15,7 +27,7 @@ async function generateRecentDetection({ numDetect, deviceId }: { numDetect: num
             data: {
                 deviceId: deviceId,
                 message: message,
-                image: "no vacio",
+                image: mockImage64,
                 type: "DETECCION",
             }
         })
@@ -25,7 +37,7 @@ async function generateRecentDetection({ numDetect, deviceId }: { numDetect: num
 async function generateLogs({ numDetect, numSys, numBat, deviceId }: { numDetect: number, numSys: number, numBat: number, deviceId: number }) {
     const logTypes = ["DETECCION", "SISTEMA", "BATERIA"];
     const nlogs = [numDetect, numSys, numBat];
-    const mockImagePath = "/home/ivan/Downloads/image_mock.jpeg"
+    // const mockImagePath = "/home/ivan/Downloads/image_mock.jpeg"
     const detection_message = '[{"name":"boar","class":18,"confidence":0.68255,"box":{"x1":97.74059,"y1":250.08957,"x2":181.88467,"y2":307.3385}}]'
     const startDate = new Date(2026, 0, 1)
     const endDate = new Date();
@@ -34,12 +46,12 @@ async function generateLogs({ numDetect, numSys, numBat, deviceId }: { numDetect
         for (let j = 0; j < nlogs[i]; j++) {
             if (logType == "DETECCION") {
                 try {
-                    const base64 = fs.readFileSync(mockImagePath, { encoding: 'base64' });
+                    // const base64 = fs.readFileSync(mockImagePath, { encoding: 'base64' });
                     const log = await prisma.log.create({
                         data: {
                             deviceId: deviceId,
                             message: detection_message,
-                            image: base64,
+                            image: mockImage64,
                             type: logType,
                             timestamp: randomDate(startDate, endDate),
                         }
@@ -80,7 +92,7 @@ async function generateAdmin() {
         })
     }
 }
-async function generateDevice() {
+async function generateDevices() {
     const device = await prisma.device.findUnique({
         where: {
             id: 17,
@@ -94,21 +106,39 @@ async function generateDevice() {
         return
     }
     if (undefined == device) {
-        await prisma.device.create({
-            data: {
+        await prisma.device.createMany({
+            data: [{
                 id: 17,
                 userId: admin.id,
                 coordLatitude: 41.81968660543046,
                 coordLength: -5.947298033932226,
-            }
+                deployToken: "TokenSecretoDePrueba1",
+            },
+            {
+                id: 16180,
+                userId: admin.id,
+                coordLatitude: 40.96882,
+                coordLength: -5.66388,
+                deployToken: "TokenSecretoDePrueba2",
+            },
+            {
+                id: 265,
+                userId: admin.id,
+                coordLatitude: 41.81968660543046,
+                coordLength: -5.66388,
+                deployToken: "TokenSecretoDePrueba3",
+            }],
+            skipDuplicates: true,
         })
     }
 }
 async function main() {
     await generateAdmin();
-    await generateDevice();
-    await generateRecentDetection({ numDetect: 10, deviceId: 17 });
-    // await generateLogs({ numDetect: 200, numSys: 10, numBat: 20, deviceId: 17 })
+    await generateDevices();
+    await generateRecentDetection({ numDetect: 1, deviceId: 17 });
+    await generateRecentDetection({ numDetect: 2, deviceId: 16180 });
+    await generateRecentDetection({ numDetect: 1, deviceId: 265 });
+    // await generateLogs({ numDetect: 100, numSys: 10, numBat: 20, deviceId: 17 })
 }
 main()
     .then(async () => {

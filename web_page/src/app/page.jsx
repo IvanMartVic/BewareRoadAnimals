@@ -31,7 +31,7 @@ export default function PresentationPage() {
             <Navbar isDrawerAbsolute={true}>
                 <div className="flex flex-col-reverse md:w-screen md:flex-row md:h-full bg-base-200 md:p-0 md:justify-start">
                     <div className="md:w-4/5 md:h-[95vh] h-[80vh] md:bg-primary w-screen">
-                        <Map position={[40.96882, -5.66388]} zoom={8} logs={logs} scrollWheelZoom={false} clickFunction={() => console.log("click")} />
+                        <Map position={[40.96882, -5.66388]} zoom={8} logs={logs} scrollWheelZoom={true} clickFunction={() => console.log("click")} />
                     </div>
                     <div className="flex flex-col md:w-1/5 h-[60vh] w-screen md:h-[95vh] bg-secondary p-5 gap-4">
                         <h1 className="text-primary font-bold text-xl"> Detecciones última hora </h1>

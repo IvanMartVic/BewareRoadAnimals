@@ -6,6 +6,7 @@ export interface InputDevice {
     userId: number,
     coordLatitude: number
     coordLength: number
+    deployToken: String
 }
 interface UpdateDeviceData {
     coordLatitude: number
@@ -54,12 +55,13 @@ export async function getDevicesCount(filters = {}) {
     return devices;
 }
 
-export async function createDevice({ userId, coordLatitude, coordLength }: InputDevice) {
+export async function createDevice({ userId, coordLatitude, coordLength, deployToken }: InputDevice) {
     const new_device = await prisma.device.create({
         data: {
             userId: userId,
             coordLatitude: coordLatitude,
             coordLength: coordLength,
+            deployToken: deployToken,
         }
     });
     return new_device;

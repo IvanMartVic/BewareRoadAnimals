@@ -285,6 +285,20 @@ export const models = [
         "default": "INACTIVE",
         "isGenerated": false,
         "isUpdatedAt": false
+      },
+      {
+        "name": "deployToken",
+        "kind": "scalar",
+        "isList": false,
+        "isRequired": true,
+        "isUnique": true,
+        "isId": false,
+        "isReadOnly": false,
+        "hasDefaultValue": false,
+        "type": "String",
+        "nativeType": null,
+        "isGenerated": false,
+        "isUpdatedAt": false
       }
     ],
     "primaryKey": null,
@@ -459,6 +473,16 @@ export const indexes = [
     "fields": [
       {
         "name": "id"
+      }
+    ]
+  },
+  {
+    "model": "Device",
+    "type": "unique",
+    "isDefinedOnField": true,
+    "fields": [
+      {
+        "name": "deployToken"
       }
     ]
   },

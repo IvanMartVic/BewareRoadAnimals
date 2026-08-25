@@ -50,7 +50,7 @@ export default function LogDetails({ log }) {
                 setImg(drawnImage);
 
             } catch (error) {
-                console.error("failed to edit image" + error.message);
+                console.error("failed to edit image" + error.message + " " + JSON.stringify(initial_base64));
                 setImg(initial_base64);
             }
         };

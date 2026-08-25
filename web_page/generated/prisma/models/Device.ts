@@ -47,6 +47,7 @@ export type DeviceMinAggregateOutputType = {
   userId: number | null
   deployedAt: Date | null
   status: string | null
+  deployToken: string | null
 }
 
 export type DeviceMaxAggregateOutputType = {
@@ -56,6 +57,7 @@ export type DeviceMaxAggregateOutputType = {
   userId: number | null
   deployedAt: Date | null
   status: string | null
+  deployToken: string | null
 }
 
 export type DeviceCountAggregateOutputType = {
@@ -65,6 +67,7 @@ export type DeviceCountAggregateOutputType = {
   userId: number
   deployedAt: number
   status: number
+  deployToken: number
   _all: number
 }
 
@@ -90,6 +93,7 @@ export type DeviceMinAggregateInputType = {
   userId?: true
   deployedAt?: true
   status?: true
+  deployToken?: true
 }
 
 export type DeviceMaxAggregateInputType = {
@@ -99,6 +103,7 @@ export type DeviceMaxAggregateInputType = {
   userId?: true
   deployedAt?: true
   status?: true
+  deployToken?: true
 }
 
 export type DeviceCountAggregateInputType = {
@@ -108,6 +113,7 @@ export type DeviceCountAggregateInputType = {
   userId?: true
   deployedAt?: true
   status?: true
+  deployToken?: true
   _all?: true
 }
 
@@ -204,6 +210,7 @@ export type DeviceGroupByOutputType = {
   userId: number
   deployedAt: Date
   status: string
+  deployToken: string
   _count: DeviceCountAggregateOutputType | null
   _avg: DeviceAvgAggregateOutputType | null
   _sum: DeviceSumAggregateOutputType | null
@@ -236,6 +243,7 @@ export type DeviceWhereInput = {
   userId?: Prisma.IntFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeFilter<"Device"> | Date | string
   status?: Prisma.StringFilter<"Device"> | string
+  deployToken?: Prisma.StringFilter<"Device"> | string
   deployedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   logs?: Prisma.LogListRelationFilter
 }
@@ -247,12 +255,14 @@ export type DeviceOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  deployToken?: Prisma.SortOrder
   deployedBy?: Prisma.UserOrderByWithRelationInput
   logs?: Prisma.LogOrderByRelationAggregateInput
 }
 
 export type DeviceWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  deployToken?: string
   AND?: Prisma.DeviceWhereInput | Prisma.DeviceWhereInput[]
   OR?: Prisma.DeviceWhereInput[]
   NOT?: Prisma.DeviceWhereInput | Prisma.DeviceWhereInput[]
@@ -263,7 +273,7 @@ export type DeviceWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringFilter<"Device"> | string
   deployedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   logs?: Prisma.LogListRelationFilter
-}, "id">
+}, "id" | "deployToken">
 
 export type DeviceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -272,6 +282,7 @@ export type DeviceOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  deployToken?: Prisma.SortOrder
   _count?: Prisma.DeviceCountOrderByAggregateInput
   _avg?: Prisma.DeviceAvgOrderByAggregateInput
   _max?: Prisma.DeviceMaxOrderByAggregateInput
@@ -289,6 +300,7 @@ export type DeviceScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeWithAggregatesFilter<"Device"> | Date | string
   status?: Prisma.StringWithAggregatesFilter<"Device"> | string
+  deployToken?: Prisma.StringWithAggregatesFilter<"Device"> | string
 }
 
 export type DeviceCreateInput = {
@@ -296,6 +308,7 @@ export type DeviceCreateInput = {
   coordLength: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
   deployedBy: Prisma.UserCreateNestedOneWithoutDevicesInput
   logs?: Prisma.LogCreateNestedManyWithoutDeviceInInput
 }
@@ -307,6 +320,7 @@ export type DeviceUncheckedCreateInput = {
   userId: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutDeviceInInput
 }
 
@@ -315,6 +329,7 @@ export type DeviceUpdateInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
   deployedBy?: Prisma.UserUpdateOneRequiredWithoutDevicesNestedInput
   logs?: Prisma.LogUpdateManyWithoutDeviceInNestedInput
 }
@@ -326,6 +341,7 @@ export type DeviceUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
   logs?: Prisma.LogUncheckedUpdateManyWithoutDeviceInNestedInput
 }
 
@@ -336,6 +352,7 @@ export type DeviceCreateManyInput = {
   userId: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
 }
 
 export type DeviceUpdateManyMutationInput = {
@@ -343,6 +360,7 @@ export type DeviceUpdateManyMutationInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DeviceUncheckedUpdateManyInput = {
@@ -352,6 +370,7 @@ export type DeviceUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DeviceListRelationFilter = {
@@ -371,6 +390,7 @@ export type DeviceCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  deployToken?: Prisma.SortOrder
 }
 
 export type DeviceAvgOrderByAggregateInput = {
@@ -387,6 +407,7 @@ export type DeviceMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  deployToken?: Prisma.SortOrder
 }
 
 export type DeviceMinOrderByAggregateInput = {
@@ -396,6 +417,7 @@ export type DeviceMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   deployedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  deployToken?: Prisma.SortOrder
 }
 
 export type DeviceSumOrderByAggregateInput = {
@@ -479,6 +501,7 @@ export type DeviceCreateWithoutDeployedByInput = {
   coordLength: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
   logs?: Prisma.LogCreateNestedManyWithoutDeviceInInput
 }
 
@@ -488,6 +511,7 @@ export type DeviceUncheckedCreateWithoutDeployedByInput = {
   coordLength: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
   logs?: Prisma.LogUncheckedCreateNestedManyWithoutDeviceInInput
 }
 
@@ -527,6 +551,7 @@ export type DeviceScalarWhereInput = {
   userId?: Prisma.IntFilter<"Device"> | number
   deployedAt?: Prisma.DateTimeFilter<"Device"> | Date | string
   status?: Prisma.StringFilter<"Device"> | string
+  deployToken?: Prisma.StringFilter<"Device"> | string
 }
 
 export type DeviceCreateWithoutLogsInput = {
@@ -534,6 +559,7 @@ export type DeviceCreateWithoutLogsInput = {
   coordLength: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
   deployedBy: Prisma.UserCreateNestedOneWithoutDevicesInput
 }
 
@@ -544,6 +570,7 @@ export type DeviceUncheckedCreateWithoutLogsInput = {
   userId: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
 }
 
 export type DeviceCreateOrConnectWithoutLogsInput = {
@@ -567,6 +594,7 @@ export type DeviceUpdateWithoutLogsInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
   deployedBy?: Prisma.UserUpdateOneRequiredWithoutDevicesNestedInput
 }
 
@@ -577,6 +605,7 @@ export type DeviceUncheckedUpdateWithoutLogsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type DeviceCreateManyDeployedByInput = {
@@ -585,6 +614,7 @@ export type DeviceCreateManyDeployedByInput = {
   coordLength: number
   deployedAt?: Date | string
   status?: string
+  deployToken: string
 }
 
 export type DeviceUpdateWithoutDeployedByInput = {
@@ -592,6 +622,7 @@ export type DeviceUpdateWithoutDeployedByInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
   logs?: Prisma.LogUpdateManyWithoutDeviceInNestedInput
 }
 
@@ -601,6 +632,7 @@ export type DeviceUncheckedUpdateWithoutDeployedByInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
   logs?: Prisma.LogUncheckedUpdateManyWithoutDeviceInNestedInput
 }
 
@@ -610,6 +642,7 @@ export type DeviceUncheckedUpdateManyWithoutDeployedByInput = {
   coordLength?: Prisma.FloatFieldUpdateOperationsInput | number
   deployedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  deployToken?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -650,6 +683,7 @@ export type DeviceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   userId?: boolean
   deployedAt?: boolean
   status?: boolean
+  deployToken?: boolean
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   logs?: boolean | Prisma.Device$logsArgs<ExtArgs>
   _count?: boolean | Prisma.DeviceCountOutputTypeDefaultArgs<ExtArgs>
@@ -662,6 +696,7 @@ export type DeviceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   userId?: boolean
   deployedAt?: boolean
   status?: boolean
+  deployToken?: boolean
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["device"]>
 
@@ -672,6 +707,7 @@ export type DeviceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   userId?: boolean
   deployedAt?: boolean
   status?: boolean
+  deployToken?: boolean
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["device"]>
 
@@ -682,9 +718,10 @@ export type DeviceSelectScalar = {
   userId?: boolean
   deployedAt?: boolean
   status?: boolean
+  deployToken?: boolean
 }
 
-export type DeviceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "coordLatitude" | "coordLength" | "userId" | "deployedAt" | "status", ExtArgs["result"]["device"]>
+export type DeviceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "coordLatitude" | "coordLength" | "userId" | "deployedAt" | "status" | "deployToken", ExtArgs["result"]["device"]>
 export type DeviceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   deployedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   logs?: boolean | Prisma.Device$logsArgs<ExtArgs>
@@ -710,6 +747,7 @@ export type $DevicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     userId: number
     deployedAt: Date
     status: string
+    deployToken: string
   }, ExtArgs["result"]["device"]>
   composites: {}
 }
@@ -1141,6 +1179,7 @@ export interface DeviceFieldRefs {
   readonly userId: Prisma.FieldRef<"Device", 'Int'>
   readonly deployedAt: Prisma.FieldRef<"Device", 'DateTime'>
   readonly status: Prisma.FieldRef<"Device", 'String'>
+  readonly deployToken: Prisma.FieldRef<"Device", 'String'>
 }
     
 

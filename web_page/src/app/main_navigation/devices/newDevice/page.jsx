@@ -7,6 +7,7 @@ import useDeviceStore from "@/stores/deviceStore"
 import useAuthStore from "@/stores/authStore"
 import { useShallow } from "zustand/shallow";
 import { useModal } from "@/context/AlertContext"
+import crypto from "crypto"
 
 
 export default function NewDevicePage() {
@@ -28,6 +29,7 @@ export default function NewDevicePage() {
     const markerRef = useRef(null);
 
     const { showAlert } = useModal();
+    const deployToken = useMemo(() => crypto.randomBytes(32).toString('hex'), [])
 
     const handleSubmit = async (e) => {
         if (e && e.preventDefault) {
@@ -38,7 +40,7 @@ export default function NewDevicePage() {
             const length = markerPosition[1];
 
             await addDevice({ userId: authUserData.id, coordLatitude: latitude, coordLength: length });
-            await showAlert({ message: `dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}` });
+            await showAlert({ message: `dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}. \n Token de despliegue: ${deployToken}` });
             router.push("/main_navigation/devices");
         }
     }
@@ -51,26 +53,38 @@ export default function NewDevicePage() {
     ), [])
 
     return (
-        <div className="flex md:flex-row flex-col items-start justify-start p-10 h-screen gap-1">
-            <div className="h-[90vh] w-full md:w-4/5">
+        <div className="relative w-full h-screen">
+            {/* El mapa ocupa todo el contenedor */}
+            <div className="w-full h-[95vh]">
                 <Map position={SALAMANCA_POS} markerPosition={markerPosition} scrollWheelZoom={true} setMarkerPosition={setMarkerPosition} markerRef={markerRef} zoom={8} />
-
             </div>
-            <form onSubmit={handleSubmit}>
-                <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-s border p-4 gap-7">
-                    <legend className="fieldset-legend text-xl text-primary">Nuevo Dispositivo</legend>
-                    <label className="label ">Despliegado por</label>
+
+            {/* Formulario flotante superpuesto */}
+            <form onSubmit={handleSubmit} className="absolute top-4 right-4 z-[1000] max-w-sm">
+                <fieldset className="flex flex-col fieldset bg-base-200/90 backdrop-blur-sm border-base-300 rounded-box w-full border p-4 gap-4 shadow-xl">
+                    <legend className="fieldset-legend text-xl text-primary font-bold">Nuevo Dispositivo</legend>
+
+                    <label className="label">Desplegado por</label>
                     <legend className="input">
                         <input
                             value={authUserData?.full_name ?? "desconocido"}
                             disabled
-                        ></input>
+                        />
                     </legend>
-                    <CoordinatesIput setMarkerPosition={setMarkerPosition} markerPosition={markerPosition}></CoordinatesIput>
-                    <button type="submit" className="btn btn-primary mt-4">Añadir</button>
+
+                    <label className="label">Token de despliegue</label>
+                    <legend className="input">
+                        <input
+                            value={deployToken}
+                            disabled
+                        />
+                    </legend>
+
+                    <CoordinatesIput setMarkerPosition={setMarkerPosition} markerPosition={markerPosition} />
+
+                    <button type="submit" className="btn btn-primary mt-2">Añadir</button>
                 </fieldset>
             </form>
-
         </div>
     );
 }

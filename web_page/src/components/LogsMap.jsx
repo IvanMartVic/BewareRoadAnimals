@@ -94,7 +94,7 @@ export default function LogsMap(props) {
         }
     }
     return (
-        <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} dragging={false}
+        <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} dragging={true}
             doubleClickZoom={false} touchZoom={false} keyboard={false} zoomControl={false} style={{ height: "100%", width: "100%" }}
             className="z-0">
             <TileLayer
@@ -114,7 +114,6 @@ export default function LogsMap(props) {
                         </Marker>
                     );
                 })}
-
             </MarkerClusterGroup>
         </MapContainer>)
 }

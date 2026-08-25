@@ -109,7 +109,7 @@ export default function LogViewPage({ searchParams }) {
                                 <option value={"ALL" || ""} disabled={false}>ALL</option>
                             }
 
-                            {searchFilters.userId && searchFilters.userId != authUserId &&
+                            {searchFilters.userId && searchFilters.userId != authUserId && searchFilters.userId != "ALL" &&
                                 <option value={+searchFilters.userId} disabled={false}>Usuario: ID={searchFilters.userId}</option>
                             }
                         </select>

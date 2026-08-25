@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Device" ADD COLUMN     "status" TEXT NOT NULL DEFAULT 'INACTIVE';
-
--- AlterTable
-ALTER TABLE "Log" ALTER COLUMN "image" DROP NOT NULL;

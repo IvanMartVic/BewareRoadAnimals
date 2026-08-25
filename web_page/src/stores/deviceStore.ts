@@ -2,8 +2,11 @@ import { create } from "zustand";
 import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById, getDevicesCount } from "@/services/deviceService"
 
 
-interface OutputDevice extends InputDevice {
+interface OutputDevice {
     id: number,
+    userId: number,
+    coordLatitude: number
+    coordLength: number
 }
 type deviceStoreState = {
     devices: OutputDevice[],

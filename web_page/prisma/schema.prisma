@@ -1,45 +1,47 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+    provider = "prisma-client"
+    output   = "../generated/prisma"
 }
+
 generator dmmf {
-  provider = "prisma-mock"
-  output   = "../generated/dmmf"
+    provider = "prisma-mock"
+    output   = "../generated/dmmf"
 }
 
 datasource db {
-  provider = "postgresql"
+    provider = "postgresql"
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  email         String   @unique
-  full_name     String
-  createdAt     DateTime @default(now())
-  role          String   @default("USER")
-  password_hash String
-  devices       Device[]
-  resetToken    String? @unique  
-  tokenExpiry   DateTime? 
+    id            Int       @id @default(autoincrement())
+    email         String    @unique
+    full_name     String
+    createdAt     DateTime  @default(now())
+    role          String    @default("USER")
+    password_hash String
+    devices       Device[]
+    resetToken    String?   @unique
+    tokenExpiry   DateTime?
 }
 
 model Device {
-  id          Int          @id @default(autoincrement())
-  coordLatitude Float
-  coordLength Float
-  userId      Int
-  deployedBy  User         @relation(fields: [userId], references: [id])
-  logs        Log[]
-  deployedAt DateTime @default(now())
-  status    String @default("INACTIVE")
+    id            Int      @id @default(autoincrement())
+    coordLatitude Float
+    coordLength   Float
+    userId        Int
+    deployedBy    User     @relation(fields: [userId], references: [id])
+    logs          Log[]
+    deployedAt    DateTime @default(now())
+    status        String   @default("INACTIVE")
+    deployToken   String   @unique
 }
 
-model Log{
-  id       Int    @id @default(autoincrement())
-  deviceId Int
-  message  String
-  image String?
-  deviceIn Device @relation(fields: [deviceId], references: [id])
-  type String @default("SISTEMA")
-  timestamp DateTime @default(now())
+model Log {
+    id        Int      @id @default(autoincrement())
+    deviceId  Int
+    message   String
+    image     String?
+    deviceIn  Device   @relation(fields: [deviceId], references: [id])
+    type      String   @default("SISTEMA")
+    timestamp DateTime @default(now())
 }
