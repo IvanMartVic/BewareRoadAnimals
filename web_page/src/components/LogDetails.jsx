@@ -7,7 +7,7 @@ export default function LogDetails({ log }) {
     const [img, setImg] = useState(null);
 
     function detectionDetails() {
-        if (log.type == "DETECCION" && log.image != null) {
+        if (log.type == "DETECCION" && log.image != null && log.image != "") {
             return JSON.parse(log.message);
         } else {
             return {};

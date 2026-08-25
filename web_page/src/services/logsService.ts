@@ -11,7 +11,7 @@ export interface LogFilters {
     timestampGte?: string;
 }
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 1000;
 export async function getLogs({
     filters = {},
     page_number = 0,
