@@ -6,7 +6,7 @@ export interface InputDevice {
     userId: number,
     coordLatitude: number
     coordLength: number
-    deployToken: String
+    deployToken: string
 }
 interface UpdateDeviceData {
     coordLatitude: number

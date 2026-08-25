@@ -14,6 +14,7 @@ export interface credentials {
 }
 export interface deviceCredentials {
     deviceId: number;
+    deployToken: string;
 }
 
 export async function mySignIn({ password, email }: credentials): Promise<{ success: boolean, message?: string }> {
@@ -71,16 +72,24 @@ export async function authResetToken(token: string): Promise<{ success: boolean,
     return ({ success: false, user: user });
 }
 
-export async function authDevice({ deviceId }: deviceCredentials) {
+export async function authDevice({ deviceId, deployToken }: deviceCredentials) {
     const device = await prisma.device.findUnique({
         where: {
             id: deviceId,
-            status: "ACTIVE",
         }
     });
-    if (device) {
-        return ({ success: true, device: device });
+    if (device?.deployToken == deployToken) {
+        const secret = new TextEncoder().encode(process.env.SECRET_STRING);
+        const alg = 'HS256'
+        const jwt = await new SignJWT({ id: deviceId })
+            .setProtectedHeader({ alg })
+            .setExpirationTime('12h')
+            .setIssuedAt()
+            .setNotBefore("0s")
+            .sign(secret);
+        return ({ success: true, device: device, jwt: jwt });
     }
+    console.log(`deviceId:${deviceId} request secret: ${deployToken} db secret: ${device?.deployToken}`);
     return ({ success: false, device: device });
 }
 

@@ -4,6 +4,11 @@ import { prisma } from "@/../lib/prisma";
 import * as authUtils from "@/utils/authUtils"
 import { DeviceFilters } from "@/services/deviceService";
 import { LogFilters } from "@/services/logsService";
+import { jwtVerify } from "jose";
+
+export interface DeviceTokenData {
+    id: number,
+}
 
 
 export async function SignIn({ password, email }: authUtils.credentials) {
@@ -15,8 +20,19 @@ export async function LogOut() {
 export async function auth() {
     return await myAuth();
 }
-export async function authDevice({ deviceId }: authUtils.deviceCredentials) {
-    return authUtils.authDevice({ deviceId });
+export async function authDevice({ deviceId, deployToken }: authUtils.deviceCredentials) {
+    return authUtils.authDevice({ deviceId, deployToken });
+}
+
+export async function verifyDeviceJWT(jwt: string | Uint8Array) {
+    try {
+        const secret = new TextEncoder().encode(process.env.SECRET_STRING);
+        const res = await jwtVerify(jwt, secret);
+        return { success: true, deviceInfo: res.payload as unknown as DeviceTokenData };
+    } catch (e) {
+        console.log("invalid device auth-token " + jwt);
+        return { success: false };
+    }
 }
 
 export async function authAdmin() {

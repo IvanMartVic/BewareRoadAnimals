@@ -39,7 +39,7 @@ export default function NewDevicePage() {
             const latitude = markerPosition[0];
             const length = markerPosition[1];
 
-            await addDevice({ userId: authUserData.id, coordLatitude: latitude, coordLength: length });
+            await addDevice({ userId: authUserData.id, coordLatitude: latitude, coordLength: length, deployToken: deployToken });
             await showAlert({ message: `dispositivo desplegado en ${latitude} ${length} por ${authUserData.full_name}. \n Token de despliegue: ${deployToken}` });
             router.push("/main_navigation/devices");
         }
@@ -61,7 +61,7 @@ export default function NewDevicePage() {
 
             {/* Formulario flotante superpuesto */}
             <form onSubmit={handleSubmit} className="absolute top-4 right-4 z-[1000] max-w-sm">
-                <fieldset className="flex flex-col fieldset bg-base-200/90 backdrop-blur-sm border-base-300 rounded-box w-full border p-4 gap-4 shadow-xl">
+                <fieldset className="flex flex-col fieldset bg-base-200/90 backdrop-blur-sm border-base-300 md:w-60 rounded-box w-full border p-4 gap-4 shadow-xl">
                     <legend className="fieldset-legend text-xl text-primary font-bold">Nuevo Dispositivo</legend>
 
                     <label className="label">Desplegado por</label>
