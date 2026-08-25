@@ -7,7 +7,7 @@ import 'react-leaflet-markercluster/styles'
 
 
 export default function MyMap(props) {
-    let { position, zoom, devices, scrollWheelZoom, clickFunction } = props
+    let { position, zoom, devices, scrollWheelZoom, clickFunction, dragging } = props
     var imageIcon = new L.Icon({
         iconUrl: '/video-camera.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -19,7 +19,7 @@ export default function MyMap(props) {
     // clickFunction = clickFunction ?? (() => { });
 
     return (
-        <MapContainer center={position} zoom={zoom} scrollWheelZoom={scrollWheelZoom ?? false} style={{ height: "100%", width: "100%" }}
+        <MapContainer center={position} zoom={zoom} dragging={dragging ?? true} scrollWheelZoom={scrollWheelZoom ?? false} style={{ height: "100%", width: "100%" }}
             className="flex-2">
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

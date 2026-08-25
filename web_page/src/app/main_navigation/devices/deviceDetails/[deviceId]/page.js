@@ -55,32 +55,41 @@ export default function LogsMainPage() {
     const router = useRouter();
     const deviceFilter = useMemo(() => ({ deviceId: +deviceId }), [deviceId]);
     return (
-        <div
-            className="flex flex-col gap-4 justify-start items-start h-screen p-10 w-full">
-            <div className="flex flex-row w-full justify-between">
-                <div className="flex flex-col w-full">
-                    <h1 className="text-3xl font-bold">Dispositivo {deviceId}</h1>
-                    {!isLoading &&
-                        <h1>Desplegado por {pageDevice?.deployedBy?.full_name || "desconocido"}</h1>
-                    }
-                </div>
-                <div className="flex items-center p-[1vw]">
-                    <button className="btn btn-error btn-soft btn-sm" onClick={handleDelete}>Eliminar dispositivo</button>
-                </div>
+        <div className="relative w-full h-screen overflow-hidden">
+            <div className="absolute inset-0 z-0 w-full h-full">
+                {!isLoading && pageDevice && (
+                    <Map
+                        dragging={false}
+                        position={[pageDevice?.coordLatitude, pageDevice?.coordLength]}
+                        zoom={13}
+                        devices={devices}
+                    />
+                )}
             </div>
-            <div className="flex w-full h-[60vh] p-[1vh] items-start">
-                <div className="flex h-full w-full">
-                    {!isLoading && pageDevice &&
-                        <Map position={[pageDevice?.coordLatitude, pageDevice?.coordLength]} zoom={13} devices={devices} />
-                    }
-                </div>
-            </div>
-            {deviceFilter &&
-                <div className="flex p-[1vw] w-full">
-                    <LogsOverview filters={deviceFilter} ></LogsOverview>
+            <div className="relative z-10 flex flex-col justify-between h-[90vh] p-2 space-y-4 pointer-events-none">
 
+                <div className="flex flex-row w-full justify-between items-start gap-4">
+                    <div className="flex flex-col bg-base-100 backdrop-blur-md p-4 rounded-box border border-base-300 shadow-lg pointer-events-auto">
+                        <h1 className="text-3xl font-bold">Dispositivo {deviceId}</h1>
+                        {!isLoading && (
+                            <div className="mt-1 text-sm opacity-90">
+                                <p><strong>Desplegado por:</strong> {pageDevice?.deployedBy?.full_name || "desconocido"}</p>
+                                <p><strong>Token de despliegue:</strong> {pageDevice?.deployToken}</p>
+                            </div>
+                        )}
+                    </div>
+                    <div>
+                        <button className="btn btn-error btn-soft btn-sm pointer-events-auto" onClick={handleDelete}>
+                            Eliminar dispositivo
+                        </button>
+                    </div>
                 </div>
-            }
+                {deviceFilter && (
+                    <div className="pointer-events-auto">
+                        <LogsOverview filters={deviceFilter} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 
