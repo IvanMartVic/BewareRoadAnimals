@@ -95,7 +95,7 @@ export default function LogViewPage({ searchParams }) {
                     <fieldset className="fieldset w-full md:w-auto md:min-w-37.5">
                         <legend className="fieldset-legend">Tipo de log</legend>
                         <select value={pageFilter.type} onChange={(e) => setFilter({ ...pageFilter, type: e.target.value })} className="select ">
-                            <option disabled={false}>ALL</option>
+                            <option disabled={false} value={"ALL"}>TODOS</option>
                             <option>SISTEMA</option>
                             <option>BATERIA</option>
                             <option value={"DETECCION"}>DETECCIÓN</option>
