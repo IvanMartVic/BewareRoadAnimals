@@ -1,6 +1,7 @@
 "use server"
 import { prisma } from "@/../lib/prisma";
 import { authDeviceFilters } from "@/services/authenticationService";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 
 export interface InputDevice {
     userId: number,
@@ -94,17 +95,33 @@ export async function getDeviceById(id: number) {
     return device;
 }
 
-export async function deleteDevice(id: number) {
+export async function deleteDevice({ id, deleteLogs }: { id: number, deleteLogs: boolean }) {
     const { success } = await authDeviceFilters({ id: id });
     if (!success) {
-        return;
+        return ({ success: false, error: 0 });
     }
-    const device = await prisma.device.delete({
-        where: {
-            id: id,
-        },
-    });
-    return device;
+    try {
+        if (deleteLogs) {
+            await prisma.log.deleteMany({
+                where: {
+                    deviceIn: {
+                        id: id,
+                    }
+                }
+            });
+        }
+        const device = await prisma.device.delete({
+            where: {
+                id: id,
+            },
+        });
+
+    } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError && e.code === "P2003") {
+            return ({ success: false, error: 1 })
+        }
+    }
+    return ({ success: true, error: null });
 }
 
 

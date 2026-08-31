@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import useLogStore from "@/stores/logStore";
 import useDeviceStore from "@/stores/deviceStore"
 import { useShallow } from "zustand/shallow";
 import { useParams } from "next/navigation";
@@ -42,14 +41,33 @@ export default function LogsMainPage() {
             ssr: false
         }
     ), [])
-    const { showConfirm } = useModal();
+    const { showConfirm, showAlert } = useModal();
     const handleDelete = async () => {
-        const choice = await showConfirm({ message: "Vas a eliminar un dispositivo ¿continuar?" });
-        if (choice) {
-            deleteDevice(+deviceId);
-            router.push("/main_navigation/devices")
+        let choice = await showConfirm({ message: "Vas a eliminar un dispositivo ¿continuar?" });
+        if (choice == false) {
+            return
         }
+        const { success, errorCode } = await deleteDevice(+deviceId);
+        if (success) {
+            await showAlert({ message: "Dispositivo eliminado con éxito" });
+            router.push("/main_navigation/devices");
+            return;
 
+        } else if (errorCode != 1) {
+            await showAlert({ message: "Ha ocurrido un error inesperado" });
+            return;
+        }
+        choice = await showConfirm({ message: "El dispositivo tiene logs asociados ¿eliminar de todas formas?" });
+        if (choice == false) {
+            return;
+        }
+        await deleteDevice(+deviceId, true);
+        if (error == null) {
+            await showAlert({ message: "Dispositivo eliminado con éxito" });
+            router.push("/main_navigation/devices");
+            return;
+        }
+        await showAlert({ message: "Ha ocurrido un error inesperado" });
     }
 
     const router = useRouter();

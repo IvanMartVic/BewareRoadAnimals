@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { getAllDevicesWithUser, createDevice, InputDevice, deleteDevice, UpdateDeviceInput, updateDevice, getDeviceById, getDevicesCount } from "@/services/deviceService"
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 
 
 interface OutputDevice {
@@ -12,13 +13,17 @@ type deviceStoreState = {
     devices: OutputDevice[],
     count: number,
     isLoading: boolean,
-    error: string | null,
+    error: { message: string, code: number } | null,
 };
 type deviceStoreActions = {
     addDevice: (newDevice: InputDevice) => void,
 
 }
 type DeviceStore = deviceStoreState & deviceStoreActions;
+
+const AUTH_FAIL_MESSAGE = "Fallo de autenticación";
+const UNEXPECTED_FAIL_MESSAGE = "Fallo inesperado";
+const LOGS_FAIL_MESSAGE = "El dispositivo tiene logs asociados";
 
 
 
@@ -34,7 +39,7 @@ const useDeviceStore = create<DeviceStore>((set) => ({
             set({ devices: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
-                set({ error: e.message, isLoading: false });
+                set({ error: { message: e.message, code: 2 }, isLoading: false });
             }
         }
     },
@@ -45,7 +50,7 @@ const useDeviceStore = create<DeviceStore>((set) => ({
             set({ count: res, isLoading: false });
         } catch (e) {
             if (e instanceof Error) {
-                set({ error: e.message, isLoading: false });
+                set({ error: { message: e.message, code: 2 }, isLoading: false });
             }
         }
     },
@@ -55,20 +60,29 @@ const useDeviceStore = create<DeviceStore>((set) => ({
             set((state) => ({ devices: [...state.devices, addedDevice] }));
         } catch (e) {
             if (e instanceof Error) {
-                set({ error: e.message });
+                set({ error: { message: e.message, code: 2 } });
             }
         }
     },
-    deleteDevice: async (id: number) => {
+    deleteDevice: async (id: number, forceLogsDeletion = false) => {
         try {
-            const deletedDevice: OutputDevice | undefined = await deleteDevice(id);
+            const { success, error }: { success: boolean, error: number | null } = await deleteDevice({ id: id, deleteLogs: forceLogsDeletion });
+            if (error == 0) {
+                set({ error: { code: 0, message: AUTH_FAIL_MESSAGE } });
+                return { success: success, errorCode: 0 };
+            } else if (error == 1) {
+                set({ error: { code: 1, message: AUTH_FAIL_MESSAGE } });
+                return { success: success, errorCode: 1 };
+            }
             set((state) => ({
-                devices: state?.devices?.filter((device) => device.id != id)
+                devices: state?.devices?.filter((device) => device.id != id),
+                error: null
             }));
-            return deletedDevice;
+            return { success: success };
         } catch (e) {
             if (e instanceof Error) {
-                set({ error: e.message });
+                set({ error: { code: 2, message: AUTH_FAIL_MESSAGE } });
+                return { success: false, errorCode: 2 };
             }
         }
     },
@@ -84,7 +98,8 @@ const useDeviceStore = create<DeviceStore>((set) => ({
 
         } catch (e) {
             if (e instanceof Error) {
-                set({ error: e.message });
+                set({ error: { message: e.message, code: 2 } });
+
             }
         }
     },
@@ -99,7 +114,7 @@ const useDeviceStore = create<DeviceStore>((set) => ({
 
         } catch (e) {
             if (e instanceof Error) {
-                set({ error: e.message });
+                set({ error: { message: e.message, code: 2 } });
             }
         }
 
