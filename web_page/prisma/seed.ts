@@ -92,52 +92,105 @@ async function generateAdmin() {
         })
     }
 }
-async function generateDevices() {
-    const device = await prisma.device.findUnique({
-        where: {
-            id: 17,
-        }
-    });
+// async function generateDevices() {
+//     const device = await prisma.device.findUnique({
+//         where: {
+//             id: 17,
+//         }
+//     });
+//     const admin = await prisma.user.findUnique({
+//         where: { email: "ivan_marvic@usal.es" }
+//     });
+//     if (null == admin) {
+//         console.error("unexpected, admin does not exist, cannot create device");
+//         return
+//     }
+//     if (undefined == device) {
+//         await prisma.device.createMany({
+//             data: [{
+//                 id: 17,
+//                 userId: admin.id,
+//                 coordLatitude: 41.81968660543046,
+//                 coordLength: -5.947298033932226,
+//                 deployToken: "TokenSecretoDePrueba1",
+//             },
+//             {
+//                 id: 16180,
+//                 userId: admin.id,
+//                 coordLatitude: 40.96882,
+//                 coordLength: -5.66388,
+//                 deployToken: "TokenSecretoDePrueba2",
+//             },
+//             {
+//                 id: 265,
+//                 userId: admin.id,
+//                 coordLatitude: 41.81968660543046,
+//                 coordLength: -5.66388,
+//                 deployToken: "TokenSecretoDePrueba3",
+//             }],
+//             skipDuplicates: true,
+//         })
+//     }
+// }
+
+interface DeviceInput {
+    id: number;
+    latitude: number;
+    longitude: number;
+}
+
+async function generateDevices(devices: DeviceInput[]) {
+    if (!devices || devices.length === 0) {
+        return;
+    }
+
     const admin = await prisma.user.findUnique({
         where: { email: "ivan_marvic@usal.es" }
     });
-    if (null == admin) {
+
+    if (!admin) {
         console.error("unexpected, admin does not exist, cannot create device");
-        return
+        return;
     }
-    if (undefined == device) {
-        await prisma.device.createMany({
-            data: [{
-                id: 17,
-                userId: admin.id,
-                coordLatitude: 41.81968660543046,
-                coordLength: -5.947298033932226,
-                deployToken: "TokenSecretoDePrueba1",
-            },
-            {
-                id: 16180,
-                userId: admin.id,
-                coordLatitude: 40.96882,
-                coordLength: -5.66388,
-                deployToken: "TokenSecretoDePrueba2",
-            },
-            {
-                id: 265,
-                userId: admin.id,
-                coordLatitude: 41.81968660543046,
-                coordLength: -5.66388,
-                deployToken: "TokenSecretoDePrueba3",
-            }],
-            skipDuplicates: true,
-        })
-    }
+
+    // Map input objects to match the Prisma schema field names
+    const deviceData = devices.map((device) => ({
+        id: device.id,
+        userId: admin.id,
+        coordLatitude: device.latitude,
+        coordLength: device.longitude,
+        deployToken: `TokenSecretoDePrueba_${device.id}`, // Generates a unique token per device
+    }));
+
+    // skipDuplicates ensures existing IDs are safely ignored
+    await prisma.device.createMany({
+        data: deviceData,
+        skipDuplicates: true,
+    });
 }
+
+const DEVICES = [
+    { id: 16180, latitude: 41.89600, longitude: -4.522100 },
+    { id: 17, latitude: 41.74470, longitude: -6.497800 },
+    { id: 265, latitude: 42.26240, longitude: -3.940300 },
+    { id: 4, latitude: 41.4531, longitude: -5.0869 },
+    { id: 5, latitude: 42.96806, longitude: -7.500288 },
+    { id: 6, latitude: 42.22780, longitude: -5.814800 },
+    { id: 7, latitude: 42.55090, longitude: -5.624700 }
+];
+
+
 async function main() {
+
     await generateAdmin();
-    await generateDevices();
+    await generateDevices(DEVICES);
     await generateRecentDetection({ numDetect: 1, deviceId: 17 });
     await generateRecentDetection({ numDetect: 2, deviceId: 16180 });
     await generateRecentDetection({ numDetect: 1, deviceId: 265 });
+    await generateRecentDetection({ numDetect: 1, deviceId: 4 });
+    await generateRecentDetection({ numDetect: 1, deviceId: 5 });
+    await generateRecentDetection({ numDetect: 1, deviceId: 6 });
+    await generateRecentDetection({ numDetect: 1, deviceId: 7 });
     // await generateLogs({ numDetect: 100, numSys: 10, numBat: 20, deviceId: 17 })
 }
 main()
