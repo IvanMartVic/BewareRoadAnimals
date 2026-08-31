@@ -106,7 +106,7 @@ export default function LogViewPage({ searchParams }) {
                         <select value={pageFilter.userId} onChange={(e) => setFilter({ ...pageFilter, userId: ("ALL" == e.target.value) ? e.target.value : +e.target.value })} className="select ">
                             <option value={authUserId} disabled={false}>Mi usuario</option>
                             {authUserData && authUserData.role == "ADMIN" &&
-                                <option value={"ALL" || ""} disabled={false}>ALL</option>
+                                <option value={"ALL" || ""} disabled={false}>TODOS</option>
                             }
 
                             {searchFilters.userId && searchFilters.userId != authUserId && searchFilters.userId != "ALL" &&
