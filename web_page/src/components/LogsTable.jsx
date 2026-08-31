@@ -5,9 +5,9 @@ export default function LogsTable({ logs, selectedRow, onSelect }) {
             <table className="table">
                 <thead className="bg-primary text-primary-content">
                     <tr>
-                        <th>Timestamp</th>
-                        <th>message</th>
-                        <th>type</th>
+                        <th>Momento de la detección</th>
+                        <th>Mensaje</th>
+                        <th>Tipo</th>
                     </tr>
                 </thead>
                 <tbody>

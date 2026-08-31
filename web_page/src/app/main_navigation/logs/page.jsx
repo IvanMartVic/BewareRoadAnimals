@@ -98,7 +98,7 @@ export default function LogViewPage({ searchParams }) {
                             <option disabled={false}>ALL</option>
                             <option>SISTEMA</option>
                             <option>BATERIA</option>
-                            <option>DETECCION</option>
+                            <option value={"DETECCION"}>DETECCIÓN</option>
                         </select>
                     </fieldset>
                     <fieldset className="fieldset w-full md:w-auto md:min-w-37.5">
